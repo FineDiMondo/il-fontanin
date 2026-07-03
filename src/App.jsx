@@ -10,6 +10,7 @@ import ChatRoom from './pages/ChatRoom.jsx'
 import Events from './pages/Events.jsx'
 import EventDetail from './pages/EventDetail.jsx'
 import Research from './pages/Research.jsx'
+import Bar from './pages/Bar.jsx'
 import LoadingSpinner from './components/LoadingSpinner.jsx'
 
 function ProtectedRoute({ children }) {
@@ -32,6 +33,7 @@ function AppRoutes() {
       <Route path="/events" element={<ProtectedRoute><Events /></ProtectedRoute>} />
       <Route path="/events/:id" element={<ProtectedRoute><EventDetail /></ProtectedRoute>} />
       <Route path="/research" element={<ProtectedRoute><Research /></ProtectedRoute>} />
+      <Route path="/bar" element={<ProtectedRoute><Bar /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

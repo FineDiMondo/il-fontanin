@@ -1,0 +1,127 @@
+import { useState } from 'react'
+import AppHeader from '../components/AppHeader.jsx'
+import BottomNav from '../components/BottomNav.jsx'
+import ToastContainer, { showToast } from '../components/Toast.jsx'
+import { getBalance, getContributions, contribute } from '../lib/wallet.js'
+
+// Menu tipico di un bar internazionale veronese, prezzi in punti F
+// (coerenti con il tasso community: 10 F ~ 1 ora di volontariato)
+const MENU = [
+  { categoria: 'Caffetteria', voci: [
+    { nome: 'Caffè espresso', prezzo: 1 },
+    { nome: 'Caffè macchiato', prezzo: 1 },
+    { nome: 'Cappuccino', prezzo: 2 },
+    { nome: 'Tè caldo', prezzo: 1 },
+  ]},
+  { categoria: 'Analcolici', voci: [
+    { nome: 'Acqua naturale / frizzante', prezzo: 1 },
+    { nome: 'Coca-Cola, Fanta, Sprite', prezzo: 2 },
+    { nome: 'Succo di frutta', prezzo: 2 },
+    { nome: 'Tè freddo', prezzo: 2 },
+    { nome: 'Chinotto', prezzo: 2 },
+  ]},
+  { categoria: 'Birre', voci: [
+    { nome: 'Birra piccola 0,2L', prezzo: 3 },
+    { nome: 'Birra media 0,4L', prezzo: 5 },
+    { nome: 'Birra artigianale', prezzo: 6 },
+  ]},
+  { categoria: 'Vino e bollicine', voci: [
+    { nome: 'Calice vino rosso', prezzo: 4 },
+    { nome: 'Calice vino bianco', prezzo: 4 },
+    { nome: 'Prosecco', prezzo: 4 },
+  ]},
+  { categoria: 'Cocktail internazionali', voci: [
+    { nome: 'Spritz Aperol', prezzo: 5 },
+    { nome: 'Gin Tonic', prezzo: 7 },
+    { nome: 'Mojito', prezzo: 7 },
+    { nome: 'Negroni', prezzo: 7 },
+    { nome: 'Moscow Mule', prezzo: 7 },
+  ]},
+  { categoria: 'Da sgranocchiare', voci: [
+    { nome: 'Patatine / noccioline', prezzo: 2 },
+    { nome: 'Tramezzino', prezzo: 4 },
+  ]},
+]
+
+function formatOra(iso) {
+  return new Date(iso).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })
+}
+export default function Bar() {
+  const [balance, setBalance] = useState(getBalance())
+  const [log, setLog] = useState(getContributions())
+
+  function handleOrder(voce) {
+    try {
+      const { balance: nuovoSaldo, entry } = contribute(voce)
+      setBalance(nuovoSaldo)
+      setLog(l => [entry, ...l].slice(0, 20))
+      showToast(`Hai contribuito ${voce.prezzo} F per ${voce.nome}`, 'success')
+    } catch (e) {
+      showToast(e.message)
+    }
+  }
+
+  return (
+    <div className="app-shell">
+      <ToastContainer />
+      <AppHeader title="Bar del Fontanin" showBack />
+
+      <div className="scroll-content pb-6">
+        <div className="mx-4 mt-4 mb-2 stone-card flex items-center justify-between">
+          <div>
+            <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">Il tuo saldo</p>
+            <p className="text-2xl font-medium text-noce mt-0.5">{balance} F</p>
+          </div>
+          <svg className="w-8 h-8 text-oro flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9" />
+            <path strokeLinecap="round" d="M12 7v10M9.5 9.5c0-1 .9-1.8 2.5-1.8s2.5.9 2.5 2c0 2.3-5 1.2-5 3.5 0 1.1 1 2 2.5 2s2.5-.7 2.5-1.8" />
+          </svg>
+        </div>
+
+        <p className="px-4 pt-2 pb-3 text-[11px] text-stone-500">
+          Ogni consumazione al bar è un contributo in punti F alla community. Scegli cosa prendi.
+        </p>
+        {MENU.map(sezione => (
+          <div key={sezione.categoria} className="mb-4">
+            <div className="px-4 mb-1">
+              <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">{sezione.categoria}</p>
+              <div className="h-px bg-pietra-border mt-1 mb-2" />
+            </div>
+            <div className="px-4 space-y-2">
+              {sezione.voci.map(voce => (
+                <button
+                  key={voce.nome}
+                  onClick={() => handleOrder(voce)}
+                  disabled={balance < voce.prezzo}
+                  className="stone-card w-full flex items-center justify-between active:scale-[0.98] transition-transform disabled:opacity-40"
+                >
+                  <span className="text-sm text-stone-700">{voce.nome}</span>
+                  <span className="text-sm font-medium text-oro-dark flex-shrink-0 ml-3">{voce.prezzo} F</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        {log.length > 0 && (
+          <div className="mt-2">
+            <div className="px-4 mb-1">
+              <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">I tuoi contributi recenti</p>
+              <div className="h-px bg-pietra-border mt-1 mb-2" />
+            </div>
+            <div className="px-4 space-y-1.5 pb-4">
+              {log.map(voce => (
+                <div key={voce.id} className="flex items-center justify-between text-xs text-stone-500">
+                  <span>{voce.nome} <span className="text-stone-400">· {formatOra(voce.data)}</span></span>
+                  <span>{voce.prezzo} F</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <BottomNav />
+    </div>
+  )
+}
