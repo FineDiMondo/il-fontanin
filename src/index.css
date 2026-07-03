@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root {
+    height: 100%;
+    overscroll-behavior: none;
+  }
+
+  body {
+    background-color: #f7f0e6;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  .app-shell {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    max-width: 480px;
+    margin: 0 auto;
+    background: #f7f0e6;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stone-card {
+    background: white;
+    border-radius: 14px;
+    border: 0.5px solid #e0d0b0;
+    padding: 14px;
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, #ede5d5 25%, #f5edd8 50%, #ede5d5 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes droplet-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+.droplet-animate { animation: droplet-pulse 2s ease-in-out infinite; }
+
+/* Scrollbar nascosta ma funzionante */
+.scroll-content::-webkit-scrollbar { display: none; }
+.scroll-content { scrollbar-width: none; }
