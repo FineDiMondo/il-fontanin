@@ -1,33 +1,40 @@
-// Gestione locale del saldo in punti F.
+// Gestione locale del saldo in punti F, per singolo utente.
 // NOTA: implementazione mock su localStorage in attesa di individuare e
 // collegare il servizio reale di wallet/ledger (vedi progetto "Ledger & Audit").
-// Sostituire con chiamate a `api` quando l'endpoint reale sara' disponibile.
+// Sostituire con chiamate a `api` (gia' autenticate via JWT) quando
+// l'endpoint reale sara' disponibile: le firme delle funzioni sono pensate
+// per restare compatibili con una versione async collegata al backend.
 
-const BALANCE_KEY = 'fdm_wallet_f'
-const LOG_KEY = 'fdm_bar_log'
 const DEFAULT_BALANCE = 120
 
-export function getBalance() {
-  const raw = localStorage.getItem(BALANCE_KEY)
+function balanceKey(userId) {
+  return `fdm_wallet_f_${userId}`
+}
+function logKey(userId) {
+  return `fdm_bar_log_${userId}`
+}
+
+export function getBalance(userId) {
+  const raw = localStorage.getItem(balanceKey(userId))
   return raw != null ? Number(raw) : DEFAULT_BALANCE
 }
 
-export function getContributions() {
-  const raw = localStorage.getItem(LOG_KEY)
+export function getContributions(userId) {
+  const raw = localStorage.getItem(logKey(userId))
   return raw ? JSON.parse(raw) : []
 }
 
-export function contribute(item) {
-  const balance = getBalance()
+export function contribute(userId, item) {
+  const balance = getBalance(userId)
   if (balance < item.prezzo) {
     throw new Error('Punti F insufficienti')
   }
   const nuovoSaldo = balance - item.prezzo
-  localStorage.setItem(BALANCE_KEY, String(nuovoSaldo))
+  localStorage.setItem(balanceKey(userId), String(nuovoSaldo))
 
   const voce = { id: Date.now(), nome: item.nome, prezzo: item.prezzo, data: new Date().toISOString() }
-  const log = [voce, ...getContributions()].slice(0, 20)
-  localStorage.setItem(LOG_KEY, JSON.stringify(log))
+  const log = [voce, ...getContributions(userId)].slice(0, 20)
+  localStorage.setItem(logKey(userId), JSON.stringify(log))
 
   return { balance: nuovoSaldo, entry: voce }
 }

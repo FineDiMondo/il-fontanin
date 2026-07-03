@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import AppHeader from '../components/AppHeader.jsx'
 import BottomNav from '../components/BottomNav.jsx'
 import ToastContainer, { showToast } from '../components/Toast.jsx'
+import { useAuth } from '../context/AuthContext.jsx'
 import { getBalance, getContributions, contribute } from '../lib/wallet.js'
 
 // Menu tipico di un bar internazionale veronese, prezzi in punti F
@@ -47,12 +49,15 @@ function formatOra(iso) {
   return new Date(iso).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })
 }
 export default function Bar() {
-  const [balance, setBalance] = useState(getBalance())
-  const [log, setLog] = useState(getContributions())
+  const { user } = useAuth()
+  const navigate = useNavigate()
+  const userId = user?.id ?? user?.email ?? 'anon'
+  const [balance, setBalance] = useState(() => getBalance(userId))
+  const [log, setLog] = useState(() => getContributions(userId))
 
   function handleOrder(voce) {
     try {
-      const { balance: nuovoSaldo, entry } = contribute(voce)
+      const { balance: nuovoSaldo, entry } = contribute(userId, voce)
       setBalance(nuovoSaldo)
       setLog(l => [entry, ...l].slice(0, 20))
       showToast(`Hai contribuito ${voce.prezzo} F per ${voce.nome}`, 'success')
@@ -69,7 +74,7 @@ export default function Bar() {
       <div className="scroll-content pb-6">
         <div className="mx-4 mt-4 mb-2 stone-card flex items-center justify-between">
           <div>
-            <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">Il tuo saldo</p>
+            <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">Saldo di {user?.nome || 'te'}</p>
             <p className="text-2xl font-medium text-noce mt-0.5">{balance} F</p>
           </div>
           <svg className="w-8 h-8 text-oro flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -119,6 +124,14 @@ export default function Bar() {
             </div>
           </div>
         )}
+        <div className="px-4 pt-2 pb-4">
+          <button
+            onClick={() => navigate('/dona')}
+            className="w-full border border-pietra-border rounded-xl py-2.5 text-sm text-stone-600"
+          >
+            Vuoi contribuire anche con un bonifico? Sostieni la community →
+          </button>
+        </div>
       </div>
 
       <BottomNav />

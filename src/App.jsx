@@ -11,6 +11,7 @@ import Events from './pages/Events.jsx'
 import EventDetail from './pages/EventDetail.jsx'
 import Research from './pages/Research.jsx'
 import Bar from './pages/Bar.jsx'
+import Dona from './pages/Dona.jsx'
 import LoadingSpinner from './components/LoadingSpinner.jsx'
 
 function ProtectedRoute({ children }) {
@@ -34,6 +35,7 @@ function AppRoutes() {
       <Route path="/events/:id" element={<ProtectedRoute><EventDetail /></ProtectedRoute>} />
       <Route path="/research" element={<ProtectedRoute><Research /></ProtectedRoute>} />
       <Route path="/bar" element={<ProtectedRoute><Bar /></ProtectedRoute>} />
+      <Route path="/dona" element={<ProtectedRoute><Dona /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
