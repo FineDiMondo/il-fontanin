@@ -38,33 +38,35 @@ export default function Forum() {
         ) : categories.length === 0 ? (
           <EmptyState message={t('forum.empty_categories')} />
         ) : (
-          categories.map(cat => (
-            <button
-              key={cat.id}
-              onClick={() => navigate(`/forum/${cat.slug}`)}
-              className="stone-card w-full text-left flex items-center gap-3 active:scale-[0.98] transition-transform"
-            >
-              <div className="bg-oro/10 rounded-xl p-2.5 flex-shrink-0">
-                <svg className="w-5 h-5 text-oro-dark" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d={ICONS[cat.slug] || ICONS.default} />
-                </svg>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-stone-800">{cat.nome}</p>
-                {cat.descrizione && (
-                  <p className="text-xs text-stone-500 truncate">{cat.descrizione}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {categories.map(cat => (
+              <button
+                key={cat.id}
+                onClick={() => navigate(`/forum/${cat.slug}`)}
+                className="stone-card w-full text-left flex items-center gap-3 active:scale-[0.98] transition-transform"
+              >
+                <div className="bg-oro/10 rounded-xl p-2.5 flex-shrink-0">
+                  <svg className="w-5 h-5 text-oro-dark" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d={ICONS[cat.slug] || ICONS.default} />
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-stone-800">{cat.nome}</p>
+                  {cat.descrizione && (
+                    <p className="text-xs text-stone-500 truncate">{cat.descrizione}</p>
+                  )}
+                </div>
+                {!cat.pubblica && (
+                  <span className="text-[10px] bg-oro/10 text-oro-dark px-2 py-0.5 rounded-full border border-pietra-border flex-shrink-0">
+                    {t('common.members_only')}
+                  </span>
                 )}
-              </div>
-              {!cat.pubblica && (
-                <span className="text-[10px] bg-oro/10 text-oro-dark px-2 py-0.5 rounded-full border border-pietra-border">
-                  {t('common.members_only')}
-                </span>
-              )}
-              <svg className="w-4 h-4 text-stone-400 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          ))
+                <svg className="w-4 h-4 text-stone-400 flex-shrink-0 ml-auto" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            ))}
+          </div>
         )}
       </div>
 

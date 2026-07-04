@@ -45,7 +45,7 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
           backgroundSize: '10px 10px',
         }}
       />
-      <div className="relative flex items-center px-4 py-3 gap-3">
+      <div className="relative flex items-center px-4 py-3 gap-3 max-w-screen-xl mx-auto w-full">
         {showBack && (
           <button
             onClick={() => navigate(-1)}

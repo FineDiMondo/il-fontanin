@@ -66,63 +66,77 @@ export default function Home() {
       <AppHeader />
 
       <div className="scroll-content">
-        {/* Benvenuto */}
-        <div className="px-4 pt-4 pb-2">
-          {user ? (
-            <p className="text-stone-500 text-xs">{t('home.welcome')}, <span className="text-stone-700 font-medium">{user.nome}</span></p>
-          ) : (
-            <p className="text-stone-500 text-xs">{t('home.welcome')}, <span className="text-stone-700 font-medium">{t('home.visitor', 'Visitatore')}</span></p>
-          )}
-        </div>
-
-        {/* Portafoglio Algorand (solo per utenti registrati) */}
-        {user && (
-          <div className="mx-4 mb-4">
-            <WalletCard />
-          </div>
-        )}
-
-        {/* Banner evento prossimo */}
-        {event && (
-          <button
-            className="mx-4 mb-3 bg-noce-light rounded-2xl p-4 flex items-center gap-3 w-[calc(100%-2rem)] active:scale-[0.98] transition-transform"
-            onClick={() => navigate(`/events/${event.id}`)}
-          >
-            <div className="bg-oro/20 rounded-xl p-2.5 flex-shrink-0">
-              <svg className="w-5 h-5 text-oro" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <div className="text-left min-w-0">
-              <p className="text-oro text-sm font-medium truncate">{event.titolo}</p>
-              <p className="text-oro-dark text-[11px]">{formatDate(event.starts_at, i18n.language)}{event.luogo ? ` · ${event.luogo}` : ''}</p>
-              {event.iscritti != null && (
-                <p className="text-oro-dark text-[10px] mt-0.5">{event.iscritti} {t('home.attendees')}</p>
+        <div className="max-w-screen-xl mx-auto w-full lg:grid lg:grid-cols-3 lg:gap-6 lg:p-6">
+          
+          {/* Colonna Sinistra/Centrale (2/3): Bacheca (Feed) */}
+          <div className="lg:col-span-2 space-y-4">
+            {/* Benvenuto */}
+            <div className="px-4 pt-4 pb-2 lg:px-0 lg:pt-0">
+              {user ? (
+                <p className="text-stone-500 text-xs">{t('home.welcome')}, <span className="text-stone-700 font-medium">{user.nome}</span></p>
+              ) : (
+                <p className="text-stone-500 text-xs">{t('home.welcome')}, <span className="text-stone-700 font-medium">{t('home.visitor', 'Visitatore')}</span></p>
               )}
             </div>
-            <svg className="w-4 h-4 text-oro-dark flex-shrink-0 ml-auto" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        )}
 
-        {/* Bacheca */}
-        <div className="px-4 mb-1">
-          <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">{t('home.board')}</p>
-          <div className="h-px bg-pietra-border mt-1 mb-3" />
+            {/* Bacheca Header */}
+            <div className="px-4 mb-1 lg:px-0">
+              <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">{t('home.board')}</p>
+              <div className="h-px bg-pietra-border mt-1 mb-3" />
+            </div>
+
+            {/* Feed / Caricamento */}
+            {loading ? (
+              <div className="px-4 space-y-3 lg:px-0">
+                {[1,2,3].map(i => <SkeletonCard key={i} />)}
+              </div>
+            ) : threads.length === 0 ? (
+              <EmptyState message={t('home.empty_posts')} sub={t('home.empty_posts_sub')} />
+            ) : (
+              <div className="px-4 space-y-3 pb-6 lg:px-0">
+                {threads.map(t => <FeedCard key={t.id} thread={t} />)}
+              </div>
+            )}
+          </div>
+
+          {/* Colonna Destra (1/3): Widget Algorand ed Evento in evidenza */}
+          <div className="space-y-4 lg:space-y-6">
+            {/* Portafoglio Algorand (solo per utenti registrati) */}
+            {user && (
+              <div className="mx-4 mb-4 lg:mx-0 lg:mb-0">
+                <WalletCard />
+              </div>
+            )}
+
+            {/* Banner evento prossimo */}
+            {event && (
+              <div className="mx-4 mb-3 lg:mx-0 lg:mb-0">
+                <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium mb-2 hidden lg:block">{t('home.next_event', 'Prossimo Evento')}</p>
+                <button
+                  className="bg-noce-light rounded-2xl p-4 flex items-center gap-3 w-full active:scale-[0.98] transition-transform"
+                  onClick={() => navigate(`/events/${event.id}`)}
+                >
+                  <div className="bg-oro/20 rounded-xl p-2.5 flex-shrink-0">
+                    <svg className="w-5 h-5 text-oro" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div className="text-left min-w-0">
+                    <p className="text-oro text-sm font-medium truncate">{event.titolo}</p>
+                    <p className="text-oro-dark text-[11px]">{formatDate(event.starts_at, i18n.language)}{event.luogo ? ` · ${event.luogo}` : ''}</p>
+                    {event.iscritti != null && (
+                      <p className="text-oro-dark text-[10px] mt-0.5">{event.iscritti} {t('home.attendees')}</p>
+                    )}
+                  </div>
+                  <svg className="w-4 h-4 text-oro-dark flex-shrink-0 ml-auto" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            )}
+          </div>
+
         </div>
-
-        {loading ? (
-          <div className="px-4 space-y-3">
-            {[1,2,3].map(i => <SkeletonCard key={i} />)}
-          </div>
-        ) : threads.length === 0 ? (
-          <EmptyState message={t('home.empty_posts')} sub={t('home.empty_posts_sub')} />
-        ) : (
-          <div className="px-4 space-y-3 pb-6">
-            {threads.map(t => <FeedCard key={t.id} thread={t} />)}
-          </div>
-        )}
       </div>
 
       <BottomNav />

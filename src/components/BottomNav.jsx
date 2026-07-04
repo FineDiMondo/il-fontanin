@@ -14,7 +14,7 @@ export default function BottomNav() {
   const { t } = useTranslation()
   return (
     <nav className="bg-noce border-t border-noce-light flex-shrink-0">
-      <div className="flex">
+      <div className="flex max-w-screen-md mx-auto">
         {tabs.map(({ to, icon, labelKey }) => (
           <NavLink
             key={to}
