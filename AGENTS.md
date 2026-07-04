@@ -74,6 +74,7 @@ Al check-out:
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-04 18:02 | Gemini/Antigravity | DONE | 2121b81 | Risoluzione bug di overflow-hidden nel selettore lingua |
 | 2026-07-04 17:45 | Gemini/Antigravity | DONE | 6007785 | Adattamento layout responsive per Desktop |
 | 2026-07-04 17:40 | Gemini/Antigravity | DONE | 1927943 | Fix redirect_uri_mismatch per Google Auth |
 | 2026-07-04 17:30 | Gemini/Antigravity | DONE | 998de45 | Audit e allineamento Firebase, versioni applicative (1.1.0) e OpenAPI |

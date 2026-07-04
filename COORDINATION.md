@@ -5,6 +5,7 @@
 
 | Commit    | Autore                  | Contenuto                                      |
 |-----------|-------------------------|------------------------------------------------|
+| 2121b81   | Antigravity             | fix: rimozione overflow-hidden da AppHeader per visibilità menu lingua |
 | 6007785   | Antigravity             | Adattamento layout responsive per schermi grandi (desktop) |
 | 998de45   | Antigravity             | Allineamento e deploy delle versioni (1.1.0) per Firebase, Vercel redirect, OpenAPI spec |
 | 1e51445   | Sessione Fontanin       | FASE 5: saldo gettoni f in WalletCard.jsx (ASA ID via env, Algorand indexer) |
