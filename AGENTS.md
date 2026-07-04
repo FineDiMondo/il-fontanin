@@ -69,7 +69,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| (vuoto — nessuno scrittore attivo) | | | | | |
+| 2026-07-04 17:30 | Gemini/Antigravity | WRITING | feature/algorand-wallet-mpc | root, community_module, android, ios, desktop, CLI | Audit e allineamento Firebase e versioni applicative |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
