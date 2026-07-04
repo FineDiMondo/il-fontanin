@@ -1,0 +1,32 @@
+{
+  "name": "el-fontanin-desktop",
+  "version": "1.0.0",
+  "description": "El Fontanin Desktop Client",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.ilfontanin.desktop",
+    "productName": "El Fontanin",
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    },
+    "directories": {
+      "output": "dist-desktop"
+    }
+  }
+}
