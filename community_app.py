@@ -51,7 +51,34 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from fastapi.openapi.utils import get_openapi
+
 app.include_router(community_router)
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title=app.title,
+        version=app.version,
+        description=app.description,
+        routes=app.routes,
+    )
+    public_paths = {
+        "/community/forum/categories",
+        "/community/events",
+        "/community/forum/search",
+        "/community/research/experiments"
+    }
+    for path in public_paths:
+        if path in openapi_schema.get("paths", {}):
+            if "get" in openapi_schema["paths"][path]:
+                if "security" in openapi_schema["paths"][path]["get"]:
+                    del openapi_schema["paths"][path]["get"]["security"]
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
 
 
 @app.get("/")
