@@ -1,16 +1,16 @@
 steps:
   # 1. Installa i moduli npm
-  - name: 'node:18'
+  - name: 'node:22'
     entrypoint: npm
     args: ['install']
 
   # 2. Compila il bundle React per produzione
-  - name: 'node:18'
+  - name: 'node:22'
     entrypoint: npm
     args: ['run', 'build']
 
   # 3. Sincronizza i file web nella cartella nativa di Android
-  - name: 'node:18'
+  - name: 'node:22'
     entrypoint: npx
     args: ['cap', 'sync', 'android']
 
