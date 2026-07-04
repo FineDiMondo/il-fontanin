@@ -133,11 +133,6 @@ def test_nessun_errore_server_per_il_visitatore(http, path):
 #    (security opzionale dichiarata), questo test resta xfail:
 #    quando verrà corretta, il test passerà e l'xfail andrà rimosso.
 # ------------------------------------------------------------
-@pytest.mark.xfail(
-    reason="OpenAPI marca come protette rotte servite pubblicamente: "
-           "spec da allineare al Progressive Guest Mode",
-    strict=False,
-)
 def test_openapi_coerente_con_perimetro_reale(http):
     spec = http.get(BASE_URL + "/openapi.json", timeout=TIMEOUT).json()
     public_paths = {"/community/forum/categories", "/community/events",
