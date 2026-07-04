@@ -7,11 +7,35 @@ import {
 import { auth, googleProvider } from '../firebase.js'
 import api from '../api/client.js'
 
+const safeSessionStorage = {
+  getItem(key) {
+    try { return sessionStorage.getItem(key) } catch { return null }
+  },
+  setItem(key, val) {
+    try { sessionStorage.setItem(key, val) } catch {}
+  },
+  removeItem(key) {
+    try { sessionStorage.removeItem(key) } catch {}
+  }
+}
+
+const safeLocalStorage = {
+  getItem(key) {
+    try { return localStorage.getItem(key) } catch { return null }
+  },
+  setItem(key, val) {
+    try { localStorage.setItem(key, val) } catch {}
+  },
+  removeItem(key) {
+    try { localStorage.removeItem(key) } catch {}
+  }
+}
+
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('fdm_user')
+    const saved = safeLocalStorage.getItem('fdm_user')
     return saved ? JSON.parse(saved) : null
   })
   const [loading, setLoading] = useState(true) // true finché non controlliamo il redirect
@@ -20,9 +44,9 @@ export function AuthProvider({ children }) {
   // Gestisce il reindirizzamento immediato alla CLI se l'utente è già autenticato
   useEffect(() => {
     if (user) {
-      const cliPort = sessionStorage.getItem('fdm_cli_port') || new URLSearchParams(window.location.search).get('cli_port')
+      const cliPort = safeSessionStorage.getItem('fdm_cli_port') || new URLSearchParams(window.location.search).get('cli_port')
       if (cliPort) {
-        sessionStorage.removeItem('fdm_cli_port')
+        safeSessionStorage.removeItem('fdm_cli_port')
         if (auth.currentUser) {
           auth.currentUser.getIdToken().then((idToken) => {
             window.location.href = `http://localhost:${cliPort}/?token=${idToken}`
@@ -38,7 +62,7 @@ export function AuthProvider({ children }) {
     const searchParams = new URLSearchParams(window.location.search)
     const qPort = searchParams.get('cli_port')
     if (qPort) {
-      sessionStorage.setItem('fdm_cli_port', qPort)
+      safeSessionStorage.setItem('fdm_cli_port', qPort)
     }
 
     getRedirectResult(auth)
@@ -47,16 +71,16 @@ export function AuthProvider({ children }) {
           const idToken = await result.user.getIdToken()
           
           // Se c'è una porta CLI memorizzata, effettua il reindirizzamento loopback
-          const cliPort = sessionStorage.getItem('fdm_cli_port')
+          const cliPort = safeSessionStorage.getItem('fdm_cli_port')
           if (cliPort) {
-            sessionStorage.removeItem('fdm_cli_port')
+            safeSessionStorage.removeItem('fdm_cli_port')
             window.location.href = `http://localhost:${cliPort}/?token=${idToken}`
             return
           }
 
           const { data } = await api.post('/auth/google-login', { id_token: idToken })
-          localStorage.setItem('fdm_token', data.access_token)
-          localStorage.setItem('fdm_user', JSON.stringify(data))
+          safeLocalStorage.setItem('fdm_token', data.access_token)
+          safeLocalStorage.setItem('fdm_user', JSON.stringify(data))
           setUser(data)
           setError(null)
         }
@@ -88,8 +112,8 @@ export function AuthProvider({ children }) {
 
   async function logout() {
     await firebaseSignOut(auth)
-    localStorage.removeItem('fdm_token')
-    localStorage.removeItem('fdm_user')
+    safeLocalStorage.removeItem('fdm_token')
+    safeLocalStorage.removeItem('fdm_user')
     setUser(null)
     setError(null)
   }
