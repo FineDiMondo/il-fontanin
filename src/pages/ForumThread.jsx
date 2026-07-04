@@ -158,10 +158,13 @@ export default function ForumThread() {
       )}
 
       {!user && (
-        <div className="flex-shrink-0 border-t border-pietra-border bg-noce px-4 py-3 flex items-center justify-between">
-          <span className="text-xs text-oro/90 font-medium">Vuoi commentare questa discussione?</span>
-          <Link to="/login" className="bg-oro text-noce text-[10px] font-semibold px-3 py-1.5 rounded-lg active:scale-95 transition-transform uppercase tracking-wider">
-            Accedi con Google
+        <div className="flex-shrink-0 border-t border-pietra-border bg-gradient-to-r from-noce/95 via-stone-900/95 to-noce/95 px-5 py-4 flex items-center justify-between z-20 backdrop-blur-md shadow-2xl">
+          <div className="flex flex-col gap-0.5">
+            <span className="text-xs text-oro font-semibold tracking-wide">Vuoi commentare questa discussione?</span>
+            <span className="text-[10px] text-oro-dark/80">Effettua l'accesso per esprimere la tua opinione</span>
+          </div>
+          <Link to="/login" className="bg-gradient-to-r from-oro via-oro-light to-oro text-noce text-[10px] font-bold px-4 py-2 rounded-xl active:scale-[0.96] transition-transform uppercase tracking-wider shadow-lg shadow-oro/20 hover:brightness-110">
+            Accedi
           </Link>
         </div>
       )}

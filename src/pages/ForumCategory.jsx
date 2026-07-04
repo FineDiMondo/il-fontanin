@@ -98,10 +98,13 @@ export default function ForumCategory() {
       </div>
 
       {!user && (
-        <div className="absolute bottom-[53px] left-0 right-0 p-3 bg-noce/95 border-t border-oro/20 flex items-center justify-between px-4 z-10 backdrop-blur-sm">
-          <span className="text-xs text-oro/90 font-medium">Vuoi creare discussioni o rispondere?</span>
-          <Link to="/login" className="bg-oro text-noce text-[10px] font-semibold px-3 py-1.5 rounded-lg active:scale-95 transition-transform uppercase tracking-wider">
-            Accedi con Google
+        <div className="absolute bottom-[53px] left-0 right-0 p-4 bg-gradient-to-r from-noce/95 via-stone-900/95 to-noce/95 border-t border-oro/30 flex items-center justify-between px-5 z-20 backdrop-blur-md shadow-2xl">
+          <div className="flex flex-col gap-0.5">
+            <span className="text-xs text-oro font-semibold tracking-wide">Vuoi partecipare alla community?</span>
+            <span className="text-[10px] text-oro-dark/80">Accedi per creare nuove discussioni o rispondere</span>
+          </div>
+          <Link to="/login" className="bg-gradient-to-r from-oro via-oro-light to-oro text-noce text-[10px] font-bold px-4 py-2 rounded-xl active:scale-[0.96] transition-transform uppercase tracking-wider shadow-lg shadow-oro/20 hover:brightness-110">
+            Accedi
           </Link>
         </div>
       )}

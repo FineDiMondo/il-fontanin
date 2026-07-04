@@ -121,12 +121,16 @@ export default function EventDetail() {
             )}
 
             {!user && (
-              <div className="bg-noce-light rounded-2xl p-4 text-center border border-oro/20">
-                <p className="text-oro font-medium text-sm mb-1.5">Vuoi partecipare a questo evento?</p>
-                <p className="text-xs text-oro-dark mb-4">L'iscrizione e il check-in con QR code sono riservati ai membri.</p>
+              <div className="stone-card bg-gradient-to-b from-noce-light/90 to-stone-900/90 border border-oro/30 rounded-2xl p-5 text-center shadow-xl backdrop-blur-sm relative overflow-hidden">
+                {/* Decorative glow */}
+                <div className="absolute -top-10 -right-10 w-24 h-24 bg-oro/10 rounded-full blur-xl pointer-events-none" />
+                <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-oro/5 rounded-full blur-xl pointer-events-none" />
+                
+                <p className="text-oro font-semibold text-sm mb-1">Vuoi partecipare a questo evento?</p>
+                <p className="text-xs text-oro-dark/80 mb-4 leading-relaxed">L'iscrizione ed il check-in automatico con QR code sono riservati ai membri associativi.</p>
                 <button
                   onClick={() => navigate('/login')}
-                  className="w-full bg-oro text-noce py-3 rounded-xl font-semibold text-xs uppercase tracking-wider active:scale-95 transition-transform"
+                  className="w-full bg-gradient-to-r from-oro via-oro-light to-oro text-noce py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider active:scale-[0.97] transition-all shadow-lg shadow-oro/10 hover:brightness-110"
                 >
                   Accedi con Google
                 </button>

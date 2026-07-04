@@ -27,7 +27,7 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
       ) : (
         <Link
           to="/login"
-          className="text-oro border border-oro/30 bg-oro/10 hover:bg-oro/20 transition-all text-xs font-semibold px-2.5 py-1.5 rounded-lg active:scale-[0.97]"
+          className="text-oro border border-oro/30 bg-gradient-to-r from-oro/10 to-oro/20 hover:from-oro/20 hover:to-oro/30 hover:border-oro/50 transition-all text-xs font-semibold px-3 py-1.5 rounded-lg active:scale-[0.96] shadow-sm"
         >
           {t('common.login', 'Accedi')}
         </Link>
