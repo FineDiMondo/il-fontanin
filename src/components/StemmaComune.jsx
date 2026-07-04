@@ -77,11 +77,14 @@ function Villafranca() {
 
 /* Di rosso, al gambero e alla pastinaca, con sei stelle d'argento */
 function Stella({ cx, cy, r = 3 }) {
+  const x = Number(cx)
+  const y = Number(cy)
+  const radius = Number(r)
   const pts = []
   for (let i = 0; i < 12; i++) {
     const a = (Math.PI / 6) * i - Math.PI / 2
-    const rr = i % 2 === 0 ? r : r * 0.45
-    pts.push(`${(cx + rr * Math.cos(a)).toFixed(2)},${(cy + rr * Math.sin(a)).toFixed(2)}`)
+    const rr = i % 2 === 0 ? radius : radius * 0.45
+    pts.push(`${(x + rr * Math.cos(a)).toFixed(2)},${(y + rr * Math.sin(a)).toFixed(2)}`)
   }
   return <polygon points={pts.join(' ')} fill={ARGENTO} stroke={ARGENTO_SCURO} strokeWidth="0.4" />
 }
