@@ -88,12 +88,15 @@ function Show-MainMenu {
     if ($null -eq $global:AuthToken) {
         Write-Host "│  $ClrOro[1]$ClrWhite Login con Email e Password                        │"
         Write-Host "│  $ClrOro[2]$ClrWhite Registra Nuovo Account (Guest/Visitatore)         │"
+        Write-Host "│  $ClrOro[3]$ClrWhite Login con Google (Apre Chrome + Incolla Token)    │"
+        Write-Host "│  $ClrOro[4]$ClrWhite Apri Applicazione Web Online (Chrome)             │"
     } else {
         Write-Host "│  $ClrOro[1]$ClrWhite Logout (Disconnetti sessione)                    │"
         Write-Host "│  $ClrOro[3]$ClrWhite Area Forum (Categorie e Discussioni)               │"
         Write-Host "│  $ClrOro[4]$ClrWhite Stanza Chat Realtime                              │"
         Write-Host "│  $ClrOro[5]$ClrWhite Eventi della Comunta' & Check-in                  │"
         Write-Host "│  $ClrOro[6]$ClrWhite Wallet Algorand MPC (Verifica Chiave)             │"
+        Write-Host "│  $ClrOro[9]$ClrWhite Apri Applicazione Web Online (Chrome)             │"
     }
     Write-Host "│  $ClrOro[7]$ClrWhite Impostazioni (Cambia Endpoint Backend)            │"
     Write-Host "│  $ClrOro[8]$ClrWhite Esci                                              │"
@@ -394,6 +397,69 @@ function Handle-Wallet {
     [void]$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 }
 
+function Handle-GoogleLogin {
+    Clear-Screen
+    Show-Header
+    Write-Host "$ClrOro--- LOGIN CON GOOGLE (APRI CHROME) ---$ClrReset"
+    Write-Host ""
+    Write-Host "Apertura del browser Chrome per l'accesso a Google..." -ForegroundColor Gray
+    
+    $onlineUrl = "https://el-fontanin.web.app/login"
+    try {
+        Start-Process "chrome.exe" $onlineUrl
+    } catch {
+        # Fallback se chrome.exe non e' nel PATH
+        Start-Process $onlineUrl
+    }
+    
+    Write-Host ""
+    Write-Host "Istruzioni per l'estrazione del token:" -ForegroundColor Yellow
+    Write-Host " 1. Esegui l'accesso sul browser Chrome che si e' appena aperto."
+    Write-Host " 2. Una volta entrato, premi F12 (Strumenti Sviluppatore)."
+    Write-Host " 3. Vai in 'Application' -> 'Local Storage' -> 'https://el-fontanin.web.app'."
+    Write-Host " 4. Copia il valore corrispondente alla chiave 'fdm_token'."
+    Write-Host " 5. Incolla il token qui sotto per caricare la sessione nel terminale."
+    Write-Host ""
+    
+    $token = Read-Host "Incolla il Token JWT (fdm_token)"
+    if ($token) {
+        $global:AuthToken = $token.Trim()
+        Write-Host "Verifica sessione presso il backend in corso..." -ForegroundColor Gray
+        $res = Invoke-API -method "GET" -path "/auth/me"
+        if ($res) {
+            $global:CurrentUser = [PSCustomObject]@{
+                user_id = $res.id
+                email = $res.email
+                nome = $res.nome
+                cognome = $res.cognome
+                ruolo = $res.ruolo
+            }
+            Write-Host ("[OK] Connesso con successo via Google! Benvenuto, {0}." -f $res.nome) -ForegroundColor Green
+        } else {
+            $global:AuthToken = $null
+            Write-Host "[ERRORE] Il token incollato non e' valido o e' scaduto." -ForegroundColor Red
+        }
+    } else {
+        Write-Host "Operazione annullata." -ForegroundColor Yellow
+    }
+    Start-Sleep -Seconds 3
+}
+
+function Handle-OpenBrowser {
+    Clear-Screen
+    Show-Header
+    Write-Host "$ClrOro--- VISUALIZZA SITO ONLINE ---$ClrReset"
+    Write-Host ""
+    $onlineUrl = "https://el-fontanin.web.app"
+    Write-Host "Apertura del browser Chrome su: $onlineUrl" -ForegroundColor Gray
+    try {
+        Start-Process "chrome.exe" $onlineUrl
+    } catch {
+        Start-Process $onlineUrl
+    }
+    Start-Sleep -Seconds 1.5
+}
+
 function Handle-Settings {
     Clear-Screen
     Show-Header
@@ -415,12 +481,14 @@ while ($true) {
     Show-Header
     Show-MainMenu
     
-    $choice = Read-Host "Seleziona un'opzione [1-8]"
+    $choice = Read-Host "Seleziona un'opzione [1-9]"
     
     if ($null -eq $global:AuthToken) {
         switch ($choice) {
             "1" { Handle-Login }
             "2" { Handle-Register }
+            "3" { Handle-GoogleLogin }
+            "4" { Handle-OpenBrowser }
             "7" { Handle-Settings }
             "8" { break }
             default { 
@@ -442,6 +510,7 @@ while ($true) {
             "6" { Handle-Wallet }
             "7" { Handle-Settings }
             "8" { break }
+            "9" { Handle-OpenBrowser }
             default { 
                 Write-Host "Opzione non valida. Riprova." -ForegroundColor Red -NoNewline
                 Start-Sleep -Seconds 1.5
