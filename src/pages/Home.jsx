@@ -68,8 +68,75 @@ export default function Home() {
       <div className="scroll-content">
         <div className="max-w-screen-xl mx-auto w-full lg:grid lg:grid-cols-3 lg:gap-6 lg:p-6">
           
-          {/* Colonna Sinistra/Centrale (2/3): Bacheca (Feed) */}
-          <div className="lg:col-span-2 space-y-4">
+          {/* Colonna Widget Destra (mostrata SOPRA su mobile) */}
+          <div className="space-y-4 lg:space-y-6 lg:col-start-3 lg:col-span-1">
+            {/* Portafoglio Algorand (solo per utenti registrati) */}
+            {user && (
+              <div className="mx-4 mt-4 lg:mx-0 lg:mt-0">
+                <WalletCard />
+              </div>
+            )}
+
+            {/* Banner evento prossimo */}
+            {event && (
+              <div className="mx-4 lg:mx-0">
+                <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium mb-2 hidden lg:block">{t('home.next_event', 'Prossimo Evento')}</p>
+                <button
+                  className="bg-noce-light rounded-2xl p-4 flex items-center gap-3 w-full active:scale-[0.98] transition-transform"
+                  onClick={() => navigate(`/events/${event.id}`)}
+                >
+                  <div className="bg-oro/20 rounded-xl p-2.5 flex-shrink-0">
+                    <svg className="w-5 h-5 text-oro" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div className="text-left min-w-0">
+                    <p className="text-oro text-sm font-medium truncate">{event.titolo}</p>
+                    <p className="text-oro-dark text-[11px]">{formatDate(event.starts_at, i18n.language)}{event.luogo ? ` · ${event.luogo}` : ''}</p>
+                    {event.iscritti != null && (
+                      <p className="text-oro-dark text-[10px] mt-0.5">{event.iscritti} {t('home.attendees')}</p>
+                    )}
+                  </div>
+                  <svg className="w-4 h-4 text-oro-dark flex-shrink-0 ml-auto" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            )}
+
+            {/* Link Rapidi: Mappa e Numeri Utili (Sezioni Principali richieste) */}
+            <div className="mx-4 lg:mx-0">
+              <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium mb-2 hidden lg:block">{t('home.useful_links', 'Link Rapidi')}</p>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => navigate('/mappa')}
+                  className="stone-card flex flex-col items-center justify-center gap-2 py-4 active:scale-[0.98] transition-transform text-center w-full"
+                >
+                  <div className="text-oro">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                    </svg>
+                  </div>
+                  <span className="text-xs font-semibold text-stone-700">{t('home.map_button', 'Fontanin Map')}</span>
+                </button>
+
+                <button
+                  onClick={() => navigate('/numeri-utili')}
+                  className="stone-card flex flex-col items-center justify-center gap-2 py-4 active:scale-[0.98] transition-transform text-center w-full"
+                >
+                  <div className="text-oro">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                  </div>
+                  <span className="text-xs font-semibold text-stone-700">{t('home.numbers_button', 'Useful numbers')}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Colonna Bacheca Sinistra (mostrata SOTTO su mobile) */}
+          <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 space-y-4">
             {/* Benvenuto */}
             <div className="px-4 pt-4 pb-2 lg:px-0 lg:pt-0">
               {user ? (
@@ -95,43 +162,6 @@ export default function Home() {
             ) : (
               <div className="px-4 space-y-3 pb-6 lg:px-0">
                 {threads.map(t => <FeedCard key={t.id} thread={t} />)}
-              </div>
-            )}
-          </div>
-
-          {/* Colonna Destra (1/3): Widget Algorand ed Evento in evidenza */}
-          <div className="space-y-4 lg:space-y-6">
-            {/* Portafoglio Algorand (solo per utenti registrati) */}
-            {user && (
-              <div className="mx-4 mb-4 lg:mx-0 lg:mb-0">
-                <WalletCard />
-              </div>
-            )}
-
-            {/* Banner evento prossimo */}
-            {event && (
-              <div className="mx-4 mb-3 lg:mx-0 lg:mb-0">
-                <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium mb-2 hidden lg:block">{t('home.next_event', 'Prossimo Evento')}</p>
-                <button
-                  className="bg-noce-light rounded-2xl p-4 flex items-center gap-3 w-full active:scale-[0.98] transition-transform"
-                  onClick={() => navigate(`/events/${event.id}`)}
-                >
-                  <div className="bg-oro/20 rounded-xl p-2.5 flex-shrink-0">
-                    <svg className="w-5 h-5 text-oro" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <div className="text-left min-w-0">
-                    <p className="text-oro text-sm font-medium truncate">{event.titolo}</p>
-                    <p className="text-oro-dark text-[11px]">{formatDate(event.starts_at, i18n.language)}{event.luogo ? ` · ${event.luogo}` : ''}</p>
-                    {event.iscritti != null && (
-                      <p className="text-oro-dark text-[10px] mt-0.5">{event.iscritti} {t('home.attendees')}</p>
-                    )}
-                  </div>
-                  <svg className="w-4 h-4 text-oro-dark flex-shrink-0 ml-auto" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
               </div>
             )}
           </div>
