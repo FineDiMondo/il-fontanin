@@ -400,47 +400,69 @@ function Handle-Wallet {
 function Handle-GoogleLogin {
     Clear-Screen
     Show-Header
-    Write-Host "$ClrOro--- LOGIN CON GOOGLE (APRI CHROME) ---$ClrReset"
+    Write-Host "$ClrOro--- LOGIN CON GOOGLE (LOOPBACK AUTOMATICO) ---$ClrReset"
     Write-Host ""
-    Write-Host "Apertura del browser Chrome per l'accesso a Google..." -ForegroundColor Gray
     
-    $onlineUrl = "https://el-fontanin.web.app/login"
+    $port = 5000
+    $listener = New-Object System.Net.HttpListener
+    $listener.Prefixes.Add("http://localhost:$port/")
+    
+    try {
+        $listener.Start()
+    } catch {
+        Write-Host "[ERRORE] Impossibile avviare il server di ascolto locale sulla porta $port." -ForegroundColor Red
+        Write-Host "Verifica che nessun altro servizio stia usando questa porta (ad es. un altro terminale o server)." -ForegroundColor Red
+        Start-Sleep -Seconds 4
+        return
+    }
+    
+    Write-Host "Apertura del browser per l'autenticazione Google..." -ForegroundColor Gray
+    $onlineUrl = "https://el-fontanin.web.app/login?cli_port=$port"
     try {
         Start-Process "chrome.exe" $onlineUrl
     } catch {
-        # Fallback se chrome.exe non e' nel PATH
+        # Fallback al browser predefinito se Chrome non è registrato nel path
         Start-Process $onlineUrl
     }
     
     Write-Host ""
-    Write-Host "Istruzioni per l'estrazione del token:" -ForegroundColor Yellow
-    Write-Host " 1. Esegui l'accesso sul browser Chrome che si e' appena aperto."
-    Write-Host " 2. Una volta entrato, premi F12 (Strumenti Sviluppatore)."
-    Write-Host " 3. Vai in 'Application' -> 'Local Storage' -> 'https://el-fontanin.web.app'."
-    Write-Host " 4. Copia il valore corrispondente alla chiave 'fdm_token'."
-    Write-Host " 5. Incolla il token qui sotto per caricare la sessione nel terminale."
+    Write-Host "In attesa che l'accesso venga completato nel browser..." -ForegroundColor Yellow
+    Write-Host "Nota: Se sei gia' autenticato nel browser, l'accesso avverra' all'istante!" -ForegroundColor Gray
     Write-Host ""
     
-    $token = Read-Host "Incolla il Token JWT (fdm_token)"
-    if ($token) {
-        $global:AuthToken = $token.Trim()
-        Write-Host "Verifica sessione presso il backend in corso..." -ForegroundColor Gray
-        $res = Invoke-API -method "GET" -path "/auth/me"
+    # Attende la richiesta HTTP loopback (bloccante)
+    $context = $listener.GetContext()
+    $request = $context.Request
+    $response = $context.Response
+    
+    # Estrae il parametro token dalla query string
+    $idToken = $request.QueryString["token"]
+    
+    # Invia una pagina HTML di successo al browser
+    $html = "<html><head><meta charset='UTF-8'><title>Accesso Completato</title><style>body { font-family: sans-serif; background-color: #5d4037; color: #fff; text-align: center; padding-top: 50px; } .card { background-color: #3e2723; padding: 30px; border-radius: 8px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.2); } h1 { color: #e8c87a; }</style></head><body><div class='card'><h1>El Fontanin</h1><p><b>Accesso autorizzato nel terminale!</b></p><p>Puoi chiudere questa finestra del browser e tornare al terminale PowerShell.</p></div></body></html>"
+    $buffer = [System.Text.Encoding]::UTF8.GetBytes($html)
+    $response.ContentLength64 = $buffer.Length
+    $response.OutputStream.Write($buffer, 0, $buffer.Length)
+    $response.OutputStream.Close()
+    
+    $listener.Stop()
+    $listener.Close()
+    
+    if ($idToken) {
+        Write-Host "Token Firebase ricevuto! Negoziazione con il backend..." -ForegroundColor Gray
+        $payload = @{
+            id_token = $idToken
+        }
+        $res = Invoke-API -method "POST" -path "/auth/google-login" -body $payload
         if ($res) {
-            $global:CurrentUser = [PSCustomObject]@{
-                user_id = $res.id
-                email = $res.email
-                nome = $res.nome
-                cognome = $res.cognome
-                ruolo = $res.ruolo
-            }
-            Write-Host ("[OK] Connesso con successo via Google! Benvenuto, {0}." -f $res.nome) -ForegroundColor Green
+            $global:AuthToken = $res.access_token
+            $global:CurrentUser = $res
+            Write-Host ("[OK] Autenticato con successo via Google Loopback! Benvenuto, {0}." -f $res.nome) -ForegroundColor Green
         } else {
-            $global:AuthToken = $null
-            Write-Host "[ERRORE] Il token incollato non e' valido o e' scaduto." -ForegroundColor Red
+            Write-Host "[ERRORE] Impossibile autenticare la sessione tramite il backend." -ForegroundColor Red
         }
     } else {
-        Write-Host "Operazione annullata." -ForegroundColor Yellow
+        Write-Host "[ERRORE] Nessun token ricevuto dalla callback del browser." -ForegroundColor Red
     }
     Start-Sleep -Seconds 3
 }

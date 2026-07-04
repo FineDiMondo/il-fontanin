@@ -17,12 +17,43 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true) // true finché non controlliamo il redirect
   const [error, setError] = useState(null)
 
+  // Gestisce il reindirizzamento immediato alla CLI se l'utente è già autenticato
+  useEffect(() => {
+    if (user) {
+      const cliPort = sessionStorage.getItem('fdm_cli_port') || new URLSearchParams(window.location.search).get('cli_port')
+      if (cliPort) {
+        sessionStorage.removeItem('fdm_cli_port')
+        if (auth.currentUser) {
+          auth.currentUser.getIdToken().then((idToken) => {
+            window.location.href = `http://localhost:${cliPort}/?token=${idToken}`
+          })
+        }
+      }
+    }
+  }, [user])
+
   // Gestisce il risultato del redirect Google al ritorno sulla pagina
   useEffect(() => {
+    // Controlla se c'è una porta CLI nei parametri di query e la memorizza temporaneamente
+    const searchParams = new URLSearchParams(window.location.search)
+    const qPort = searchParams.get('cli_port')
+    if (qPort) {
+      sessionStorage.setItem('fdm_cli_port', qPort)
+    }
+
     getRedirectResult(auth)
       .then(async (result) => {
         if (result?.user) {
           const idToken = await result.user.getIdToken()
+          
+          // Se c'è una porta CLI memorizzata, effettua il reindirizzamento loopback
+          const cliPort = sessionStorage.getItem('fdm_cli_port')
+          if (cliPort) {
+            sessionStorage.removeItem('fdm_cli_port')
+            window.location.href = `http://localhost:${cliPort}/?token=${idToken}`
+            return
+          }
+
           const { data } = await api.post('/auth/google-login', { id_token: idToken })
           localStorage.setItem('fdm_token', data.access_token)
           localStorage.setItem('fdm_user', JSON.stringify(data))
