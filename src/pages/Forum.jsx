@@ -5,11 +5,13 @@ import BottomNav from '../components/BottomNav.jsx'
 import LoadingSpinner from '../components/LoadingSpinner.jsx'
 import EmptyState from '../components/EmptyState.jsx'
 import api from '../api/client.js'
+import { useTranslation } from 'react-i18next'
 
 export default function Forum() {
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   useEffect(() => {
     api.get('/forum/categories')
@@ -26,15 +28,15 @@ export default function Forum() {
 
   return (
     <div className="app-shell">
-      <AppHeader title="Forum" showBack={false} />
+      <AppHeader title={t('forum.title')} showBack={false} />
 
       <div className="scroll-content px-4 py-4 space-y-3">
-        <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">Categorie</p>
+        <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">{t('forum.categories')}</p>
 
         {loading ? (
           <LoadingSpinner />
         ) : categories.length === 0 ? (
-          <EmptyState message="Nessuna categoria" />
+          <EmptyState message={t('forum.empty_categories')} />
         ) : (
           categories.map(cat => (
             <button
@@ -55,7 +57,7 @@ export default function Forum() {
               </div>
               {!cat.pubblica && (
                 <span className="text-[10px] bg-oro/10 text-oro-dark px-2 py-0.5 rounded-full border border-pietra-border">
-                  Soci
+                  {t('common.members_only')}
                 </span>
               )}
               <svg className="w-4 h-4 text-stone-400 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">

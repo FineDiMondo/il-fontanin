@@ -8,8 +8,9 @@ import { useAuth } from '../context/AuthContext.jsx'
 import api from '../api/client.js'
 import { showToast } from '../components/Toast.jsx'
 import ToastContainer from '../components/Toast.jsx'
+import { useTranslation } from 'react-i18next'
 
-function PostCard({ post, threadId }) {
+function PostCard({ post, threadId, t }) {
   const [likes, setLikes] = useState(post.likes ?? 0)
   const [liked, setLiked] = useState(false)
 
@@ -32,7 +33,7 @@ function PostCard({ post, threadId }) {
         <div className="flex-1">
           <div className="flex items-baseline gap-2">
             <span className="text-xs font-medium text-stone-700">{post.user?.nome}</span>
-            <span className="text-[10px] text-oro-dark">{timeAgo(post.created_at)}</span>
+            <span className="text-[10px] text-oro-dark">{timeAgo(post.created_at, t)}</span>
           </div>
           <p className="text-sm text-stone-600 leading-relaxed mt-1">{post.corpo}</p>
         </div>
@@ -52,17 +53,18 @@ function PostCard({ post, threadId }) {
   )
 }
 
-function timeAgo(d) {
+function timeAgo(d, t) {
   const s = (Date.now() - new Date(d)) / 1000
-  if (s < 60) return 'ora'
-  if (s < 3600) return `${Math.floor(s/60)} min fa`
-  if (s < 86400) return `${Math.floor(s/3600)} ore fa`
-  return `${Math.floor(s/86400)} giorni fa`
+  if (s < 60) return t('time.now')
+  if (s < 3600) return t('time.min_ago', { count: Math.floor(s / 60) })
+  if (s < 86400) return t('time.hours_ago', { count: Math.floor(s / 3600) })
+  return t('time.days_ago', { count: Math.floor(s / 86400) })
 }
 
 export default function ForumThread() {
   const { id } = useParams()
   const { user } = useAuth()
+  const { t } = useTranslation()
   const [thread, setThread] = useState(null)
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -102,7 +104,7 @@ export default function ForumThread() {
   return (
     <div className="app-shell">
       <ToastContainer />
-      <AppHeader title={thread?.titolo || 'Thread'} showBack />
+      <AppHeader title={thread?.titolo || t('forum.default_thread_title')} showBack />
 
       <div className="scroll-content px-4 py-4 space-y-3 pb-4">
         {loading ? (
@@ -116,7 +118,7 @@ export default function ForumThread() {
                   <UserAvatar name={thread.user?.nome} avatarUrl={thread.user?.avatar_url} />
                   <div>
                     <p className="text-sm font-medium text-stone-800">{thread.user?.nome}</p>
-                    <p className="text-[11px] text-oro-dark">{timeAgo(thread.created_at)}</p>
+                    <p className="text-[11px] text-oro-dark">{timeAgo(thread.created_at, t)}</p>
                   </div>
                 </div>
                 <h2 className="text-base font-medium text-stone-800 mb-2">{thread.titolo}</h2>
@@ -126,7 +128,7 @@ export default function ForumThread() {
 
             {/* Risposte */}
             {posts.map(post => (
-              <PostCard key={post.id} post={post} threadId={id} />
+              <PostCard key={post.id} post={post} threadId={id} t={t} />
             ))}
             <div ref={bottomRef} />
           </>
@@ -139,7 +141,7 @@ export default function ForumThread() {
           <textarea
             className="flex-1 text-sm border border-pietra-border rounded-xl px-3 py-2 bg-white focus:outline-none focus:ring-1 focus:ring-oro-muted resize-none"
             rows={2}
-            placeholder="Scrivi una risposta…"
+            placeholder={t('forum.reply_ph')}
             value={reply}
             onChange={e => setReply(e.target.value)}
           />

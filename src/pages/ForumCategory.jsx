@@ -9,11 +9,13 @@ import { useAuth } from '../context/AuthContext.jsx'
 import api from '../api/client.js'
 import { showToast } from '../components/Toast.jsx'
 import ToastContainer from '../components/Toast.jsx'
+import { useTranslation } from 'react-i18next'
 
 export default function ForumCategory() {
   const { slug } = useParams()
   const { user } = useAuth()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const [threads, setThreads] = useState([])
   const [loading, setLoading] = useState(true)
   const [showNew, setShowNew] = useState(false)
@@ -59,7 +61,7 @@ export default function ForumCategory() {
           <form onSubmit={submitThread} className="mx-4 mt-4 stone-card space-y-3">
             <input
               className="w-full text-sm border border-pietra-border rounded-xl px-3 py-2.5 bg-pietra-pale focus:outline-none focus:ring-1 focus:ring-oro-muted"
-              placeholder="Titolo del thread…"
+              placeholder={t('forum.thread_title_ph')}
               value={form.titolo}
               onChange={e => setForm(f => ({ ...f, titolo: e.target.value }))}
               maxLength={300}
@@ -67,18 +69,18 @@ export default function ForumCategory() {
             <textarea
               className="w-full text-sm border border-pietra-border rounded-xl px-3 py-2.5 bg-pietra-pale focus:outline-none focus:ring-1 focus:ring-oro-muted resize-none"
               rows={4}
-              placeholder="Scrivi qui…"
+              placeholder={t('forum.thread_body_ph')}
               value={form.corpo}
               onChange={e => setForm(f => ({ ...f, corpo: e.target.value }))}
             />
             <div className="flex gap-2">
               <button type="button" onClick={() => setShowNew(false)}
                 className="flex-1 py-2 text-sm text-stone-500 border border-pietra-border rounded-xl">
-                Annulla
+                {t('common.cancel')}
               </button>
               <button type="submit" disabled={submitting}
                 className="flex-1 py-2 text-sm font-medium bg-noce text-oro rounded-xl disabled:opacity-60">
-                {submitting ? 'Pubblicando…' : 'Pubblica'}
+                {submitting ? t('common.publishing') : t('common.publish')}
               </button>
             </div>
           </form>
@@ -88,7 +90,7 @@ export default function ForumCategory() {
           {loading ? (
             [1,2,3].map(i => <SkeletonCard key={i} />)
           ) : threads.length === 0 ? (
-            <EmptyState message="Nessun thread ancora" sub={canPost ? 'Inizia la conversazione' : ''} />
+            <EmptyState message={t('forum.empty_threads')} sub={canPost ? t('forum.empty_threads_sub') : ''} />
           ) : (
             threads.map(t => <FeedCard key={t.id} thread={t} />)
           )}
@@ -99,7 +101,7 @@ export default function ForumCategory() {
         <button
           onClick={() => setShowNew(true)}
           className="absolute bottom-20 right-4 w-12 h-12 bg-noce text-oro rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-transform"
-          aria-label="Nuovo thread"
+          aria-label={t('forum.new_thread')}
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />

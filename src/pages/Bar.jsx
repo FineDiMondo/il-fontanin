@@ -5,52 +5,55 @@ import BottomNav from '../components/BottomNav.jsx'
 import ToastContainer, { showToast } from '../components/Toast.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import { getBalance, getContributions, contribute } from '../lib/wallet.js'
+import { useTranslation } from 'react-i18next'
 
 // Menu tipico di un bar internazionale veronese, prezzi in punti F
 // (coerenti con il tasso community: 10 F ~ 1 ora di volontariato)
+// catKey rimanda alla chiave di traduzione della categoria (vedi locales/*.json bar.cat_*)
 const MENU = [
-  { categoria: 'Caffetteria', voci: [
+  { categoria: 'Caffetteria', catKey: 'bar.cat_coffee', voci: [
     { nome: 'Caffè espresso', prezzo: 1 },
     { nome: 'Caffè macchiato', prezzo: 1 },
     { nome: 'Cappuccino', prezzo: 2 },
     { nome: 'Tè caldo', prezzo: 1 },
   ]},
-  { categoria: 'Analcolici', voci: [
+  { categoria: 'Analcolici', catKey: 'bar.cat_soft', voci: [
     { nome: 'Acqua naturale / frizzante', prezzo: 1 },
     { nome: 'Coca-Cola, Fanta, Sprite', prezzo: 2 },
     { nome: 'Succo di frutta', prezzo: 2 },
     { nome: 'Tè freddo', prezzo: 2 },
     { nome: 'Chinotto', prezzo: 2 },
   ]},
-  { categoria: 'Birre', voci: [
+  { categoria: 'Birre', catKey: 'bar.cat_beer', voci: [
     { nome: 'Birra piccola 0,2L', prezzo: 3 },
     { nome: 'Birra media 0,4L', prezzo: 5 },
     { nome: 'Birra artigianale', prezzo: 6 },
   ]},
-  { categoria: 'Vino e bollicine', voci: [
+  { categoria: 'Vino e bollicine', catKey: 'bar.cat_wine', voci: [
     { nome: 'Calice vino rosso', prezzo: 4 },
     { nome: 'Calice vino bianco', prezzo: 4 },
     { nome: 'Prosecco', prezzo: 4 },
   ]},
-  { categoria: 'Cocktail internazionali', voci: [
+  { categoria: 'Cocktail internazionali', catKey: 'bar.cat_cocktail', voci: [
     { nome: 'Spritz Aperol', prezzo: 5 },
     { nome: 'Gin Tonic', prezzo: 7 },
     { nome: 'Mojito', prezzo: 7 },
     { nome: 'Negroni', prezzo: 7 },
     { nome: 'Moscow Mule', prezzo: 7 },
   ]},
-  { categoria: 'Da sgranocchiare', voci: [
+  { categoria: 'Da sgranocchiare', catKey: 'bar.cat_snack', voci: [
     { nome: 'Patatine / noccioline', prezzo: 2 },
     { nome: 'Tramezzino', prezzo: 4 },
   ]},
 ]
 
-function formatOra(iso) {
-  return new Date(iso).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })
+function formatOra(iso, locale) {
+  return new Date(iso).toLocaleTimeString(locale || 'it-IT', { hour: '2-digit', minute: '2-digit' })
 }
 export default function Bar() {
   const { user } = useAuth()
   const navigate = useNavigate()
+  const { t, i18n } = useTranslation()
   const userId = user?.id ?? user?.email ?? 'anon'
   const [balance, setBalance] = useState(() => getBalance(userId))
   const [log, setLog] = useState(() => getContributions(userId))
@@ -60,21 +63,21 @@ export default function Bar() {
       const { balance: nuovoSaldo, entry } = contribute(userId, voce)
       setBalance(nuovoSaldo)
       setLog(l => [entry, ...l].slice(0, 20))
-      showToast(`Hai contribuito ${voce.prezzo} F per ${voce.nome}`, 'success')
+      showToast(t('bar.contributed', { amount: voce.prezzo, item: voce.nome }), 'success')
     } catch (e) {
-      showToast(e.message)
+      showToast(e.message === 'insufficient_funds' ? t('bar.insufficient') : e.message)
     }
   }
 
   return (
     <div className="app-shell">
       <ToastContainer />
-      <AppHeader title="Bar del Fontanin" showBack />
+      <AppHeader title={t('bar.title')} showBack />
 
       <div className="scroll-content pb-6">
         <div className="mx-4 mt-4 mb-2 stone-card flex items-center justify-between">
           <div>
-            <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">Saldo di {user?.nome || 'te'}</p>
+            <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">{t('bar.balance_of', { name: user?.nome || t('bar.you') })}</p>
             <p className="text-2xl font-medium text-noce mt-0.5">{balance} F</p>
           </div>
           <svg className="w-8 h-8 text-oro flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -84,12 +87,12 @@ export default function Bar() {
         </div>
 
         <p className="px-4 pt-2 pb-3 text-[11px] text-stone-500">
-          Ogni consumazione al bar è un contributo in punti F alla community. Scegli cosa prendi.
+          {t('bar.intro')}
         </p>
         {MENU.map(sezione => (
           <div key={sezione.categoria} className="mb-4">
             <div className="px-4 mb-1">
-              <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">{sezione.categoria}</p>
+              <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">{t(sezione.catKey)}</p>
               <div className="h-px bg-pietra-border mt-1 mb-2" />
             </div>
             <div className="px-4 space-y-2">
@@ -111,13 +114,13 @@ export default function Bar() {
         {log.length > 0 && (
           <div className="mt-2">
             <div className="px-4 mb-1">
-              <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">I tuoi contributi recenti</p>
+              <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">{t('bar.recent')}</p>
               <div className="h-px bg-pietra-border mt-1 mb-2" />
             </div>
             <div className="px-4 space-y-1.5 pb-4">
               {log.map(voce => (
                 <div key={voce.id} className="flex items-center justify-between text-xs text-stone-500">
-                  <span>{voce.nome} <span className="text-stone-400">· {formatOra(voce.data)}</span></span>
+                  <span>{voce.nome} <span className="text-stone-400">· {formatOra(voce.data, i18n.language)}</span></span>
                   <span>{voce.prezzo} F</span>
                 </div>
               ))}
@@ -129,7 +132,7 @@ export default function Bar() {
             onClick={() => navigate('/dona')}
             className="w-full border border-pietra-border rounded-xl py-2.5 text-sm text-stone-600"
           >
-            Vuoi contribuire anche con un bonifico? Sostieni la community →
+            {t('bar.support_link')}
           </button>
         </div>
       </div>

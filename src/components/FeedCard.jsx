@@ -1,16 +1,18 @@
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import UserAvatar from './UserAvatar.jsx'
 
-function timeAgo(dateStr) {
+function timeAgo(dateStr, t) {
   const diff = (Date.now() - new Date(dateStr)) / 1000
-  if (diff < 60) return 'ora'
-  if (diff < 3600) return `${Math.floor(diff / 60)} min fa`
-  if (diff < 86400) return `${Math.floor(diff / 3600)} ore fa`
-  return `${Math.floor(diff / 86400)} giorni fa`
+  if (diff < 60) return t('time.now')
+  if (diff < 3600) return t('time.min_ago', { count: Math.floor(diff / 60) })
+  if (diff < 86400) return t('time.hours_ago', { count: Math.floor(diff / 3600) })
+  return t('time.days_ago', { count: Math.floor(diff / 86400) })
 }
 
 export default function FeedCard({ thread }) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   return (
     <button
@@ -22,7 +24,7 @@ export default function FeedCard({ thread }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-baseline gap-2">
             <span className="text-xs font-medium text-stone-700">{thread.user?.nome}</span>
-            <span className="text-[10px] text-oro-dark">{timeAgo(thread.created_at)}</span>
+            <span className="text-[10px] text-oro-dark">{timeAgo(thread.created_at, t)}</span>
           </div>
           <h3 className="text-sm font-medium text-stone-800 mt-0.5 leading-snug line-clamp-2">
             {thread.titolo}

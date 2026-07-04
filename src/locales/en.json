@@ -1,0 +1,127 @@
+{
+  "nav": { "home": "Home", "forum": "Forum", "chat": "Chat", "events": "Events", "bar": "Bar", "research": "Research" },
+  "app": { "name": "Il Fontanin", "org": "Fine di Mondo APS" },
+  "common": {
+    "loading": "Loading…",
+    "back": "Back",
+    "cancel": "Cancel",
+    "publish": "Publish",
+    "publishing": "Publishing…",
+    "sending": "Sending…",
+    "members_only": "Members",
+    "logout": "Log out",
+    "language": "Language",
+    "guide": "Guide"
+  },
+  "login": {
+    "tagline": "The community of the historic Fontanin spring — a place, a story, real people.",
+    "google_button": "Sign in with Google",
+    "google_loading": "Signing in…",
+    "error_default": "Sign-in failed. Try again.",
+    "disclaimer": "By signing in you agree to join the experimental community of Fine di Mondo APS",
+    "footer": "Fine di Mondo APS · Tax code 04729370231"
+  },
+  "home": {
+    "welcome": "Welcome",
+    "board": "Board",
+    "empty_posts": "No posts yet",
+    "empty_posts_sub": "Be the first to write on the forum",
+    "offline": "You're offline — some content may be outdated",
+    "attendees": "attending"
+  },
+  "forum": {
+    "title": "Forum",
+    "categories": "Categories",
+    "empty_categories": "No categories",
+    "empty_threads": "No threads yet",
+    "empty_threads_sub": "Start the conversation",
+    "new_thread": "New thread",
+    "thread_title_ph": "Thread title…",
+    "thread_body_ph": "Write here…",
+    "reply_ph": "Write a reply…",
+    "default_thread_title": "Thread",
+    "all_experiments": "All experiments"
+  },
+  "chat": {
+    "title": "Chat",
+    "empty_rooms": "No rooms available",
+    "type_public": "Public",
+    "type_private": "Private",
+    "type_event": "Event",
+    "connecting": "connecting…",
+    "connected": "connected",
+    "disconnected": "disconnected",
+    "error": "error",
+    "online": "Online",
+    "message_ph": "Write a message…"
+  },
+  "events": {
+    "title": "Events",
+    "empty_events": "No upcoming events",
+    "attendees": "attending",
+    "spots_left": "spots left",
+    "sold_out": "Sold out",
+    "register": "Register for this event",
+    "registering": "Registering…",
+    "registered": "Registration confirmed!",
+    "qr_title": "Check-in QR",
+    "qr_sub": "Show this code at the event entrance",
+    "show_qr": "Show QR code",
+    "start": "Starts",
+    "place": "Place"
+  },
+  "research": {
+    "title": "Research",
+    "active_experiments": "Active experiments",
+    "empty_experiments": "No active experiments",
+    "empty_experiments_sub": "Check back later",
+    "empty_survey": "No survey available",
+    "response_sent": "Response sent",
+    "thanks": "Thanks for taking part!",
+    "submit": "Submit answers",
+    "answer_ph": "Your answer…",
+    "completed": "completed"
+  },
+  "bar": {
+    "title": "Fontanin Bar",
+    "balance_of": "{{name}}'s balance",
+    "you": "you",
+    "intro": "Every drink at the bar is a contribution in F points to the community. Pick what you're having.",
+    "cat_coffee": "Coffee",
+    "cat_soft": "Soft drinks",
+    "cat_beer": "Beer",
+    "cat_wine": "Wine and bubbles",
+    "cat_cocktail": "International cocktails",
+    "cat_snack": "Snacks",
+    "recent": "Your recent contributions",
+    "insufficient": "Not enough F points",
+    "contributed": "You contributed {{amount}} F for {{item}}",
+    "support_link": "Want to contribute with a bank transfer too? Support the community →"
+  },
+  "dona": {
+    "title": "Support the community",
+    "intro": "A direct bank transfer, no fees: scan the code with your banking app, the details fill in themselves.",
+    "not_configured": "IBAN not configured yet. Ask a coordinator to enable the donation QR.",
+    "amount": "Amount",
+    "other_amount": "Other amount"
+  },
+  "guide": {
+    "title": "Quick guide",
+    "intro": "How Il Fontanin works, section by section.",
+    "sections": [
+      { "title": "Home", "body": "Your board: the latest forum posts and the next scheduled event, all at a glance." },
+      { "title": "Forum", "body": "Community discussions organized by category. Members can start new threads and reply." },
+      { "title": "Chat", "body": "Real-time messaging rooms: public, private, or tied to an event." },
+      { "title": "Events", "body": "Calendar of clean-up days, meetups and activities. Register and show your QR at the entrance." },
+      { "title": "Bar and F points", "body": "Every drink at the bar is a contribution in F points to the community, tracked on your profile." },
+      { "title": "Support the community", "body": "Want to contribute with a bank transfer? Scan the QR with your banking app: no fees." },
+      { "title": "Changing language", "body": "Tap the language icon at the top to pick any of the available languages at any time." }
+    ]
+  },
+  "time": {
+    "now": "just now",
+    "min_ago": "{{count}} min ago",
+    "hours_ago": "{{count}} h ago",
+    "days_ago": "{{count}} d ago"
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "nav": { "home": "Início", "forum": "Fórum", "chat": "Chat", "events": "Eventos", "bar": "Bar", "research": "Pesquisa" },
+  "app": { "name": "Il Fontanin", "org": "Fine di Mondo APS" },
+  "common": {
+    "loading": "Carregando…",
+    "back": "Voltar",
+    "cancel": "Cancelar",
+    "publish": "Publicar",
+    "publishing": "Publicando…",
+    "sending": "Enviando…",
+    "members_only": "Sócios",
+    "logout": "Sair",
+    "language": "Idioma",
+    "guide": "Guia"
+  },
+  "login": {
+    "tagline": "A comunidade da histórica nascente do Fontanin — um lugar, uma história, pessoas de verdade.",
+    "google_button": "Entrar com o Google",
+    "google_loading": "Entrando…",
+    "error_default": "Falha no login. Tente novamente.",
+    "disclaimer": "Ao entrar, você concorda em fazer parte da comunidade experimental da Fine di Mondo APS",
+    "footer": "Fine di Mondo APS · CNPJ/CF 04729370231"
+  },
+  "home": {
+    "welcome": "Bem-vindo",
+    "board": "Mural",
+    "empty_posts": "Nenhuma publicação ainda",
+    "empty_posts_sub": "Seja o primeiro a escrever no fórum",
+    "offline": "Você está offline — alguns conteúdos podem estar desatualizados",
+    "attendees": "inscritos"
+  },
+  "forum": {
+    "title": "Fórum",
+    "categories": "Categorias",
+    "empty_categories": "Nenhuma categoria",
+    "empty_threads": "Nenhum tópico ainda",
+    "empty_threads_sub": "Comece a conversa",
+    "new_thread": "Novo tópico",
+    "thread_title_ph": "Título do tópico…",
+    "thread_body_ph": "Escreva aqui…",
+    "reply_ph": "Escreva uma resposta…",
+    "default_thread_title": "Tópico",
+    "all_experiments": "Todos os experimentos"
+  },
+  "chat": {
+    "title": "Chat",
+    "empty_rooms": "Nenhuma sala disponível",
+    "type_public": "Pública",
+    "type_private": "Privada",
+    "type_event": "Evento",
+    "connecting": "conectando…",
+    "connected": "conectado",
+    "disconnected": "desconectado",
+    "error": "erro",
+    "online": "Online",
+    "message_ph": "Escreva uma mensagem…"
+  },
+  "events": {
+    "title": "Eventos",
+    "empty_events": "Nenhum evento programado",
+    "attendees": "inscritos",
+    "spots_left": "vagas",
+    "sold_out": "Esgotado",
+    "register": "Inscrever-se neste evento",
+    "registering": "Inscrevendo…",
+    "registered": "Inscrição confirmada!",
+    "qr_title": "QR de check-in",
+    "qr_sub": "Mostre este código na entrada do evento",
+    "show_qr": "Mostrar QR code",
+    "start": "Início",
+    "place": "Local"
+  },
+  "research": {
+    "title": "Pesquisa",
+    "active_experiments": "Experimentos ativos",
+    "empty_experiments": "Nenhum experimento ativo",
+    "empty_experiments_sub": "Volte mais tarde",
+    "empty_survey": "Nenhuma pesquisa disponível",
+    "response_sent": "Resposta enviada",
+    "thanks": "Obrigado por participar!",
+    "submit": "Enviar respostas",
+    "answer_ph": "Sua resposta…",
+    "completed": "concluído"
+  },
+  "bar": {
+    "title": "Bar do Fontanin",
+    "balance_of": "Saldo de {{name}}",
+    "you": "você",
+    "intro": "Cada consumo no bar é uma contribuição em pontos F para a comunidade. Escolha o que vai tomar.",
+    "cat_coffee": "Cafeteria",
+    "cat_soft": "Bebidas sem álcool",
+    "cat_beer": "Cervejas",
+    "cat_wine": "Vinho e espumantes",
+    "cat_cocktail": "Coquetéis internacionais",
+    "cat_snack": "Petiscos",
+    "recent": "Suas contribuições recentes",
+    "insufficient": "Pontos F insuficientes",
+    "contributed": "Você contribuiu com {{amount}} F por {{item}}",
+    "support_link": "Quer contribuir também com uma transferência bancária? Apoie a comunidade →"
+  },
+  "dona": {
+    "title": "Apoie a comunidade",
+    "intro": "Uma transferência bancária direta, sem taxas: escaneie o código com o app do seu banco e os dados são preenchidos automaticamente.",
+    "not_configured": "IBAN ainda não configurado. Peça a um responsável para ativar o QR de doação.",
+    "amount": "Valor",
+    "other_amount": "Outro valor"
+  },
+  "guide": {
+    "title": "Guia rápido",
+    "intro": "Como funciona o Il Fontanin, seção por seção.",
+    "sections": [
+      { "title": "Início", "body": "Seu mural: as últimas publicações do fórum e o próximo evento programado, tudo em um só lugar." },
+      { "title": "Fórum", "body": "Discussões da comunidade organizadas por categoria. Sócios podem abrir novos tópicos e responder." },
+      { "title": "Chat", "body": "Salas de mensagens em tempo real: públicas, privadas ou ligadas a um evento." },
+      { "title": "Eventos", "body": "Calendário de mutirões de limpeza, encontros e atividades. Inscreva-se e mostre seu QR na entrada." },
+      { "title": "Bar e pontos F", "body": "Cada consumo no bar é uma contribuição em pontos F para a comunidade, registrada no seu perfil." },
+      { "title": "Apoie a comunidade", "body": "Quer contribuir com uma transferência bancária? Escaneie o QR com o app do seu banco: sem taxas." },
+      { "title": "Trocar de idioma", "body": "Toque no ícone de idioma no topo para escolher entre os idiomas disponíveis a qualquer momento." }
+    ]
+  },
+  "time": {
+    "now": "agora",
+    "min_ago": "há {{count}} min",
+    "hours_ago": "há {{count}} h",
+    "days_ago": "há {{count}} dias"
+  }
+}

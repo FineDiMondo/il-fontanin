@@ -1,0 +1,127 @@
+{
+  "nav": { "home": "Home", "forum": "Forum", "chat": "Chat", "events": "Eventi", "bar": "Bar", "research": "Ricerca" },
+  "app": { "name": "Il Fontanin", "org": "Fine di Mondo APS" },
+  "common": {
+    "loading": "Caricamento…",
+    "back": "Indietro",
+    "cancel": "Annulla",
+    "publish": "Pubblica",
+    "publishing": "Pubblicando…",
+    "sending": "Invio in corso…",
+    "members_only": "Soci",
+    "logout": "Esci",
+    "language": "Lingua",
+    "guide": "Guida"
+  },
+  "login": {
+    "tagline": "La comunità del fontanin storico — un luogo, una storia, persone vere.",
+    "google_button": "Accedi con Google",
+    "google_loading": "Accesso in corso…",
+    "error_default": "Accesso non riuscito. Riprova.",
+    "disclaimer": "Accedendo accetti di far parte della community sperimentale di Fine di Mondo APS",
+    "footer": "Fine di Mondo APS · CF 04729370231"
+  },
+  "home": {
+    "welcome": "Benvenuto",
+    "board": "Bacheca",
+    "empty_posts": "Nessun post ancora",
+    "empty_posts_sub": "Sii il primo a scrivere nel forum",
+    "offline": "Sei offline — alcuni contenuti potrebbero non essere aggiornati",
+    "attendees": "iscritti"
+  },
+  "forum": {
+    "title": "Forum",
+    "categories": "Categorie",
+    "empty_categories": "Nessuna categoria",
+    "empty_threads": "Nessun thread ancora",
+    "empty_threads_sub": "Inizia la conversazione",
+    "new_thread": "Nuovo thread",
+    "thread_title_ph": "Titolo del thread…",
+    "thread_body_ph": "Scrivi qui…",
+    "reply_ph": "Scrivi una risposta…",
+    "default_thread_title": "Thread",
+    "all_experiments": "Tutti gli esperimenti"
+  },
+  "chat": {
+    "title": "Chat",
+    "empty_rooms": "Nessuna stanza disponibile",
+    "type_public": "Pubblica",
+    "type_private": "Privata",
+    "type_event": "Evento",
+    "connecting": "connessione…",
+    "connected": "connesso",
+    "disconnected": "disconnesso",
+    "error": "errore",
+    "online": "Online",
+    "message_ph": "Scrivi un messaggio…"
+  },
+  "events": {
+    "title": "Eventi",
+    "empty_events": "Nessun evento in programma",
+    "attendees": "iscritti",
+    "spots_left": "posti",
+    "sold_out": "Esaurito",
+    "register": "Iscriviti a questo evento",
+    "registering": "Iscrizione in corso…",
+    "registered": "Iscrizione confermata!",
+    "qr_title": "QR check-in",
+    "qr_sub": "Mostra questo codice all'ingresso dell'evento",
+    "show_qr": "Mostra QR code",
+    "start": "Inizio",
+    "place": "Luogo"
+  },
+  "research": {
+    "title": "Ricerca",
+    "active_experiments": "Esperimenti attivi",
+    "empty_experiments": "Nessun esperimento attivo",
+    "empty_experiments_sub": "Torna più tardi",
+    "empty_survey": "Nessun sondaggio disponibile",
+    "response_sent": "Risposta inviata",
+    "thanks": "Grazie per la tua partecipazione!",
+    "submit": "Invia le risposte",
+    "answer_ph": "La tua risposta…",
+    "completed": "completato"
+  },
+  "bar": {
+    "title": "Bar del Fontanin",
+    "balance_of": "Saldo di {{name}}",
+    "you": "te",
+    "intro": "Ogni consumazione al bar è un contributo in punti F alla community. Scegli cosa prendi.",
+    "cat_coffee": "Caffetteria",
+    "cat_soft": "Analcolici",
+    "cat_beer": "Birre",
+    "cat_wine": "Vino e bollicine",
+    "cat_cocktail": "Cocktail internazionali",
+    "cat_snack": "Da sgranocchiare",
+    "recent": "I tuoi contributi recenti",
+    "insufficient": "Punti F insufficienti",
+    "contributed": "Hai contribuito {{amount}} F per {{item}}",
+    "support_link": "Vuoi contribuire anche con un bonifico? Sostieni la community →"
+  },
+  "dona": {
+    "title": "Sostieni la community",
+    "intro": "Un bonifico diretto, senza commissioni: inquadra il codice con l'app della tua banca, i dati si compilano da soli.",
+    "not_configured": "IBAN non ancora configurato. Chiedi a un referente di attivare il QR di donazione.",
+    "amount": "Importo",
+    "other_amount": "Altro importo"
+  },
+  "guide": {
+    "title": "Guida rapida",
+    "intro": "Come funziona Il Fontanin, sezione per sezione.",
+    "sections": [
+      { "title": "Home", "body": "La tua bacheca: gli ultimi post del forum e il prossimo evento in programma, tutto in un colpo d'occhio." },
+      { "title": "Forum", "body": "Discussioni della community divise per categoria. Chi è socio può aprire nuovi thread e rispondere." },
+      { "title": "Chat", "body": "Stanze di messaggistica in tempo reale: pubbliche, private o legate a un evento." },
+      { "title": "Eventi", "body": "Calendario delle giornate di pulizia, incontri e attività. Iscriviti e mostra il tuo QR all'ingresso." },
+      { "title": "Bar e punti F", "body": "Ogni consumazione al bar è un contributo in punti F alla community, tracciato sul tuo profilo." },
+      { "title": "Sostieni la community", "body": "Vuoi contribuire con un bonifico? Inquadra il QR con l'app della tua banca: nessuna commissione." },
+      { "title": "Cambiare lingua", "body": "Tocca l'icona della lingua in alto per scegliere tra le lingue disponibili in qualsiasi momento." }
+    ]
+  },
+  "time": {
+    "now": "ora",
+    "min_ago": "{{count}} min fa",
+    "hours_ago": "{{count}} ore fa",
+    "days_ago": "{{count}} giorni fa"
+  }
+}

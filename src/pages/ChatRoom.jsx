@@ -5,20 +5,22 @@ import BottomNav from '../components/BottomNav.jsx'
 import UserAvatar from '../components/UserAvatar.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import api from '../api/client.js'
+import { useTranslation } from 'react-i18next'
 
 const BASE = import.meta.env.VITE_API_BASE_URL || 'https://freedomrun-491323.ey.r.appspot.com'
 const WS_BASE = BASE.replace('https://', 'wss://').replace('http://', 'ws://')
 
-function timeShort(iso) {
-  return new Date(iso).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })
+function timeShort(iso, locale) {
+  return new Date(iso).toLocaleTimeString(locale || 'it-IT', { hour: '2-digit', minute: '2-digit' })
 }
 
 export default function ChatRoom() {
   const { slug } = useParams()
   const { user } = useAuth()
+  const { t, i18n } = useTranslation()
   const [messages, setMessages] = useState([])
   const [text, setText] = useState('')
-  const [status, setStatus] = useState('connessione…')
+  const [status, setStatus] = useState(t('chat.connecting'))
   const [usersOnline, setUsersOnline] = useState([])
   const wsRef = useRef(null)
   const bottomRef = useRef(null)
@@ -38,9 +40,9 @@ export default function ChatRoom() {
     const ws = new WebSocket(`${WS_BASE}/community/chat/ws/${slug}?token=${token}`)
     wsRef.current = ws
 
-    ws.onopen = () => setStatus('connesso')
-    ws.onclose = () => setStatus('disconnesso')
-    ws.onerror = () => setStatus('errore')
+    ws.onopen = () => setStatus(t('chat.connected'))
+    ws.onclose = () => setStatus(t('chat.disconnected'))
+    ws.onerror = () => setStatus(t('chat.error'))
 
     ws.onmessage = (e) => {
       const data = JSON.parse(e.data)
@@ -88,7 +90,7 @@ export default function ChatRoom() {
       {usersOnline.length > 0 && (
         <div className="flex-shrink-0 px-4 py-1.5 bg-noce/5 border-b border-pietra-border">
           <p className="text-[10px] text-stone-500">
-            Online: {usersOnline.map(u => u.nome).join(', ')}
+            {t('chat.online')}: {usersOnline.map(u => u.nome).join(', ')}
           </p>
         </div>
       )}
@@ -110,7 +112,7 @@ export default function ChatRoom() {
                 }`}>
                   {msg.testo}
                 </div>
-                <span className="text-[9px] text-stone-400 mx-1">{timeShort(msg.created_at)}</span>
+                <span className="text-[9px] text-stone-400 mx-1">{timeShort(msg.created_at, i18n.language)}</span>
               </div>
             </div>
           )
@@ -121,7 +123,7 @@ export default function ChatRoom() {
       <form onSubmit={send} className="flex-shrink-0 border-t border-pietra-border bg-pietra-pale px-3 py-2 flex gap-2 items-center">
         <input
           className="flex-1 text-sm border border-pietra-border rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:ring-1 focus:ring-oro-muted"
-          placeholder="Scrivi un messaggio…"
+          placeholder={t('chat.message_ph')}
           value={text}
           onChange={e => setText(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send(e)}

@@ -5,11 +5,13 @@ import BottomNav from '../components/BottomNav.jsx'
 import LoadingSpinner from '../components/LoadingSpinner.jsx'
 import EmptyState from '../components/EmptyState.jsx'
 import api from '../api/client.js'
+import { useTranslation } from 'react-i18next'
 
 export default function Chat() {
   const [rooms, setRooms] = useState([])
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   useEffect(() => {
     api.get('/chat/rooms')
@@ -17,14 +19,14 @@ export default function Chat() {
       .finally(() => setLoading(false))
   }, [])
 
-  const TIPO_LABEL = { pubblica: 'Pubblica', privata: 'Privata', evento: 'Evento' }
+  const TIPO_LABEL = { pubblica: t('chat.type_public'), privata: t('chat.type_private'), evento: t('chat.type_event') }
 
   return (
     <div className="app-shell">
-      <AppHeader title="Chat" showBack={false} />
+      <AppHeader title={t('chat.title')} showBack={false} />
       <div className="scroll-content px-4 py-4 space-y-3">
         {loading ? <LoadingSpinner /> : rooms.length === 0 ? (
-          <EmptyState message="Nessuna stanza disponibile" />
+          <EmptyState message={t('chat.empty_rooms')} />
         ) : (
           rooms.map(room => (
             <button

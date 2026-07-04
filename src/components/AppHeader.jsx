@@ -1,7 +1,10 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import LanguageSelector from './LanguageSelector.jsx'
 
 export default function AppHeader({ title, showBack = false, rightSlot }) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   return (
     <header className="bg-noce flex-shrink-0 relative overflow-hidden">
@@ -18,7 +21,7 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
           <button
             onClick={() => navigate(-1)}
             className="touch-target text-oro-muted hover:text-oro transition-colors"
-            aria-label="Torna indietro"
+            aria-label={t('common.back')}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -42,13 +45,28 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
             <h1 className="text-oro font-medium text-base truncate">{title}</h1>
           ) : (
             <>
-              <h1 className="text-oro font-cinzel font-medium text-lg leading-tight">Il Fontanin</h1>
-              <p className="text-oro-dark text-[10px] uppercase tracking-widest">Fine di Mondo · Comunità</p>
+              <h1 className="text-oro font-cinzel font-medium text-lg leading-tight">{t('app.name')}</h1>
+              <p className="text-oro-dark text-[10px] uppercase tracking-widest">{t('app.org')}</p>
             </>
           )}
         </div>
 
-        {rightSlot}
+        <div className="flex items-center gap-2">
+          {rightSlot}
+          {!showBack && (
+            <Link
+              to="/guida"
+              className="touch-target text-oro-muted hover:text-oro transition-colors"
+              aria-label={t('common.guide')}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.5 9a2.5 2.5 0 115 .5c0 1.5-2 1.7-2 3.3M12 17h.01" />
+              </svg>
+            </Link>
+          )}
+          <LanguageSelector />
+        </div>
       </div>
     </header>
   )

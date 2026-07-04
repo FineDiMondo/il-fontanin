@@ -4,10 +4,12 @@ import AppHeader from '../components/AppHeader.jsx'
 import BottomNav from '../components/BottomNav.jsx'
 import ToastContainer, { showToast } from '../components/Toast.jsx'
 import { buildEpcPayload, isDonationConfigured } from '../lib/donazioneQr.js'
+import { useTranslation } from 'react-i18next'
 
 const IMPORTI_RAPIDI = [5, 10, 20, 50]
 
 export default function Dona() {
+  const { t } = useTranslation()
   const [importo, setImporto] = useState(10)
   const canvasRef = useRef(null)
   const configurato = isDonationConfigured()
@@ -25,26 +27,25 @@ export default function Dona() {
   return (
     <div className="app-shell">
       <ToastContainer />
-      <AppHeader title="Sostieni la community" showBack />
+      <AppHeader title={t('dona.title')} showBack />
 
       <div className="scroll-content px-4 py-4 space-y-4">
         <p className="text-sm text-stone-600 leading-relaxed">
-          Un bonifico diretto, senza commissioni: inquadra il codice con l'app della tua banca,
-          i dati si compilano da soli.
+          {t('dona.intro')}
         </p>
 
         {!configurato ? (
           <div className="stone-card">
             <p className="text-sm text-stone-600">
-              IBAN non ancora configurato. Imposta <code className="text-xs">VITE_DONATION_IBAN</code> e{' '}
-              <code className="text-xs">VITE_DONATION_BENEFICIARY</code> per attivare il QR di donazione.
+              {t('dona.not_configured')} <code className="text-xs">VITE_DONATION_IBAN</code> ·{' '}
+              <code className="text-xs">VITE_DONATION_BENEFICIARY</code>
             </p>
           </div>
         ) : (
           <>
             <div className="stone-card flex flex-col items-center gap-3">
               <canvas ref={canvasRef} />
-              <p className="text-xs text-stone-500">Importo: {importo} €</p>
+              <p className="text-xs text-stone-500">{t('dona.amount')}: {importo} €</p>
             </div>
 
             <div className="flex gap-2">
@@ -62,7 +63,7 @@ export default function Dona() {
             </div>
 
             <div>
-              <label className="text-xs text-stone-500 block mb-1">Altro importo</label>
+              <label className="text-xs text-stone-500 block mb-1">{t('dona.other_amount')}</label>
               <input
                 type="number"
                 min="1"

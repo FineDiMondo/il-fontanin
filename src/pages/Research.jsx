@@ -6,8 +6,9 @@ import EmptyState from '../components/EmptyState.jsx'
 import api from '../api/client.js'
 import { showToast } from '../components/Toast.jsx'
 import ToastContainer from '../components/Toast.jsx'
+import { useTranslation } from 'react-i18next'
 
-function SurveyForm({ survey, onDone }) {
+function SurveyForm({ survey, onDone, t }) {
   const [answers, setAnswers] = useState({})
   const [submitting, setSubmitting] = useState(false)
 
@@ -20,7 +21,7 @@ function SurveyForm({ survey, onDone }) {
     setSubmitting(true)
     try {
       await api.post(`/research/surveys/${survey.id}/responses`, { risposte: answers })
-      showToast('Risposta inviata, grazie!', 'success')
+      showToast(`${t('research.response_sent')}, ${t('research.thanks')}`, 'success')
       onDone()
     } catch (e) {
       showToast(e?.response?.data?.detail || 'Errore nell\'invio')
@@ -40,7 +41,7 @@ function SurveyForm({ survey, onDone }) {
             <textarea
               className="w-full text-sm border border-pietra-border rounded-xl px-3 py-2 bg-pietra-pale focus:outline-none focus:ring-1 focus:ring-oro-muted resize-none"
               rows={3}
-              placeholder="La tua risposta…"
+              placeholder={t('research.answer_ph')}
               onChange={e => setAnswer(d.id, e.target.value)}
             />
           )}
@@ -98,13 +99,14 @@ function SurveyForm({ survey, onDone }) {
         disabled={submitting}
         className="w-full bg-noce text-oro py-3.5 rounded-2xl font-medium text-sm active:scale-[0.98] transition-transform disabled:opacity-60"
       >
-        {submitting ? 'Invio in corso…' : 'Invia le risposte'}
+        {submitting ? t('common.sending') : t('research.submit')}
       </button>
     </form>
   )
 }
 
 export default function Research() {
+  const { t } = useTranslation()
   const [experiments, setExperiments] = useState([])
   const [selected, setSelected] = useState(null)
   const [survey, setSurvey] = useState(null)
@@ -139,7 +141,7 @@ export default function Research() {
   return (
     <div className="app-shell">
       <ToastContainer />
-      <AppHeader title="Ricerca" showBack={false} />
+      <AppHeader title={t('research.title')} showBack={false} />
 
       <div className="scroll-content px-4 py-4 space-y-4">
         {selected ? (
@@ -149,7 +151,7 @@ export default function Research() {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
-              Tutti gli esperimenti
+              {t('forum.all_experiments')}
             </button>
 
             <div className="stone-card">
@@ -163,24 +165,25 @@ export default function Research() {
             {loadingSurvey ? <LoadingSpinner /> :
               done.has(selected.id) ? (
                 <div className="bg-muschio/10 border border-muschio/30 rounded-2xl p-6 text-center">
-                  <p className="text-muschio font-medium">Risposta inviata</p>
-                  <p className="text-xs text-stone-500 mt-1">Grazie per la tua partecipazione!</p>
+                  <p className="text-muschio font-medium">{t('research.response_sent')}</p>
+                  <p className="text-xs text-stone-500 mt-1">{t('research.thanks')}</p>
                 </div>
               ) : survey ? (
                 <SurveyForm
                   survey={survey}
                   onDone={() => setDone(s => new Set([...s, selected.id]))}
+                  t={t}
                 />
               ) : (
-                <EmptyState message="Nessun sondaggio disponibile" />
+                <EmptyState message={t('research.empty_survey')} />
               )
             }
           </>
         ) : (
           <>
-            <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">Esperimenti attivi</p>
+            <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">{t('research.active_experiments')}</p>
             {loading ? <LoadingSpinner /> : experiments.length === 0 ? (
-              <EmptyState message="Nessun esperimento attivo" sub="Torna più tardi" />
+              <EmptyState message={t('research.empty_experiments')} sub={t('research.empty_experiments_sub')} />
             ) : (
               experiments.map(exp => (
                 <button
@@ -202,7 +205,7 @@ export default function Research() {
                     </span>
                     {done.has(exp.id) && (
                       <span className="ml-1.5 inline-block text-[10px] bg-muschio/10 text-muschio px-2 py-0.5 rounded-full border border-muschio/30">
-                        completato
+                        {t('research.completed')}
                       </span>
                     )}
                   </div>

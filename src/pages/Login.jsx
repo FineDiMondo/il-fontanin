@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext.jsx'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import LanguageSelector from '../components/LanguageSelector.jsx'
 
 export default function Login() {
   const { loginWithGoogle, loading } = useAuth()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const [error, setError] = useState('')
 
   async function handleGoogle() {
@@ -13,7 +16,7 @@ export default function Login() {
       await loginWithGoogle()
       navigate('/')
     } catch (e) {
-      setError(e?.response?.data?.detail || 'Accesso non riuscito. Riprova.')
+      setError(e?.response?.data?.detail || t('login.error_default'))
     }
   }
 
@@ -27,6 +30,10 @@ export default function Login() {
           backgroundSize: '12px 12px',
         }}
       />
+
+      <div className="flex justify-end px-4 pt-3 relative">
+        <LanguageSelector />
+      </div>
 
       {/* Hero */}
       <div className="flex-1 flex flex-col items-center justify-center px-8 relative">
@@ -50,7 +57,7 @@ export default function Login() {
           Fine di Mondo APS
         </p>
         <p className="text-stone-400 text-sm text-center max-w-[260px] leading-relaxed mt-3">
-          La comunità del fontanin storico — un luogo, una storia, persone vere.
+          {t('login.tagline')}
         </p>
 
         {/* Separatore ornamentale */}
@@ -77,7 +84,7 @@ export default function Login() {
             <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
           </svg>
           <span className="flex-1 text-center text-sm font-medium text-stone-700">
-            {loading ? 'Accesso in corso…' : 'Accedi con Google'}
+            {loading ? t('login.google_loading') : t('login.google_button')}
           </span>
         </button>
 
@@ -86,13 +93,13 @@ export default function Login() {
         )}
 
         <p className="text-stone-600 text-[11px] text-center mt-8 max-w-[260px] leading-relaxed">
-          Accedendo accetti di far parte della community sperimentale di Fine di Mondo APS
+          {t('login.disclaimer')}
         </p>
       </div>
 
       {/* Footer */}
       <div className="text-center py-4">
-        <p className="text-stone-700 text-[10px] uppercase tracking-widest">Fine di Mondo APS · CF 04729370231</p>
+        <p className="text-stone-700 text-[10px] uppercase tracking-widest">{t('login.footer')}</p>
       </div>
     </div>
   )

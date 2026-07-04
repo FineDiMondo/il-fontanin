@@ -27,7 +27,8 @@ export function getContributions(userId) {
 export function contribute(userId, item) {
   const balance = getBalance(userId)
   if (balance < item.prezzo) {
-    throw new Error('Punti F insufficienti')
+    // Codice sentinella tradotto lato UI (vedi locales/*.json bar.insufficient)
+    throw new Error('insufficient_funds')
   }
   const nuovoSaldo = balance - item.prezzo
   localStorage.setItem(balanceKey(userId), String(nuovoSaldo))
