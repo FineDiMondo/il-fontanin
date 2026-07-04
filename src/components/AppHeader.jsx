@@ -36,7 +36,7 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
   )
 
   return (
-    <header className="bg-noce flex-shrink-0 relative overflow-hidden">
+    <header className="bg-noce flex-shrink-0 relative">
       {/* texture pietra */}
       <div
         className="absolute inset-0 opacity-5"
