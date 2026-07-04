@@ -107,6 +107,30 @@
     "amount": "Importo",
     "other_amount": "Altro importo"
   },
+  "mappa": {
+    "title": "Mappa del Fontanin",
+    "intro": "Punti di interesse e aree della zona: la sorgiva, il Fosso Nuovo e i dintorni di Villa Canossa. Confini indicativi, in fase di verifica.",
+    "legend": "Legenda",
+    "fontanin": "Il Fontanin",
+    "fontanin_body": "La sorgiva storica, scavata nel 1682.",
+    "villa_canossa": "Villa Canossa",
+    "villa_canossa_body": "Complesso settecentesco a Grezzano di Mozzecane, voluto dal marchese Carlo di Canossa.",
+    "fosso_nuovo": "Fosso Nuovo",
+    "canossa_title": "Aree di proprietà Canossa",
+    "canossa_body": "Boschetto e area della villa (confini indicativi).",
+    "demanio_title": "Aree demaniali · Consorzio di Bonifica",
+    "demanio_body": "Rive del fosso e aree di manutenzione gestite dal Consorzio di Bonifica Veronese (confini indicativi).",
+    "disclaimer": "Mappa illustrativa: le aree colorate sono bozze tracciate a mano e vanno verificate su base catastale. Segnala eventuali correzioni alla community."
+  },
+  "numeri": {
+    "title": "Numeri utili",
+    "intro": "Contatti utili per emergenze, enti locali e un indirizzo consigliato nei dintorni.",
+    "emergenze": "Emergenze",
+    "enti": "Enti e gestione acque",
+    "ente_consorzio": "Gestione del reticolo idrico e manutenzione fossi",
+    "ristorante": "Nei dintorni",
+    "ristorante_note": "Cucina veneta, chiuso il martedì · su prenotazione consigliata"
+  },
   "guide": {
     "title": "Guida rapida",
     "intro": "Come funziona Il Fontanin, sezione per sezione.",

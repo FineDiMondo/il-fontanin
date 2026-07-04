@@ -107,6 +107,30 @@
     "amount": "Importe",
     "other_amount": "Otro importe"
   },
+  "mappa": {
+    "title": "Mapa del Fontanin",
+    "intro": "Puntos de interés y áreas cercanas: el manantial, el arroyo Fosso Nuovo y los alrededores de Villa Canossa. Límites indicativos, en fase de verificación.",
+    "legend": "Leyenda",
+    "fontanin": "Il Fontanin",
+    "fontanin_body": "El manantial histórico, excavado en 1682.",
+    "villa_canossa": "Villa Canossa",
+    "villa_canossa_body": "Complejo del siglo XVIII en Grezzano di Mozzecane, construido por encargo del marqués Carlo di Canossa.",
+    "fosso_nuovo": "Fosso Nuovo",
+    "canossa_title": "Áreas de propiedad Canossa",
+    "canossa_body": "Bosquecillo y área de la villa (límites indicativos).",
+    "demanio_title": "Áreas públicas · Consorcio de Saneamiento",
+    "demanio_body": "Orillas del arroyo y áreas de mantenimiento gestionadas por el Consorzio di Bonifica Veronese (límites indicativos).",
+    "disclaimer": "Mapa ilustrativo: las áreas coloreadas son borradores dibujados a mano y deben verificarse con el catastro. Informa cualquier corrección a la comunidad."
+  },
+  "numeri": {
+    "title": "Números útiles",
+    "intro": "Contactos útiles para emergencias, organismos locales y una dirección recomendada en la zona.",
+    "emergenze": "Emergencias",
+    "enti": "Organismos y gestión del agua",
+    "ente_consorzio": "Gestión de la red hídrica y mantenimiento de los canales",
+    "ristorante": "Cerca de aquí",
+    "ristorante_note": "Cocina véneta, cerrado los martes · se recomienda reservar"
+  },
   "guide": {
     "title": "Guía rápida",
     "intro": "Cómo funciona Il Fontanin, sección por sección.",

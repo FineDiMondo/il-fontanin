@@ -107,6 +107,30 @@
     "amount": "Amount",
     "other_amount": "Other amount"
   },
+  "mappa": {
+    "title": "Fontanin Map",
+    "intro": "Points of interest and areas nearby: the spring, the Fosso Nuovo stream and the surroundings of Villa Canossa. Boundaries are indicative and under review.",
+    "legend": "Legend",
+    "fontanin": "Il Fontanin",
+    "fontanin_body": "The historic spring, excavated in 1682.",
+    "villa_canossa": "Villa Canossa",
+    "villa_canossa_body": "18th-century estate in Grezzano di Mozzecane, built for Marquis Carlo di Canossa.",
+    "fosso_nuovo": "Fosso Nuovo",
+    "canossa_title": "Canossa-owned areas",
+    "canossa_body": "Woodland and villa grounds (indicative boundaries).",
+    "demanio_title": "Public land · Land Reclamation Board",
+    "demanio_body": "Ditch banks and maintenance areas managed by the Consorzio di Bonifica Veronese (indicative boundaries).",
+    "disclaimer": "Illustrative map: the colored areas are hand-drawn drafts and should be checked against land registry data. Report any corrections to the community."
+  },
+  "numeri": {
+    "title": "Useful numbers",
+    "intro": "Useful contacts for emergencies, local authorities, and a recommended spot nearby.",
+    "emergenze": "Emergencies",
+    "enti": "Authorities and water management",
+    "ente_consorzio": "Waterway network and ditch maintenance",
+    "ristorante": "Nearby",
+    "ristorante_note": "Venetian cuisine, closed on Tuesdays · booking recommended"
+  },
   "guide": {
     "title": "Quick guide",
     "intro": "How Il Fontanin works, section by section.",

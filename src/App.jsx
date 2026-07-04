@@ -13,6 +13,8 @@ import Research from './pages/Research.jsx'
 import Bar from './pages/Bar.jsx'
 import Dona from './pages/Dona.jsx'
 import Guida from './pages/Guida.jsx'
+import Mappa from './pages/Mappa.jsx'
+import NumeriUtili from './pages/NumeriUtili.jsx'
 import LoadingSpinner from './components/LoadingSpinner.jsx'
 
 function ProtectedRoute({ children }) {
@@ -41,6 +43,8 @@ function AppRoutes() {
       <Route path="/bar" element={<ProtectedRoute><Bar /></ProtectedRoute>} />
       <Route path="/dona" element={<ProtectedRoute><Dona /></ProtectedRoute>} />
       <Route path="/guida" element={<ProtectedRoute><Guida /></ProtectedRoute>} />
+      <Route path="/mappa" element={<ProtectedRoute><Mappa /></ProtectedRoute>} />
+      <Route path="/numeri-utili" element={<ProtectedRoute><NumeriUtili /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
