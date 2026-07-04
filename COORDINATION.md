@@ -1,10 +1,12 @@
 # COORDINATION — El Fontanin multi-sessione
-# Aggiornato: 4 lug 2026 — sessione Nuova (finding #3 completato)
+# Aggiornato: 4 lug 2026 — sessione Fontanin (finding #5 completato)
 
 ## Stato branch: feature/algorand-wallet-mpc
 
 | Commit    | Autore                  | Contenuto                                      |
 |-----------|-------------------------|------------------------------------------------|
+| 1e51445   | Sessione Fontanin       | FASE 5: saldo gettoni f in WalletCard.jsx (ASA ID via env, Algorand indexer) |
+| 9e7ae19   | Sessione Nuova          | chore: aggiorna COORDINATION.md — finding #3   |
 | 5cb9660   | Sessione Nuova          | docs: Finding #3 governance memo esperimenti   |
 | 4554217   | Fontanin session        | chore: collision window closed                 |
 | 717dc87   | Fontanin session        | Aggiunge test_visitatore.py in root            |
@@ -22,7 +24,7 @@
 | #2 OpenAPI | COMMITTATO | Sessione Cowork       | dac1843 - xfail rimane fino a deploy Cloud Run   |
 | #3 Governance experiments | COMMITTATO | Sessione Nuova | 5cb9660 - docs/GOVERNANCE_MEMO_experiments.md — ATTENDE DELIBERA CONSIGLIO |
 | #4 Recovery wallet | BLOCCATO | — | Attende delibera Consiglio, nessun codice       |
-| #5 ASA ID WalletCard | DA FARE | Sessione FONTANIN | Indexer call + env var per ID  |
+| #5 ASA ID WalletCard | COMMITTATO | Sessione Fontanin | 1e51445 - VITE_FONTANIN_ASA_ID, indexer mainnet-idx.algonode.cloud, placeholder se env assente |
 
 ## Regola scrittori attivi
 
@@ -33,5 +35,6 @@
 
 ## Prossimi step
 
-Sessione Fontanin → fase 5: WalletCard.jsx ASA ID + Algorand indexer (unico finding rimasto con codice)
-Sessione Nuova → in attesa di istruzioni — Finding #3 chiuso, #4 bloccato, #5 a Fontanin
+Tutti i finding con codice sono COMMITTATI (#1, #2, #3, #5). #4 resta BLOCCATO (delibera Consiglio).
+Nessun deploy (Hosting/Cloud Run) né merge su main finché l'utente non conferma esplicitamente in chat.
+Sessione Fontanin → in attesa: report finale 7 punti incarico, poi disponibile per nuove assegnazioni.
