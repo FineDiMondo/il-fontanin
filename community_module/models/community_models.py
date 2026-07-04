@@ -19,20 +19,27 @@ from sqlalchemy.sql import func
 Base = declarative_base()
 
 
+_engine = None
+_Session = None
+
 def get_engine():
-    db_host = os.getenv("JACKASS_DB_HOST", "35.241.200.140")
-    db_port = os.getenv("JACKASS_DB_PORT", "5432")
-    db_user = os.getenv("JACKASS_DB_USER", "jackass_admin")
-    db_pass = os.getenv("JACKASS_DB_PASSWORD", "")
-    db_name = os.getenv("JACKASS_DB_NAME", "jackass_verona")
-    url = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
-    return create_engine(url, pool_pre_ping=True, pool_size=5, max_overflow=10)
+    global _engine
+    if _engine is None:
+        db_host = os.getenv("JACKASS_DB_HOST", "35.241.200.140")
+        db_port = os.getenv("JACKASS_DB_PORT", "5432")
+        db_user = os.getenv("JACKASS_DB_USER", "jackass_admin")
+        db_pass = os.getenv("JACKASS_DB_PASSWORD", "")
+        db_name = os.getenv("JACKASS_DB_NAME", "jackass_verona")
+        url = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
+        _engine = create_engine(url, pool_pre_ping=True, pool_size=5, max_overflow=10)
+    return _engine
 
 
 def get_session():
-    engine = get_engine()
-    Session = sessionmaker(bind=engine)
-    return Session()
+    global _Session
+    if _Session is None:
+        _Session = sessionmaker(bind=get_engine())
+    return _Session()
 
 
 # =============================================================================
