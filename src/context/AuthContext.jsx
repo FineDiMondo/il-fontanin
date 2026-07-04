@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import {
-  signInWithRedirect,
+  signInWithPopup,
   getRedirectResult,
   signOut as firebaseSignOut,
 } from 'firebase/auth'
@@ -56,7 +56,7 @@ export function AuthProvider({ children }) {
     }
   }, [user])
 
-  // Gestisce il risultato del redirect Google al ritorno sulla pagina
+  // Gestisce il risultato del redirect Google al ritorno sulla pagina (come fallback)
   useEffect(() => {
     // Controlla se c'è una porta CLI nei parametri di query e la memorizza temporaneamente
     const searchParams = new URLSearchParams(window.location.search)
@@ -95,18 +95,36 @@ export function AuthProvider({ children }) {
       })
   }, [])
 
-  // Avvia il redirect verso Google (non apre popup)
+  // Avvia il login con Google tramite Popup (estremamente robusto contro il blocco dei cookie)
   async function loginWithGoogle() {
     setLoading(true)
     setError(null)
     try {
-      await signInWithRedirect(auth, googleProvider)
-      // La pagina verrà reindirizzata — il codice sotto non viene mai eseguito
+      const result = await signInWithPopup(auth, googleProvider)
+      if (result.user) {
+        const idToken = await result.user.getIdToken()
+        
+        // Se c'è una porta CLI in corso, effettua il reindirizzamento loopback
+        const cliPort = safeSessionStorage.getItem('fdm_cli_port') || new URLSearchParams(window.location.search).get('cli_port')
+        if (cliPort) {
+          safeSessionStorage.removeItem('fdm_cli_port')
+          window.location.href = `http://localhost:${cliPort}/?token=${idToken}`
+          return
+        }
+
+        const { data } = await api.post('/auth/google-login', { id_token: idToken })
+        safeLocalStorage.setItem('fdm_token', data.access_token)
+        safeLocalStorage.setItem('fdm_user', JSON.stringify(data))
+        setUser(data)
+        setError(null)
+      }
     } catch (err) {
-      console.error('[Auth] signInWithRedirect error:', err.code, err.message)
+      console.error('[Auth] signInWithPopup error:', err.code, err.message)
       setError(err.code || err.message)
       setLoading(false)
       throw err
+    } finally {
+      setLoading(false)
     }
   }
 
