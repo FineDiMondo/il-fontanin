@@ -28,9 +28,24 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
+# Lista esplicita dei domini per evitare errori CORS dovuti all'uso di allow_credentials=True con wildcard
+origins = [
+    "http://localhost:5173",
+    "http://localhost:8080",
+    "http://localhost:8081",
+    "https://el-fontanin.web.app",
+    "https://el-fontanin.firebaseapp.com",
+    "https://il-fontanin.vercel.app",
+]
+
+cors_origins_env = os.getenv("CORS_ORIGINS")
+if cors_origins_env:
+    # Aggiunge eventuali domini extra specificati nelle variabili d'ambiente
+    origins.extend([o.strip() for o in cors_origins_env.split(",") if o.strip()])
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=os.getenv("CORS_ORIGINS", "*").split(","),
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
