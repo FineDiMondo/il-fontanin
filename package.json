@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@web3auth/ethereum-provider": "^9.7.0",
+    "@web3auth/single-factor-auth": "^9.5.0",
+    "algosdk": "^3.6.0",
     "axios": "^1.7.2",
     "firebase": "^10.12.2",
     "i18next": "^26.3.4",
@@ -19,7 +22,8 @@
     "react-dom": "^18.3.1",
     "react-i18next": "^17.0.8",
     "react-leaflet": "^4.2.1",
-    "react-router-dom": "^6.24.0"
+    "react-router-dom": "^6.24.0",
+    "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
