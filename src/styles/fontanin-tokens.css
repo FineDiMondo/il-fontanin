@@ -1,0 +1,160 @@
+/* ============================================================
+   EL FONTANIN — ACCESSIBILITY & DESIGN TOKEN LAYER
+   File: src/styles/fontanin-tokens.css
+   Import in src/main.jsx PRIMA di index.css:  import './styles/fontanin-tokens.css'
+   ------------------------------------------------------------
+   Palette derivata dal theme-color di produzione (#2c1a06):
+   terra (humus), acqua di risorgiva, bambù. Tutti gli abbinamenti
+   testo/sfondo indicati rispettano WCAG AA (>= 4.5:1).
+   ============================================================ */
+
+:root {
+  /* ---- COLORE ------------------------------------------------
+     humus-900 su carta-50  -> 14.8:1  (testo principale)
+     humus-700 su carta-50  ->  9.1:1  (testo secondario)
+     bambu-700 su carta-50  ->  5.6:1  (link / azioni, AA ok)
+     carta-50  su humus-900 -> 14.8:1  (testo su header scuro)
+     acqua-600 SOLO come decorazione/bordo, mai testo su carta  */
+  --fn-humus-900: #2c1a06;
+  --fn-humus-700: #4a3113;
+  --fn-humus-100: #e9e0d2;
+  --fn-carta-50:  #faf6ee;
+  --fn-bambu-700: #2f6b2f;
+  --fn-bambu-500: #4c8f4c;
+  --fn-acqua-600: #2a7f8f;
+  --fn-acqua-100: #dcefF2;
+  --fn-focus:     #b25e1e; /* anello di focus, 3:1 vs carta-50 */
+
+  /* ---- TIPOGRAFIA (scala modulare 1.2, base 17px) -----------
+     Base 17px, non 16: leggibilità anziani senza rompere layout */
+  --fn-text-base: 1.0625rem;   /* 17px */
+  --fn-text-sm:   0.9375rem;   /* 15px — MAI sotto questa soglia */
+  --fn-text-lg:   1.275rem;
+  --fn-text-xl:   1.53rem;
+  --fn-text-2xl:  1.836rem;
+  --fn-leading-body: 1.6;      /* interlinea generosa */
+  --fn-tracking-caps: 0.04em;
+
+  /* ---- TOUCH TARGET ------------------------------------------
+     44px minimo iOS/WCAG 2.5.8; 48px raccomandato per anziani  */
+  --fn-touch-min: 44px;
+  --fn-touch-comfort: 48px;
+  --fn-tap-gap: 8px;           /* distanza minima tra target     */
+
+  /* ---- ICONOGRAFIA (card forum/eventi per bambini) ----------- */
+  --fn-icon-card: 56px;        /* icone categoria: grandi, parlanti */
+  --fn-icon-inline: 24px;
+
+  /* ---- RAGGI / OMBRE (fascia 20-30: moderno ma quieto) ------- */
+  --fn-radius-card: 16px;
+  --fn-radius-pill: 999px;
+  --fn-shadow-card: 0 1px 2px rgb(44 26 6 / .06), 0 8px 24px rgb(44 26 6 / .08);
+  --fn-shadow-card-hover: 0 2px 4px rgb(44 26 6 / .08), 0 14px 32px rgb(44 26 6 / .14);
+
+  /* ---- MOTION -------------------------------------------------
+     Un solo linguaggio di movimento in tutta l'app.             */
+  --fn-ease: cubic-bezier(.22,.8,.36,1);
+  --fn-dur-fast: 140ms;
+  --fn-dur-page: 260ms;
+}
+
+/* ---- REGOLA GLOBALE: rispetto di prefers-reduced-motion ------ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- FOCUS VISIBILE (tastiera): mai rimuoverlo ---------------- */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--fn-focus);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ---- CLASSI DI UTILITÀ (usabili accanto a Tailwind) ----------- */
+
+/* Pulsante conforme: touch-target garantito anche se il testo è corto */
+.fn-btn {
+  min-height: var(--fn-touch-comfort);
+  min-width: var(--fn-touch-min);
+  padding: 0 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  font-size: var(--fn-text-base);
+  font-weight: 600;
+  border-radius: var(--fn-radius-pill);
+  transition: transform var(--fn-dur-fast) var(--fn-ease),
+              box-shadow var(--fn-dur-fast) var(--fn-ease),
+              background-color var(--fn-dur-fast) var(--fn-ease);
+}
+.fn-btn:hover  { transform: translateY(-1px); }
+.fn-btn:active { transform: translateY(0); }
+
+.fn-btn--primary {
+  background: var(--fn-bambu-700);
+  color: var(--fn-carta-50);            /* contrasto 5.9:1 */
+}
+.fn-btn--primary:hover { background: var(--fn-bambu-500); }
+
+.fn-btn--ghost {
+  background: transparent;
+  color: var(--fn-humus-900);
+  border: 2px solid var(--fn-humus-100);
+}
+
+/* Card standard (forum, eventi): micro-hover per fascia 20-30,
+   ma percepibile anche come affordance "si può premere" */
+.fn-card {
+  background: var(--fn-carta-50);
+  border: 1px solid var(--fn-humus-100);
+  border-radius: var(--fn-radius-card);
+  box-shadow: var(--fn-shadow-card);
+  transition: box-shadow var(--fn-dur-fast) var(--fn-ease),
+              transform var(--fn-dur-fast) var(--fn-ease);
+}
+.fn-card:hover {
+  box-shadow: var(--fn-shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+/* Icona di categoria "parlante" (bambini): grande + etichetta SEMPRE
+   visibile sotto l'icona — mai icona sola senza testo */
+.fn-icon-cat {
+  width: var(--fn-icon-card);
+  height: var(--fn-icon-card);
+  display: grid;
+  place-items: center;
+  border-radius: var(--fn-radius-card);
+  background: var(--fn-acqua-100);
+  color: var(--fn-humus-900);
+  font-size: 32px;              /* emoji/icone leggibili */
+}
+.fn-icon-cat + .fn-icon-label {
+  display: block;
+  margin-top: .375rem;
+  font-size: var(--fn-text-sm);
+  font-weight: 700;
+  color: var(--fn-humus-700);
+  text-align: center;
+}
+
+/* Transizione tra pagine (usare con React Router / wrapper) */
+.fn-page-enter { opacity: 0; transform: translateY(6px); }
+.fn-page-enter-active {
+  opacity: 1; transform: none;
+  transition: opacity var(--fn-dur-page) var(--fn-ease),
+              transform var(--fn-dur-page) var(--fn-ease);
+}
+
+/* ---- NOTA DI INTEGRAZIONE INDEX.HTML --------------------------
+   RIMUOVERE da index.html:  maximum-scale=1.0, user-scalable=no
+   Sostituire con:
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   Motivo: blocca lo zoom -> violazione WCAG 1.4.4, critica per anziani.
+   --------------------------------------------------------------- */

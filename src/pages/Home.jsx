@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import WalletCard from '../components/WalletCard.jsx'
 import AppHeader from '../components/AppHeader.jsx'
 import BottomNav from '../components/BottomNav.jsx'
 import FeedCard from '../components/FeedCard.jsx'
@@ -73,6 +74,13 @@ export default function Home() {
             <p className="text-stone-500 text-xs">{t('home.welcome')}, <span className="text-stone-700 font-medium">{t('home.visitor', 'Visitatore')}</span></p>
           )}
         </div>
+
+        {/* Portafoglio Algorand (solo per utenti registrati) */}
+        {user && (
+          <div className="mx-4 mb-4">
+            <WalletCard />
+          </div>
+        )}
 
         {/* Banner evento prossimo */}
         {event && (

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import LoginBanner from '../components/LoginBanner.jsx'
 import AppHeader from '../components/AppHeader.jsx'
 import BottomNav from '../components/BottomNav.jsx'
 import LoadingSpinner from '../components/LoadingSpinner.jsx'
@@ -121,20 +122,7 @@ export default function EventDetail() {
             )}
 
             {!user && (
-              <div className="stone-card bg-gradient-to-b from-noce-light/90 to-stone-900/90 border border-oro/30 rounded-2xl p-5 text-center shadow-xl backdrop-blur-sm relative overflow-hidden">
-                {/* Decorative glow */}
-                <div className="absolute -top-10 -right-10 w-24 h-24 bg-oro/10 rounded-full blur-xl pointer-events-none" />
-                <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-oro/5 rounded-full blur-xl pointer-events-none" />
-                
-                <p className="text-oro font-semibold text-sm mb-1">Vuoi partecipare a questo evento?</p>
-                <p className="text-xs text-oro-dark/80 mb-4 leading-relaxed">L'iscrizione ed il check-in automatico con QR code sono riservati ai membri associativi.</p>
-                <button
-                  onClick={() => navigate('/login')}
-                  className="w-full bg-gradient-to-r from-oro via-oro-light to-oro text-noce py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider active:scale-[0.97] transition-all shadow-lg shadow-oro/10 hover:brightness-110"
-                >
-                  Accedi con Google
-                </button>
-              </div>
+              <LoginBanner context="event" />
             )}
 
             {registered && (

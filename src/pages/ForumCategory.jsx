@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
+import LoginBanner from '../components/LoginBanner.jsx'
 import AppHeader from '../components/AppHeader.jsx'
 import BottomNav from '../components/BottomNav.jsx'
 import FeedCard from '../components/FeedCard.jsx'
@@ -98,14 +99,8 @@ export default function ForumCategory() {
       </div>
 
       {!user && (
-        <div className="absolute bottom-[53px] left-0 right-0 p-4 bg-gradient-to-r from-noce/95 via-stone-900/95 to-noce/95 border-t border-oro/30 flex items-center justify-between px-5 z-20 backdrop-blur-md shadow-2xl">
-          <div className="flex flex-col gap-0.5">
-            <span className="text-xs text-oro font-semibold tracking-wide">Vuoi partecipare alla community?</span>
-            <span className="text-[10px] text-oro-dark/80">Accedi per creare nuove discussioni o rispondere</span>
-          </div>
-          <Link to="/login" className="bg-gradient-to-r from-oro via-oro-light to-oro text-noce text-[10px] font-bold px-4 py-2 rounded-xl active:scale-[0.96] transition-transform uppercase tracking-wider shadow-lg shadow-oro/20 hover:brightness-110">
-            Accedi
-          </Link>
+        <div className="absolute bottom-[53px] left-0 right-0 z-20">
+          <LoginBanner context="forum" />
         </div>
       )}
 
