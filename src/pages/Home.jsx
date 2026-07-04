@@ -6,6 +6,7 @@ import BottomNav from '../components/BottomNav.jsx'
 import FeedCard from '../components/FeedCard.jsx'
 import { SkeletonCard } from '../components/LoadingSpinner.jsx'
 import EmptyState from '../components/EmptyState.jsx'
+import StemmaComune from '../components/StemmaComune.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import api from '../api/client.js'
 import { showToast } from '../components/Toast.jsx'
@@ -58,7 +59,7 @@ export default function Home() {
     <div className="app-shell">
       <ToastContainer />
       {!online && (
-        <div className="bg-amber-600 text-white text-xs text-center py-1.5 px-4 flex-shrink-0">
+        <div className="bg-oro-dark text-white text-xs text-center py-1.5 px-4 flex-shrink-0">
           {t('home.offline')}
         </div>
       )}
@@ -132,6 +133,29 @@ export default function Home() {
                   <span className="text-xs font-semibold text-stone-700">{t('home.numbers_button', 'Useful numbers')}</span>
                 </button>
               </div>
+            </div>
+
+            {/* Il territorio: stemmi dei tre comuni -> Storia */}
+            <div className="mx-4 lg:mx-0">
+              <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium mb-2">{t('home.territory', 'Il territorio')}</p>
+              <button
+                onClick={() => navigate('/storia')}
+                className="stone-card w-full flex items-center justify-between gap-3 active:scale-[0.98] transition-transform"
+              >
+                <div className="flex items-center gap-2.5">
+                  <StemmaComune comune="villafranca" variant="pieno" size={28} />
+                  <StemmaComune comune="povegliano" variant="pieno" size={28} />
+                  <StemmaComune comune="mozzecane" variant="pieno" size={28} />
+                  <StemmaComune comune="vigasio" variant="pieno" size={28} />
+                </div>
+                <div className="text-right min-w-0">
+                  <p className="text-xs font-semibold text-stone-700">{t('home.territory_link', 'Storia del territorio')}</p>
+                  <p className="text-[10px] text-stone-400">{t('home.territory_sub', 'Villafranca · Povegliano · Mozzecane')}</p>
+                </div>
+                <svg className="w-4 h-4 text-stone-400 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
           </div>
 

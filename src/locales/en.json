@@ -27,7 +27,10 @@
     "empty_posts": "No posts yet",
     "empty_posts_sub": "Be the first to write on the forum",
     "offline": "You're offline — some content may be outdated",
-    "attendees": "attending"
+    "attendees": "attending",
+    "territory": "The area",
+    "territory_link": "History of the area",
+    "territory_sub": "Villafranca · Povegliano · Mozzecane · Vigasio"
   },
   "forum": {
     "title": "Forum",
@@ -109,8 +112,38 @@
   },
   "mappa": {
     "title": "Fontanin Map",
-    "intro": "Points of interest and areas nearby: the spring, the Fosso Nuovo stream and the surroundings of Villa Canossa. Boundaries are indicative and under review.",
+    "intro": "Points of interest and areas nearby: the spring, the Fosso Nuovo stream, the surroundings of Villa Canossa, other springs, nearby protected green areas, and the main castles and historic monuments within about 10 km, including the route of the Serraglio Scaligero. Boundaries are indicative and under review.",
     "legend": "Legend",
+    "legend_water": "Other water points",
+    "legend_green": "Protected green areas",
+    "legend_storia": "Castles and historic monuments (~10 km)",
+    "oasi_bora_title": "Oasi della Bora (WWF)",
+    "oasi_bora_body": "A protected woodland of about 1.5 hectares in Povegliano Veronese, created in 1992 on former farmland. The Fossa Bora spring runs through it; home to over 40 native tree species and protected wildlife (kingfisher, sparrowhawk, crested newt).",
+    "parco_tione_title": "Parco del Tione",
+    "parco_tione_body": "An urban park of about 150,000 sqm along the Tione river in Villafranca, redeveloped in 2021-2023 with a 7.5 km walking path, sports areas and family spaces.",
+    "fossa_moretta_title": "Fossa Moretta",
+    "fossa_moretta_body": "A spring about 200 metres from Il Fontanin, in the municipality of Povegliano Veronese: two water heads historically used to irrigate the area's rice fields.",
+    "tione_title": "Source of the Tione river",
+    "tione_body": "The Tione rises from the springs of Grezzano (Mozzecane) and flows through Villafranca, Mozzecane and the lower Veronese plain before joining the Tartaro.",
+    "hawk_title": "Former Hawk base – Parco Diffuso delle Risorgive",
+    "hawk_body": "The site of a former NATO military base in Povegliano, at the centre of the \"Fontanili di Povegliano: Biodiversità Bene Comune\" project (2025-2026): 14 hectares to be returned to the community as a diffuse nature park, linked to the springs of Villafranca.",
+    "castello_villafranca_title": "Villafranca Scaliger Castle",
+    "castello_villafranca_body": "Built in 1202 and extended in 1256, it was one of the defensive strongholds of Scaliger Verona and the western anchor of the Serraglio. About 2 km from Il Fontanin.",
+    "serraglio_title": "Serraglio Scaligero",
+    "serraglio_body": "A fortified line of earthworks and moats built by Cangrande II della Scala (1345-1354) to protect the Veronese farmland: it linked Villafranca to Valeggio sul Mincio via Custoza, for about 15 km. The route shown is indicative, between the three strongholds.",
+    "castello_valeggio_title": "Valeggio sul Mincio Scaliger Castle",
+    "castello_valeggio_body": "A late-13th-century fortress above the Mincio river, connected to the Visconti Bridge (1393) at Borghetto: the eastern anchor of the Serraglio. About 10.5 km from Il Fontanin.",
+    "rocca_nogarole_title": "Rocca di Nogarole",
+    "rocca_nogarole_body": "The castle of the Nogarola family, which gave its name to the village of Nogarole Rocca. About 7.8 km from Il Fontanin.",
+    "necropoli_povegliano_title": "Necropolis and Balladoro Museum",
+    "necropoli_povegliano_body": "In Povegliano Veronese: Bronze Age and Roman necropolises, and one of the most important Lombard necropolises in Veneto (6th-7th century). Grave goods are held at the G. Balladoro Archaeological Museum. About 6.3 km from Il Fontanin.",
+    "pieve_sommacampagna_title": "Pieve di Sant'Andrea",
+    "pieve_sommacampagna_body": "An ancient parish church in Sommacampagna, near the site of the Roman vicus along the road to Mantua. About 5.2 km from Il Fontanin.",
+    "ossario_custoza_title": "Custoza Ossuary",
+    "ossario_custoza_body": "A monument to the fallen of the two Battles of Custoza (1848 and 1866), among the decisive clashes of the Italian unification wars. Custoza was also a waypoint on the Serraglio Scaligero. About 9 km from Il Fontanin.",
+    "abbazia_vigasio_title": "Abbey of San Zeno",
+    "abbazia_vigasio_body": "In Vigasio, a village with municipal statutes dating back to 1226, among the oldest in the area. About 4.7 km from Il Fontanin.",
+    "storia_link": "Read more in the History section",
     "fontanin": "Il Fontanin",
     "fontanin_body": "The historic spring, excavated in 1682.",
     "villa_canossa": "Villa Canossa",
@@ -130,6 +163,128 @@
     "ente_consorzio": "Waterway network and ditch maintenance",
     "ristorante": "Nearby",
     "ristorante_note": "Venetian cuisine, closed on Tuesdays · booking recommended"
+  },
+  "storia": {
+    "title": "History of the area",
+    "intro": "The story of the land around Il Fontanin — Villafranca, Povegliano, Mozzecane, Valeggio and the plain of the resurgent springs — from Roman times to today: the medieval Communes, the Scaligeri, the Signorie, the Venetian Republic, the Quadrilateral and the Kingdom of Italy, the 20th century.",
+    "comuni_title": "The municipalities",
+    "eras_title": "The eras",
+    "stemmi_note": "The coats of arms shown are simplified vector reproductions of the official civic blazons (without mural crown and ornamental branches), for illustrative community use.",
+    "comuni": [
+      { "stemma": "villafranca", "nome": "Villafranca di Verona", "ruolo": "City of the armistice", "sintesi": "A free borough founded by the Comune of Verona in 1185 along the Via Postumia: its name comes from the tax exemption (\"villa franca\") granted to settlers. Scaliger castle of 1202, western anchor of the Serraglio, and site of the 1859 armistice. Il Fontanin (1682) lies in its territory, in the Sant'Andrea area." },
+      { "stemma": "povegliano", "nome": "Povegliano Veronese", "ruolo": "Springs and Lombard heritage", "sintesi": "The main municipality of the spring belt: the Tartaro and many fontanili (Fossa Bora, Fossa Moretta) rise here. It holds one of the most important Lombard necropolises in Veneto (6th-7th century), with grave goods on display at the Balladoro Museum: a heritage that ties the village to the Lombard duchy of Verona." },
+      { "stemma": "mozzecane", "nome": "Mozzecane", "ruolo": "Land of the Canossa", "sintesi": "A municipality on the Mantuan border, crossed by the Tione, which rises from the springs of Grezzano. At Grezzano the marquises of Canossa — the family whose canting arms show a dog with a bone — built Villa Canossa in the 18th century, still the heart of the hamlet and adjoining the Fontanin area." },
+      { "stemma": "vigasio", "nome": "Vigasio", "ruolo": "Waters and ancient statutes", "sintesi": "A village between the Tartaro and the springs — the dragonflies on its coat of arms tell of its waters — with municipal statutes as early as 1226, among the oldest on the Veronese plain, and the ancient abbey of San Zeno." },
+      { "stemma": null, "nome": "Valeggio sul Mincio", "ruolo": "Eastern anchor of the Serraglio", "sintesi": "On the Mincio, with its late-13th-century Scaliger castle and the Visconti Bridge at Borghetto (1393): the eastern anchor of the Serraglio and a historic hinge between Verona and Mantua, from prehistoric pile dwellings to the battles of the Risorgimento." }
+    ],
+    "eras": [
+      {
+        "title": "Prehistory and the Roman era",
+        "period": "up to the 5th century AD",
+        "items": [
+          { "comune": "Villafranca di Verona", "title": "Via Postumia", "body": "The great Roman consular road (148 BC), linking Genoa to Aquileia, passed through this area, making it a hub of trade between Verona and Cremona from early on." },
+          { "comune": "Povegliano Veronese", "title": "Gambaloni and Ortaia necropolises", "body": "Bronze Age settlements and a Roman necropolis (1st-3rd century AD): the finds are now held at the G. Balladoro Archaeological Museum." },
+          { "comune": "Sommacampagna", "title": "Roman vicus of Custoza", "body": "A small Roman settlement stood along the road to Mantua, in the area of today's Custoza hamlet." },
+          { "comune": "Valeggio sul Mincio", "title": "Pile-dwelling settlement", "body": "Remains of a Bronze Age pile-dwelling settlement have been found in the Mincio area, part of the UNESCO serial site \"Prehistoric Pile Dwellings around the Alps\"." }
+        ]
+      },
+      {
+        "title": "The Lombards and the Early Middle Ages",
+        "period": "6th - 10th century",
+        "items": [
+          { "comune": "Povegliano Veronese", "title": "The Lombard heritage", "body": "Within the Lombard duchy of Verona, Povegliano was the site of a significant settlement: its necropolis (6th-7th century) is among the most important in Veneto, with warriors buried with weapons, shields and even horses and dogs. The grave goods are on display at the Balladoro Museum: this is the heart of the area's Lombard heritage." },
+          { "comune": "Mozzecane", "title": "Rural estates between Verona and Mantua", "body": "In the Early Middle Ages the territory was organised into rural estates on the edge of the spring belt, in a border zone long disputed between the Veronese and Mantuan lands." },
+          { "comune": "Vigasio", "title": "First organised settlements", "body": "The earliest traces of organised settlement date to this period, linked to the first works to control the waters." }
+        ]
+      },
+      {
+        "title": "The age of the Communes",
+        "period": "11th - 13th century",
+        "items": [
+          { "comune": "Villafranca di Verona", "title": "The free borough of 1185", "body": "The Comune of Verona founded the borough of the \"Fossa\" in 1185, granting settlers exemption from duties: from this franchise comes the name Villa Franca. It is the town's founding act, planned with the typical grid layout of the communal new towns." },
+          { "comune": "Vigasio", "title": "Municipal statutes of 1226", "body": "Among the oldest municipal statutes in the area: evidence of an already well-structured civic organisation on the Veronese plain." },
+          { "comune": "Povegliano Veronese", "title": "Parish and rural community", "body": "The community consolidated around its parish church and the waters of the springs, which fed mills and irrigated meadows." }
+        ]
+      },
+      {
+        "title": "The Scaligeri",
+        "period": "1262 - 1387",
+        "items": [
+          { "comune": "Villafranca di Verona", "title": "The Scaliger Castle", "body": "Built in 1202 and extended in 1256, under the Della Scala the castle became one of the defensive strongholds of the Veronese lordship, at the western tip of the fortified system of the plain." },
+          { "comune": "Villafranca - Custoza - Valeggio", "title": "The Serraglio Scaligero", "body": "Cangrande II della Scala had a line of earthworks, moats and towers about 15 km long built (1345-1354), linking Villafranca to Valeggio via Custoza: a forward defence protecting the Veronese farmland." },
+          { "comune": "Valeggio sul Mincio", "title": "The castle on the Mincio", "body": "The late-13th-century Scaliger fortress dominates the Mincio valley and the village of Borghetto, the eastern anchor of the Serraglio." },
+          { "comune": "Nogarole Rocca", "title": "The Rocca of the Nogarola", "body": "The castle of the feudal Nogarola family, allies of the Scaligeri, gives its name to the village." }
+        ]
+      },
+      {
+        "title": "The Signorie: Visconti and Carraresi",
+        "period": "1387 - 1405",
+        "items": [
+          { "comune": "Verona and its territory", "title": "The Visconti conquest", "body": "In 1387 Gian Galeazzo Visconti, lord of Milan, ended the Scaliger lordship: the plain of Villafranca and Valeggio also entered the Visconti dominions." },
+          { "comune": "Valeggio sul Mincio", "title": "The Visconti Bridge", "body": "In 1393 the Visconti completed at Borghetto the fortified bridge-dam, about 600 metres long, integrated into the Serraglio system: one of the most imposing military works of the Po plain." },
+          { "comune": "Verona and its territory", "title": "The Carrarese interlude", "body": "On Gian Galeazzo's death (1402) the territory passed briefly to the Carraresi of Padua (1404), the last episode of the wars between the Signorie before Venice arrived." }
+        ]
+      },
+      {
+        "title": "The Venetian Republic",
+        "period": "1405 - 1797",
+        "items": [
+          { "comune": "Verona and its territory", "title": "Devotion to Venice", "body": "In 1405 Verona and its territory gave themselves to the Republic of Venice: almost four centuries of Venetian peace began, during which the plain of the springs became a mosaic of irrigated meadows, rice fields and farm estates." },
+          { "comune": "Mozzecane (Grezzano)", "title": "The Canossa and Villa Canossa", "body": "From 1414 the Canossa family — whose canting arms show a dog with a bone — acquired holdings in the area; in the 18th century Marquis Carlo di Canossa built at Grezzano the villa that still marks the landscape next to Il Fontanin." },
+          { "comune": "Villafranca di Verona", "title": "Il Fontanin is dug", "body": "In 1682 the historic Il Fontanin spring was excavated in the Sant'Andrea area: perennial water for meadows and rice fields, and the starting point of this community's story." }
+        ]
+      },
+      {
+        "title": "From Napoleon to the Kingdom of Italy: the Quadrilateral",
+        "period": "1797 - 1866",
+        "items": [
+          { "comune": "Verona and its territory", "title": "The fall of the Venetian Republic", "body": "In 1797 Napoleon ended the Republic of Venice; after 1815 the territory entered the Kingdom of Lombardy-Venetia under Austria." },
+          { "comune": "Veronese and Mantuan plain", "title": "The Quadrilateral", "body": "Austria organised its defence around the four fortresses of Verona, Peschiera, Mantua and Legnago: the \"Quadrilateral\". The plain of Villafranca, Povegliano and Valeggio, at the centre of the system, became the manoeuvring ground of armies in the wars of independence." },
+          { "comune": "Sommacampagna (Custoza)", "title": "The two Battles of Custoza", "body": "The hills of Custoza were the site of two decisive clashes of the Risorgimento (1848 and 1866); the Ossuary preserves the memory of the fallen of both battles." },
+          { "comune": "Villafranca di Verona", "title": "The armistice of 1859", "body": "On 11-12 July 1859 Napoleon III and Franz Joseph signed at Villafranca the armistice ending the Second Italian War of Independence: ever since, it has been \"the city of the armistice\"." },
+          { "comune": "Verona and its territory", "title": "Annexation to the Kingdom of Italy", "body": "In 1866, with the Third War of Independence and the plebiscite, Veneto left Austria and joined the Kingdom of Italy: the municipalities around Il Fontanin became Italian too." }
+        ]
+      },
+      {
+        "title": "The 20th century: wars and Fascism",
+        "period": "1900 - 1945",
+        "items": [
+          { "comune": "Villafranca di Verona", "title": "The military airfield", "body": "In the early 1900s one of Italy's first military airfields was established at Villafranca, active in both world wars: it is the origin of today's Verona-Villafranca airport." },
+          { "comune": "Veronese and Mantuan plain", "title": "The Fascist era: land reclamation and regimentation", "body": "Under Fascism the \"integral land reclamation\" (1933 law) reorganised canals, ditches and water boards: the spring network was brought into the bodies that would become today's Consorzio di Bonifica Veronese, while village life was regimented within the structures of the regime." },
+          { "comune": "Villafranca and surroundings", "title": "The Second World War", "body": "Between 1944 and 1945 the airfield, railways and roads of the area were repeatedly bombed by the Allies; Liberation came at the end of April 1945 as the front crossed the line of the Mincio and the Adige." }
+        ]
+      },
+      {
+        "title": "From the post-war years to today",
+        "period": "1945 - today",
+        "items": [
+          { "comune": "Veronese and Mantuan plain", "title": "Reconstruction and growth", "body": "From the post-war years the spring-belt countryside combined irrigated agriculture with a dense fabric of small industry and crafts; the villages grew along the roads to Verona and Mantua." },
+          { "comune": "Povegliano Veronese", "title": "The Cold War: the Hawk base", "body": "From the 1960s a NATO missile base (Hawk system) occupied 14 hectares of countryside at Povegliano: decommissioned, it is now at the centre of the project to convert it into a \"Parco Diffuso delle Risorgive\"." },
+          { "comune": "Villafranca and Povegliano", "title": "Back to the springs", "body": "With the \"Fontanili di Povegliano: Biodiversità Bene Comune\" project and the civic movement for the Parco del Fontanin, the community is rediscovering its waters: biodiversity protection, trails and shared care of the land." }
+        ]
+      }
+    ],
+    "disclaimer": "Popular historical summary for community purposes: dates and details should be checked against each municipality's official historiographical sources."
+  },
+  "geologia": {
+    "title": "Geology of Il Fontanin",
+    "intro": "Why, at this exact point of the Veronese plain, groundwater rises spontaneously to the surface: the geology of the risorgive (resurgent springs) explained briefly.",
+    "sections": [
+      { "title": "The Veronese plain in three bands", "body": "The upper plain, gravelly and highly permeable, lets water from the Alpine rivers infiltrate quickly into the ground. In the middle plain the soil gradually becomes finer (sands and silts): this is where the spring belt lies, about 30 km wide and 8 km deep, running across the whole Venetian plain. In the lower plain, clayey and poorly permeable, water flows almost entirely on the surface, in artificially regulated canals and ditches." },
+      { "title": "How a resurgent spring forms", "body": "In the upper plain, water infiltrates the gravel and forms a large underground aquifer that flows slowly downhill. Where the subsoil becomes less permeable, the water table can no longer sink further and is pushed upward, until it resurfaces spontaneously in pools and water heads: this is the phenomenon of the risorgiva, or resurgent spring. Il Fontanin sits exactly in this transition belt." },
+      { "title": "An almost constant flow", "body": "Unlike surface streams, resurgent springs keep a relatively stable flow and temperature all year round, because the water feeding them has slowly travelled through the underground aquifer for months or years before resurfacing. This has historically made them valuable for irrigating fields and running mills, even in the driest months." },
+      { "title": "A unique ecosystem", "body": "The clear, constant-temperature water of resurgent springs supports distinctive ecosystems, with aquatic plants (macrophytes), fish and wildlife not found elsewhere on the plain: this is the case for the protected areas near Il Fontanin, such as the Oasi della Bora and the Parco del Tione, shown in the Map section." },
+      { "title": "A widespread system", "body": "Across the Venetian spring belt, the resurgent springs together discharge roughly 11-12 cubic metres of water per second, spread across six main hydrographic systems: Il Fontanin is part of this widespread network, not an isolated case." }
+    ],
+    "disclaimer": "Popular explanation for community purposes, based on general geographic sources about the Venetian spring belt: a precise survey of Il Fontanin itself would require local hydrogeological data, not currently available."
+  },
+  "acqua": {
+    "title": "Water Analysis and Sensors",
+    "intro": "This is where analyses of Il Fontanin's water quality and data from on-site sensors will appear in the future.",
+    "empty_title": "No data available",
+    "empty_sub": "No sensors have been installed yet and no analyses have been carried out. Once available, results (temperature, flow rate, chemical-physical parameters) will be published on this page.",
+    "propose_title": "Want to contribute?",
+    "propose_body": "If you're part of the community and want to propose a water analysis or the installation of a sensor, bring it up in the forum or at community events."
   },
   "guide": {
     "title": "Quick guide",

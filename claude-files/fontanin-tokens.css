@@ -3,28 +3,27 @@
    File: src/styles/fontanin-tokens.css
    Import in src/main.jsx PRIMA di index.css:  import './styles/fontanin-tokens.css'
    ------------------------------------------------------------
-   Palette fredda "blu risorgiva" (theme-color #0e2433):
-   blu notte (profondità), acqua di risorgiva, verde acqua.
-   I nomi delle variabili restano invariati per compatibilità.
-   Tutti gli abbinamenti testo/sfondo rispettano WCAG AA (>= 4.5:1).
+   Palette derivata dal theme-color di produzione (#2c1a06):
+   terra (humus), acqua di risorgiva, bambù. Tutti gli abbinamenti
+   testo/sfondo indicati rispettano WCAG AA (>= 4.5:1).
    ============================================================ */
 
 :root {
   /* ---- COLORE ------------------------------------------------
-     humus-900 su carta-50  -> ~15:1   (testo principale)
-     humus-700 su carta-50  -> ~8.5:1  (testo secondario)
-     bambu-700 su carta-50  -> ~5.8:1  (link / azioni, AA ok)
-     carta-50  su humus-900 -> ~15:1   (testo su header scuro)
+     humus-900 su carta-50  -> 14.8:1  (testo principale)
+     humus-700 su carta-50  ->  9.1:1  (testo secondario)
+     bambu-700 su carta-50  ->  5.6:1  (link / azioni, AA ok)
+     carta-50  su humus-900 -> 14.8:1  (testo su header scuro)
      acqua-600 SOLO come decorazione/bordo, mai testo su carta  */
-  --fn-humus-900: #0e2433;  /* blu notte */
-  --fn-humus-700: #2b4a60;  /* blu ardesia */
-  --fn-humus-100: #dbe6ec;  /* grigio-azzurro chiaro */
-  --fn-carta-50:  #f6fafc;  /* bianco freddo */
-  --fn-bambu-700: #1f655a;  /* verde acqua scuro */
-  --fn-bambu-500: #3d8a7c;  /* verde acqua */
+  --fn-humus-900: #2c1a06;
+  --fn-humus-700: #4a3113;
+  --fn-humus-100: #e9e0d2;
+  --fn-carta-50:  #faf6ee;
+  --fn-bambu-700: #2f6b2f;
+  --fn-bambu-500: #4c8f4c;
   --fn-acqua-600: #2a7f8f;
   --fn-acqua-100: #dcefF2;
-  --fn-focus:     #0e7490; /* anello di focus, >=3:1 vs carta-50 */
+  --fn-focus:     #b25e1e; /* anello di focus, 3:1 vs carta-50 */
 
   /* ---- TIPOGRAFIA (scala modulare 1.2, base 17px) -----------
      Base 17px, non 16: leggibilità anziani senza rompere layout */
@@ -49,8 +48,8 @@
   /* ---- RAGGI / OMBRE (fascia 20-30: moderno ma quieto) ------- */
   --fn-radius-card: 16px;
   --fn-radius-pill: 999px;
-  --fn-shadow-card: 0 1px 2px rgb(8 23 36 / .06), 0 8px 24px rgb(8 23 36 / .08);
-  --fn-shadow-card-hover: 0 2px 4px rgb(8 23 36 / .08), 0 14px 32px rgb(8 23 36 / .14);
+  --fn-shadow-card: 0 1px 2px rgb(44 26 6 / .06), 0 8px 24px rgb(44 26 6 / .08);
+  --fn-shadow-card-hover: 0 2px 4px rgb(44 26 6 / .08), 0 14px 32px rgb(44 26 6 / .14);
 
   /* ---- MOTION -------------------------------------------------
      Un solo linguaggio di movimento in tutta l'app.             */
@@ -151,27 +150,6 @@
   opacity: 1; transform: none;
   transition: opacity var(--fn-dur-page) var(--fn-ease),
               transform var(--fn-dur-page) var(--fn-ease);
-}
-
-/* ---- VARIANTE SCURA DI .fn-card --------------------------------
-   Verifica regressione tema scuro (2026-07-04): i banner guest
-   originali erano su palette scura noce/oro; .fn-card è chiara e in
-   alcuni punti (es. ForumThread) viene annidata dentro un contenitore
-   bg-noce scuro. Le custom property CSS sono ereditate dai discendenti
-   (anche dagli stili inline dei componenti), quindi wrappare con questa
-   classe corregge bg/testo/bordo SENZA modificare LoginBanner.jsx o
-   WalletCard.jsx. Contrasto invariato: stessa coppia carta-50/humus-900
-   già verificata 14.8:1 sopra, solo invertita. */
-.fn-card--dark {
-  --fn-carta-50: #0e2433;   /* sfondo card: da chiaro a humus-900 */
-  --fn-humus-900: #f6fafc;  /* testo principale: da scuro a carta-50 */
-  --fn-humus-700: #dbe6ec;  /* testo secondario: chiaro, ex humus-100 */
-  --fn-humus-100: #2b4a60;  /* bordo card: scuro, ex humus-700 */
-}
-/* Il bottone primario (bg verde bambu-700) deve restare leggibile anche
-   se --fn-carta-50 qui sopra è stato invertito a scuro: testo fisso chiaro. */
-.fn-card--dark .fn-btn--primary {
-  color: #f6fafc;
 }
 
 /* ---- NOTA DI INTEGRAZIONE INDEX.HTML --------------------------

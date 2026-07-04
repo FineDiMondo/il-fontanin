@@ -5,6 +5,7 @@
 
 | Commit    | Autore                  | Contenuto                                      |
 |-----------|-------------------------|------------------------------------------------|
+| 48a4e37   | Antigravity             | feat: aggiunta bottoni rapidi Mappa e Numeri Utili nella Homepage |
 | 2121b81   | Antigravity             | fix: rimozione overflow-hidden da AppHeader per visibilità menu lingua |
 | 6007785   | Antigravity             | Adattamento layout responsive per schermi grandi (desktop) |
 | 998de45   | Antigravity             | Allineamento e deploy delle versioni (1.1.0) per Firebase, Vercel redirect, OpenAPI spec |

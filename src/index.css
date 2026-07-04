@@ -9,7 +9,7 @@
   }
 
   body {
-    background-color: #ede5d5;
+    background-color: #dfe8ee;
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: transparent;
@@ -24,7 +24,7 @@
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
-    background: #f7f0e6;
+    background: #f3f7f9;
     position: relative;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -36,8 +36,8 @@
       height: 95dvh;
       margin: 2.5dvh auto;
       border-radius: 20px;
-      border: 1px solid #e2d2b4;
-      box-shadow: 0 25px 50px -12px rgba(44, 26, 6, 0.12);
+      border: 1px solid #cfdde6;
+      box-shadow: 0 25px 50px -12px rgba(8, 23, 36, 0.14);
     }
   }
 
@@ -59,12 +59,12 @@
   .stone-card {
     background: white;
     border-radius: 14px;
-    border: 0.5px solid #e0d0b0;
+    border: 0.5px solid #d6e1e8;
     padding: 14px;
   }
 
   .skeleton {
-    background: linear-gradient(90deg, #ede5d5 25%, #f5edd8 50%, #ede5d5 75%);
+    background: linear-gradient(90deg, #dfe8ee 25%, #ecf3f7 50%, #dfe8ee 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
     border-radius: 8px;

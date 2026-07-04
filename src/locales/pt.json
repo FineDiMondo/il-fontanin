@@ -109,8 +109,38 @@
   },
   "mappa": {
     "title": "Mapa do Fontanin",
-    "intro": "Pontos de interesse e áreas próximas: a nascente, o riacho Fosso Nuovo e os arredores de Villa Canossa. Limites indicativos, em fase de verificação.",
+    "intro": "Pontos de interesse e áreas próximas: a nascente, o riacho Fosso Nuovo, os arredores de Villa Canossa, outras nascentes, as áreas verdes protegidas próximas e os principais castelos e monumentos históricos num raio de cerca de 10 km, incluindo o traçado do Serraglio Scaligero. Limites indicativos, em fase de verificação.",
     "legend": "Legenda",
+    "legend_water": "Outros pontos d'água",
+    "legend_green": "Áreas verdes protegidas",
+    "legend_storia": "Castelos e monumentos históricos (~10 km)",
+    "oasi_bora_title": "Oasi della Bora (WWF)",
+    "oasi_bora_body": "Área florestal protegida de cerca de 1,5 hectare em Povegliano Veronese, criada em 1992 num antigo terreno agrícola. A nascente Fossa Bora passa por ali; abriga mais de 40 espécies arbóreas nativas e fauna protegida (martim-pescador, gavião, tritão-crestado).",
+    "parco_tione_title": "Parco del Tione",
+    "parco_tione_body": "Parque urbano de cerca de 150.000 m² ao longo do rio Tione em Villafranca, requalificado em 2021-2023 com um percurso pedestre de 7,5 km, áreas esportivas e para famílias.",
+    "fossa_moretta_title": "Fossa Moretta",
+    "fossa_moretta_body": "Nascente a cerca de 200 metros do Fontanin, no município de Povegliano Veronese: duas cabeceiras d'água historicamente usadas para irrigar os arrozais da região.",
+    "tione_title": "Nascente do rio Tione",
+    "tione_body": "O Tione nasce das nascentes de Grezzano (Mozzecane) e atravessa Villafranca, Mozzecane e a baixa planície veronesa até desaguar no Tartaro.",
+    "hawk_title": "Antiga base Hawk – Parco Diffuso delle Risorgive",
+    "hawk_body": "Área da antiga base militar da OTAN em Povegliano, no centro do projeto \"Fontanili di Povegliano: Biodiversità Bene Comune\" (2025-2026): 14 hectares a serem devolvidos à comunidade como parque natural difuso, conectado às nascentes de Villafranca.",
+    "castello_villafranca_title": "Castelo Scaligero de Villafranca",
+    "castello_villafranca_body": "Erguido em 1202 e ampliado em 1256, foi um dos baluartes defensivos da Verona escalígera e a extremidade ocidental do Serraglio. A cerca de 2 km do Fontanin.",
+    "serraglio_title": "Serraglio Scaligero",
+    "serraglio_body": "Cinturão fortificado de aterros e fossos mandado construir por Cangrande II della Scala (1345-1354) para proteger a planície agrícola veronesa: ligava Villafranca a Valeggio sul Mincio passando por Custoza, por cerca de 15 km. Traçado indicativo entre os três baluartes.",
+    "castello_valeggio_title": "Castelo Scaligero de Valeggio sul Mincio",
+    "castello_valeggio_body": "Fortaleza do final do século XIII sobre o rio Mincio, ligada à Ponte Visconteo (1393) em Borghetto: extremidade oriental do Serraglio. A cerca de 10,5 km do Fontanin.",
+    "rocca_nogarole_title": "Rocca di Nogarole",
+    "rocca_nogarole_body": "Castelo da família Nogarola, que deu nome à vila de Nogarole Rocca. A cerca de 7,8 km do Fontanin.",
+    "necropoli_povegliano_title": "Necrópole e Museu Balladoro",
+    "necropoli_povegliano_body": "Em Povegliano Veronese: necrópoles da Idade do Bronze e romana, e uma das mais importantes necrópoles lombardas do Vêneto (séc. VI-VII). Os achados funerários estão no Museu Arqueológico G. Balladoro. A cerca de 6,3 km do Fontanin.",
+    "pieve_sommacampagna_title": "Pieve di Sant'Andrea",
+    "pieve_sommacampagna_body": "Antiga igreja matriz de Sommacampagna, próxima à área do vicus romano ao longo da estrada para Mantova. A cerca de 5,2 km do Fontanin.",
+    "ossario_custoza_title": "Ossuário de Custoza",
+    "ossario_custoza_body": "Monumento em memória dos caídos nas duas Batalhas de Custoza (1848 e 1866), entre os confrontos decisivos do Risorgimento. Custoza também foi um ponto do Serraglio Scaligero. A cerca de 9 km do Fontanin.",
+    "abbazia_vigasio_title": "Abadia de San Zeno",
+    "abbazia_vigasio_body": "Em Vigasio, vila com estatutos municipais já em 1226, entre os mais antigos da região. A cerca de 4,7 km do Fontanin.",
+    "storia_link": "Saiba mais na seção História",
     "fontanin": "Il Fontanin",
     "fontanin_body": "A nascente histórica, escavada em 1682.",
     "villa_canossa": "Villa Canossa",
@@ -130,6 +160,127 @@
     "ente_consorzio": "Gestão da rede hídrica e manutenção dos córregos",
     "ristorante": "Nas redondezas",
     "ristorante_note": "Cozinha vêneta, fechado às terças-feiras · reserva recomendada"
+  },
+  "storia": {
+    "title": "História do território",
+    "intro": "A história da terra ao redor do Fontanin — Villafranca, Povegliano, Mozzecane, Valeggio e a planície das nascentes de ressurgência — desde a época romana até hoje: os Comuni medievais, os Scaligeri, as Signorie, a República de Veneza, o Quadrilátero e o Reino da Itália, o século XX.",
+    "comuni_title": "Os municípios",
+    "eras_title": "As épocas",
+    "stemmi_note": "Os emblemas mostrados são interpretações gráficas originais inspiradas na heráldica e na história local, não reproduções dos brasões oficiais dos municípios.",
+    "comuni": [
+      { "stemma": "villafranca", "nome": "Villafranca di Verona", "ruolo": "Cidade do armistício", "sintesi": "Um burgo franco fundado pelo Comune de Verona em 1185 ao longo da Via Postumia: seu nome vem da isenção fiscal (\"villa franca\") concedida aos colonos. Castelo escalígero de 1202, extremidade ocidental do Serraglio, e local do armistício de 1859. O Fontanin (1682) fica em seu território, na área de Sant'Andrea." },
+      { "stemma": "povegliano", "nome": "Povegliano Veronese", "ruolo": "Nascentes e herança lombarda", "sintesi": "O principal município da faixa das nascentes: aqui nascem o Tartaro e diversos fontanili (Fossa Bora, Fossa Moretta). Abriga uma das necrópoles lombardas mais importantes do Vêneto (séc. VI-VII), com achados funerários expostos no Museu Balladoro: uma herança que liga a vila ao ducado lombardo de Verona." },
+      { "stemma": "mozzecane", "nome": "Mozzecane", "ruolo": "Terra dos Canossa", "sintesi": "Um município na fronteira mantuana, atravessado pelo Tione, que nasce das nascentes de Grezzano. Em Grezzano, os marqueses de Canossa — família cujo brasão falante mostra um cão com um osso — construíram a Villa Canossa no século XVIII, ainda hoje o coração do distrito e vizinha da área do Fontanin." },
+      { "stemma": null, "nome": "Valeggio sul Mincio", "ruolo": "Extremidade oriental do Serraglio", "sintesi": "Sobre o Mincio, com seu castelo escalígero do final do século XIII e a Ponte Visconteo em Borghetto (1393): a extremidade oriental do Serraglio e uma charneira histórica entre Verona e Mantova, desde as palafitas pré-históricas até as batalhas do Risorgimento." }
+    ],
+    "eras": [
+      {
+        "title": "Pré-história e época romana",
+        "period": "até o século V d.C.",
+        "items": [
+          { "comune": "Villafranca di Verona", "title": "Via Postumia", "body": "A grande estrada consular romana (148 a.C.), que ligava Gênova a Aquileia, passava por esta área, tornando-a desde cedo um ponto de encontro de tráfego entre Verona e Cremona." },
+          { "comune": "Povegliano Veronese", "title": "Necrópoles de Gambaloni e Ortaia", "body": "Assentamentos da Idade do Bronze e necrópole romana (séc. I-III d.C.): os achados estão hoje no Museu Arqueológico G. Balladoro." },
+          { "comune": "Sommacampagna", "title": "Vicus romano de Custoza", "body": "Um pequeno assentamento romano existia ao longo da estrada para Mantova, na área do atual distrito de Custoza." },
+          { "comune": "Valeggio sul Mincio", "title": "Assentamento palafítico", "body": "Na área do Mincio foram encontrados vestígios de um povoado palafítico da Idade do Bronze, parte do sítio seriado da UNESCO \"Sítios palafíticos pré-históricos dos Alpes\"." }
+        ]
+      },
+      {
+        "title": "Os lombardos e a Alta Idade Média",
+        "period": "séc. VI - X",
+        "items": [
+          { "comune": "Povegliano Veronese", "title": "A herança lombarda", "body": "No ducado lombardo de Verona, Povegliano foi sede de um assentamento importante: sua necrópole (séc. VI-VII) está entre as mais importantes do Vêneto, com guerreiros sepultados com armas, escudos e até cavalos e cães. Os achados funerários estão expostos no Museu Balladoro: é o coração da herança lombarda do território." },
+          { "comune": "Mozzecane", "title": "Propriedades rurais entre Verona e Mantova", "body": "Na Alta Idade Média o território se organizou em propriedades rurais na margem da faixa das nascentes, numa zona de fronteira há muito disputada entre veroneses e mantuanos." },
+          { "comune": "Vigasio", "title": "Primeiros assentamentos organizados", "body": "Os primeiros vestígios de um assentamento organizado datam deste período, ligados às primeiras obras de controle das águas." }
+        ]
+      },
+      {
+        "title": "A era dos Comuni",
+        "period": "séc. XI - XIII",
+        "items": [
+          { "comune": "Villafranca di Verona", "title": "O burgo franco de 1185", "body": "O Comune de Verona fundou em 1185 o burgo da \"Fossa\", concedendo aos colonos a isenção de taxas: dessa franquia nasce o nome Villa Franca. É o ato de fundação da vila, planejada com o típico traçado em grade dos novos burgos comunais." },
+          { "comune": "Vigasio", "title": "Estatutos municipais de 1226", "body": "Entre os estatutos municipais mais antigos da região: testemunham uma organização cívica já bem estruturada na planície veronesa." },
+          { "comune": "Povegliano Veronese", "title": "Igreja matriz e comunidade rural", "body": "A comunidade se consolidou em torno de sua igreja matriz e das águas das nascentes, que alimentavam moinhos e prados irrigados." }
+        ]
+      },
+      {
+        "title": "Os Scaligeri",
+        "period": "1262 - 1387",
+        "items": [
+          { "comune": "Villafranca di Verona", "title": "O Castelo Scaligero", "body": "Erguido em 1202 e ampliado em 1256, sob os Della Scala o castelo se tornou um dos baluartes defensivos do senhorio veronês, na extremidade ocidental do sistema fortificado da planície." },
+          { "comune": "Villafranca - Custoza - Valeggio", "title": "O Serraglio Scaligero", "body": "Cangrande II della Scala mandou construir (1345-1354) uma linha de aterros, fossos e torres de cerca de 15 km, ligando Villafranca a Valeggio via Custoza: uma defesa avançada protegendo a planície agrícola veronesa." },
+          { "comune": "Valeggio sul Mincio", "title": "O castelo sobre o Mincio", "body": "A fortaleza escalígera do final do século XIII domina o vale do Mincio e a vila de Borghetto, extremidade oriental do Serraglio." },
+          { "comune": "Nogarole Rocca", "title": "A Rocca dos Nogarola", "body": "O castelo da família feudal Nogarola, aliada dos Scaligeri, dá nome à vila." }
+        ]
+      },
+      {
+        "title": "As Signorie: Visconti e Carraresi",
+        "period": "1387 - 1405",
+        "items": [
+          { "comune": "Verona e seu território", "title": "A conquista viscontea", "body": "Em 1387 Gian Galeazzo Visconti, senhor de Milão, pôs fim ao senhorio escalígero: a planície de Villafranca e Valeggio também entrou nos domínios viscontes." },
+          { "comune": "Valeggio sul Mincio", "title": "A Ponte Visconteo", "body": "Em 1393 os Visconti concluíram em Borghetto a ponte-represa fortificada de cerca de 600 metros, integrada ao sistema do Serraglio: uma das obras militares mais imponentes da planície do Pó." },
+          { "comune": "Verona e seu território", "title": "O interlúdio carrarese", "body": "Com a morte de Gian Galeazzo (1402), o território passou brevemente aos Carraresi de Pádua (1404), último episódio das guerras entre senhorios antes da chegada de Veneza." }
+        ]
+      },
+      {
+        "title": "A República de Veneza",
+        "period": "1405 - 1797",
+        "items": [
+          { "comune": "Verona e seu território", "title": "A dedição a Veneza", "body": "Em 1405 Verona e seu território se entregaram à República de Veneza: começaram quase quatro séculos de paz veneziana, durante os quais a planície das nascentes se tornou um mosaico de prados irrigados, arrozais e propriedades rurais." },
+          { "comune": "Mozzecane (Grezzano)", "title": "Os Canossa e a Villa Canossa", "body": "A partir de 1414 a família Canossa — cujo brasão falante mostra um cão com um osso — adquiriu propriedades na região; no século XVIII o marquês Carlo di Canossa construiu em Grezzano a vila que ainda hoje marca a paisagem ao lado do Fontanin." },
+          { "comune": "Villafranca di Verona", "title": "A escavação do Fontanin", "body": "Em 1682 foi escavada a histórica nascente do Fontanin, na área de Sant'Andrea: água perene para prados e arrozais, ponto de partida da história desta comunidade." }
+        ]
+      },
+      {
+        "title": "De Napoleão ao Reino da Itália: o Quadrilátero",
+        "period": "1797 - 1866",
+        "items": [
+          { "comune": "Verona e seu território", "title": "A queda da República de Veneza", "body": "Em 1797 Napoleão pôs fim à República de Veneza; após 1815 o território passou ao Reino Lombardo-Vêneto sob a Áustria." },
+          { "comune": "Planície veronesa e mantuana", "title": "O Quadrilátero", "body": "A Áustria organizou sua defesa em torno das quatro fortalezas de Verona, Peschiera, Mantova e Legnago: o \"Quadrilátero\". A planície de Villafranca, Povegliano e Valeggio, no centro do sistema, tornou-se o terreno de manobra dos exércitos nas guerras de independência." },
+          { "comune": "Sommacampagna (Custoza)", "title": "As duas Batalhas de Custoza", "body": "As colinas de Custoza foram palco de dois confrontos decisivos do Risorgimento (1848 e 1866); o Ossuário preserva a memória dos caídos de ambas as batalhas." },
+          { "comune": "Villafranca di Verona", "title": "O armistício de 1859", "body": "Em 11-12 de julho de 1859, Napoleão III e Francisco José assinaram em Villafranca o armistício que encerrou a Segunda Guerra da Independência Italiana: desde então, é \"a cidade do armistício\"." },
+          { "comune": "Verona e seu território", "title": "A anexação ao Reino da Itália", "body": "Em 1866, com a Terceira Guerra da Independência e o plebiscito, o Vêneto deixou a Áustria e entrou no Reino da Itália: os municípios ao redor do Fontanin também se tornaram italianos." }
+        ]
+      },
+      {
+        "title": "O século XX: guerras e fascismo",
+        "period": "1900 - 1945",
+        "items": [
+          { "comune": "Villafranca di Verona", "title": "O aeródromo militar", "body": "No início do século XX, um dos primeiros campos de aviação militar da Itália foi estabelecido em Villafranca, ativo nas duas guerras mundiais: é a origem do atual aeroporto de Verona-Villafranca." },
+          { "comune": "Planície veronesa e mantuana", "title": "A era fascista: bonificação e enquadramento", "body": "Sob o fascismo, a \"bonificação integral\" (lei de 1933) reorganizou canais, valas e consórcios hídricos: a rede de nascentes foi incorporada aos órgãos que se tornariam o atual Consorzio di Bonifica Veronese, enquanto a vida das vilas era enquadrada nas estruturas do regime." },
+          { "comune": "Villafranca e arredores", "title": "A Segunda Guerra Mundial", "body": "Entre 1944 e 1945, o aeródromo, ferrovias e estradas da região foram repetidamente bombardeados pelos Aliados; a Libertação chegou no final de abril de 1945, com a passagem da frente pela linha do Mincio e do Adige." }
+        ]
+      },
+      {
+        "title": "Do pós-guerra até hoje",
+        "period": "1945 - hoje",
+        "items": [
+          { "comune": "Planície veronesa e mantuana", "title": "Reconstrução e crescimento", "body": "A partir do pós-guerra, o campo da faixa das nascentes combinou a agricultura irrigada com um tecido denso de pequenas indústrias e artesanato; as vilas cresceram ao longo das estradas para Verona e Mantova." },
+          { "comune": "Povegliano Veronese", "title": "A Guerra Fria: a base Hawk", "body": "A partir dos anos 1960, uma base de mísseis da OTAN (sistema Hawk) ocupou 14 hectares de campo em Povegliano: desativada, está hoje no centro do projeto de conversão em \"Parco Diffuso delle Risorgive\"." },
+          { "comune": "Villafranca e Povegliano", "title": "De volta às nascentes", "body": "Com o projeto \"Fontanili di Povegliano: Biodiversità Bene Comune\" e o movimento cívico pelo Parco del Fontanin, a comunidade está redescobrindo suas águas: proteção da biodiversidade, trilhas e cuidado compartilhado do território." }
+        ]
+      }
+    ],
+    "disclaimer": "Síntese histórica divulgativa para fins comunitários: datas e detalhes devem ser verificados nas fontes historiográficas oficiais de cada município."
+  },
+  "geologia": {
+    "title": "Geologia do Fontanin",
+    "intro": "Por que, exatamente neste ponto da planície veronesa, a água subterrânea sobe espontaneamente à superfície: a geologia das nascentes de ressurgência explicada em resumo.",
+    "sections": [
+      { "title": "A planície veronesa em três faixas", "body": "A alta planície, cascalhenta e muito permeável, deixa infiltrar rapidamente a água dos rios alpinos no subsolo. Na planície média o terreno se torna gradualmente mais fino (areias e siltes): é aqui que fica a faixa das nascentes, com cerca de 30 km de largura e 8 km de profundidade, que atravessa toda a planície vêneta. Na baixa planície, argilosa e pouco permeável, a água escoa quase só na superfície, em canais e valas regulados artificialmente." },
+      { "title": "Como nasce uma nascente de ressurgência", "body": "Na alta planície a água se infiltra no cascalho e forma um grande aquífero subterrâneo que escoa lentamente rio abaixo. Quando o subsolo se torna menos permeável, o lençol freático não consegue mais descer e é empurrado para cima, até ressurgir espontaneamente em poços e cabeceiras d'água: é o fenômeno da risorgiva, ou nascente de ressurgência. O Fontanin está exatamente nessa faixa de transição." },
+      { "title": "Uma vazão quase constante", "body": "Ao contrário dos cursos d'água de superfície, as nascentes de ressurgência mantêm uma vazão e temperatura relativamente estáveis o ano todo, porque a água que as alimenta atravessou lentamente o aquífero subterrâneo por meses ou anos antes de ressurgir. Isso historicamente as tornou preciosas para a irrigação dos campos e o funcionamento de moinhos, mesmo nos meses mais secos." },
+      { "title": "Um ecossistema único", "body": "A água límpida e de temperatura constante das nascentes de ressurgência sustenta ecossistemas particulares, com plantas aquáticas (macrófitas), peixes e fauna que não se encontram em outras partes da planície: é o caso das áreas protegidas próximas ao Fontanin, como a Oasi della Bora e o Parco del Tione, visíveis na seção Mapa." },
+      { "title": "Um sistema difuso", "body": "Na faixa das nascentes vênetas, o conjunto das nascentes de ressurgência descarrega ao todo cerca de 11-12 metros cúbicos de água por segundo, distribuídos em seis principais sistemas hidrográficos: o Fontanin faz parte dessa rede difusa, não é um caso isolado." }
+    ],
+    "disclaimer": "Explicação divulgativa para fins comunitários, baseada em fontes geográficas gerais sobre a faixa das nascentes vênetas: um levantamento pontual do Fontanin exigiria dados hidrogeológicos locais, hoje não disponíveis."
+  },
+  "acqua": {
+    "title": "Análise da Água e Sensores",
+    "intro": "Aqui aparecerão futuramente as análises da qualidade da água do Fontanin e os dados dos sensores instalados no local.",
+    "empty_title": "Nenhum dado disponível",
+    "empty_sub": "Ainda não foram instalados sensores nem realizadas análises. Quando disponíveis, os resultados (temperatura, vazão, parâmetros físico-químicos) serão publicados nesta página.",
+    "propose_title": "Quer contribuir?",
+    "propose_body": "Se você faz parte da comunidade e quer propor uma análise da água ou a instalação de um sensor, fale sobre isso no fórum ou nos eventos da comunidade."
   },
   "guide": {
     "title": "Guia rápido",

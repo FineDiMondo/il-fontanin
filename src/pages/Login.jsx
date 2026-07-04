@@ -55,12 +55,12 @@ export default function Login() {
         <div className="mb-6 droplet-animate">
           <svg width="64" height="80" viewBox="0 0 64 80" fill="none">
             <path d="M32 4C32 4 6 36 6 52C6 67 18 78 32 78C46 78 58 67 58 52C58 36 32 4 32 4Z"
-              fill="#e8c87a" opacity="0.25"/>
+              fill="#8fcae2" opacity="0.25"/>
             <path d="M32 10C32 10 10 40 10 52C10 64.2 20 74 32 74C44 74 54 64.2 54 52C54 40 32 10 32 10Z"
-              fill="#c9a96e" opacity="0.15"/>
+              fill="#639db5" opacity="0.15"/>
             <path d="M32 14C32 14 13 42 13 52.5C13 62.8 21.6 71 32 71"
-              stroke="#e8c87a" strokeWidth="2.5" strokeLinecap="round"/>
-            <circle cx="26" cy="46" r="3" fill="#e8c87a" opacity="0.4"/>
+              stroke="#8fcae2" strokeWidth="2.5" strokeLinecap="round"/>
+            <circle cx="26" cy="46" r="3" fill="#8fcae2" opacity="0.4"/>
           </svg>
         </div>
 
@@ -78,8 +78,8 @@ export default function Login() {
         <div className="flex items-center gap-3 my-8 w-full max-w-[280px]">
           <div className="flex-1 h-px bg-gradient-to-r from-transparent to-noce-light" />
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <circle cx="8" cy="8" r="3" fill="#c9a96e" opacity="0.5"/>
-            <circle cx="8" cy="8" r="1.5" fill="#e8c87a"/>
+            <circle cx="8" cy="8" r="3" fill="#639db5" opacity="0.5"/>
+            <circle cx="8" cy="8" r="1.5" fill="#8fcae2"/>
           </svg>
           <div className="flex-1 h-px bg-gradient-to-l from-transparent to-noce-light" />
         </div>

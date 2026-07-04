@@ -16,6 +16,9 @@ import Dona from './pages/Dona.jsx'
 import Guida from './pages/Guida.jsx'
 import Mappa from './pages/Mappa.jsx'
 import NumeriUtili from './pages/NumeriUtili.jsx'
+import Storia from './pages/Storia.jsx'
+import Geologia from './pages/Geologia.jsx'
+import AnalisiAcqua from './pages/AnalisiAcqua.jsx'
 import LoadingSpinner from './components/LoadingSpinner.jsx'
 
 function ProtectedRoute({ children }) {
@@ -43,6 +46,9 @@ function AppRoutes() {
       <Route path="/guida" element={<Guida />} />
       <Route path="/mappa" element={<Mappa />} />
       <Route path="/numeri-utili" element={<NumeriUtili />} />
+      <Route path="/storia" element={<Storia />} />
+      <Route path="/geologia" element={<Geologia />} />
+      <Route path="/analisi-acqua" element={<AnalisiAcqua />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

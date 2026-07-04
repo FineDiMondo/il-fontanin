@@ -35,6 +35,37 @@ export default function Guida() {
           </button>
         </div>
 
+        <div className="flex gap-2 mb-1">
+          <button
+            onClick={() => navigate('/storia')}
+            className="flex-1 stone-card flex flex-col items-center gap-1.5 py-3 active:scale-[0.97] transition-transform"
+          >
+            <svg className="w-5 h-5 text-oro-dark" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span className="text-[11px] text-stone-600 font-medium">{t('storia.title')}</span>
+          </button>
+          <button
+            onClick={() => navigate('/geologia')}
+            className="flex-1 stone-card flex flex-col items-center gap-1.5 py-3 active:scale-[0.97] transition-transform"
+          >
+            <svg className="w-5 h-5 text-oro-dark" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 12v9m0-9L4 7.5m8 4.5l8-4.5" />
+            </svg>
+            <span className="text-[11px] text-stone-600 font-medium">{t('geologia.title')}</span>
+          </button>
+          <button
+            onClick={() => navigate('/analisi-acqua')}
+            className="flex-1 stone-card flex flex-col items-center gap-1.5 py-3 active:scale-[0.97] transition-transform"
+          >
+            <svg className="w-5 h-5 text-oro-dark" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 2.69l5.66 5.66a8 8 0 11-11.32 0L12 2.69z" />
+            </svg>
+            <span className="text-[11px] text-stone-600 font-medium">{t('acqua.title')}</span>
+          </button>
+        </div>
+
         {Array.isArray(sections) && sections.map((s, i) => (
           <div key={i} className="stone-card p-4">
             <h2 className="font-medium text-oro-dark mb-1">{s.title}</h2>

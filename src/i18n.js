@@ -48,7 +48,9 @@ i18n
       ur: { translation: ur },
       ne: { translation: ne },
     },
-    fallbackLng: 'it',
+    // Fallback deterministico: le chiavi mancanti nelle 6 lingue senza
+    // contenuto storico completo cadono su EN, con IT come ultima risorsa.
+    fallbackLng: { it: ['it'], default: ['en', 'it'] },
     supportedLngs: LANGUAGES.map((l) => l.code),
     nonExplicitSupportedLngs: true,
     interpolation: { escapeValue: false },

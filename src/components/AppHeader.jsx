@@ -62,9 +62,9 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
           <div className="droplet-animate">
             <svg width="22" height="28" viewBox="0 0 22 28" fill="none">
               <path d="M11 1C11 1 2 13 2 18C2 22.9 6.1 27 11 27C15.9 27 20 22.9 20 18C20 13 11 1 11 1Z"
-                fill="#e8c87a" opacity="0.4"/>
+                fill="#8fcae2" opacity="0.4"/>
               <path d="M11 4C11 4 4 14 4 18.5C4 22 7.1 25 11 25"
-                stroke="#e8c87a" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                stroke="#8fcae2" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
             </svg>
           </div>
         )}
