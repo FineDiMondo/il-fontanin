@@ -7,3 +7,6 @@ dist/
 .vercel/
 
 .vercel
+
+.firebase/
+firebase-debug.log
