@@ -1,7 +1,7 @@
-﻿# Fontanin CLI - Edizione Retro' per PowerShell
+# Fontanin CLI - Edizione Retro' per PowerShell
 # Fine di Mondo APS (c) 2026
 
-$Host.UI.RawUI.WindowTitle = "El Fontanin - Retro Terminal Client v1.0.0"
+$Host.UI.RawUI.WindowTitle = "El Fontanin - Retro Terminal Client v1.1.0"
 
 # Codici Colori ANSI per grafica avanzata
 $ESC = [char]27

@@ -1,7 +1,7 @@
-﻿# Fontanin Real Client - Terminal Client App (Real Backend Integration)
+# Fontanin Real Client - Terminal Client App (Real Backend Integration)
 # Fine di Mondo APS (c) 2026
 
-$Host.UI.RawUI.WindowTitle = "El Fontanin - Real Terminal App v1.0.0"
+$Host.UI.RawUI.WindowTitle = "El Fontanin - Real Terminal App v1.1.0"
 
 # Configuration
 $global:BackendUrl = "https://finedimondo-backend-vqytacm7la-ew.a.run.app/community"
