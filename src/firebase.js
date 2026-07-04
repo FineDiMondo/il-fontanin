@@ -3,9 +3,7 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey:     import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'el-fontanin.firebaseapp.com' 
-    : window.location.hostname,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'el-fontanin.firebaseapp.com',
   projectId:  import.meta.env.VITE_FIREBASE_PROJECT_ID,
   appId:      import.meta.env.VITE_FIREBASE_APP_ID,
 }
