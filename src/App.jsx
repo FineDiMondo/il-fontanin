@@ -28,6 +28,16 @@ function ProtectedRoute({ children }) {
   return children
 }
 
+function SocioRoute({ children }) {
+  const { user, loading } = useAuth()
+  if (loading) return <LoadingSpinner />
+  if (!user) return <Navigate to="/login" replace />
+  if (user.ruolo !== 'socio' && user.ruolo !== 'admin') {
+    return <Navigate to="/" replace />
+  }
+  return children
+}
+
 function AppRoutes() {
   return (
     <Routes>
@@ -36,8 +46,8 @@ function AppRoutes() {
       <Route path="/forum" element={<Forum />} />
       <Route path="/forum/:slug" element={<ForumCategory />} />
       <Route path="/forum/thread/:id" element={<ForumThread />} />
-      <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
-      <Route path="/chat/:slug" element={<ProtectedRoute><ChatRoom /></ProtectedRoute>} />
+      <Route path="/chat" element={<SocioRoute><Chat /></SocioRoute>} />
+      <Route path="/chat/:slug" element={<SocioRoute><ChatRoom /></SocioRoute>} />
       <Route path="/events" element={<Events />} />
       <Route path="/events/:id" element={<EventDetail />} />
       <Route path="/research" element={<Research />} />

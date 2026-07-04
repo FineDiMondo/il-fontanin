@@ -70,7 +70,7 @@ class CategoryOut(BaseModel):
 # =============================================================================
 
 class ThreadCreate(BaseModel):
-    category_id: UUID
+    category_id: Optional[UUID] = None
     titolo: str = Field(min_length=5, max_length=300)
     corpo: str = Field(min_length=10)
 
