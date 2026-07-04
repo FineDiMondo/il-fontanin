@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { MapContainer, TileLayer, Marker, Popup, Polygon, Polyline, LayersControl } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, Polygon, Polyline, LayersControl, CircleMarker } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
@@ -50,6 +50,27 @@ const AREA_DEMANIO_CONSORZIO = [
 // Area indicativa di proprietà Canossa (boschetto + villa) a Grezzano.
 const AREA_CANOSSA = [
   [45.3156, 10.8603], [45.3156, 10.8653], [45.3120, 10.8653], [45.3120, 10.8603],
+]
+
+// ---------------------------------------------------------------------------
+// Punti d'acqua e aree verdi protette nei dintorni (bozza 2026-07-04).
+// Fonte: ricerca web su risorgive della fascia veneta, Comune di Povegliano
+// Veronese (elenco ufficiale risorgive), Oasi WWF della Bora, progetto
+// Cariverona "Fontanili di Povegliano: Biodiversità Bene Comune" 2025-26,
+// Parco del Tione (Villafranca). Coordinate indicative/stimate.
+// ---------------------------------------------------------------------------
+
+const FOSSA_MORETTA = [45.3387, 10.8607]
+const OASI_BORA = [45.3548, 10.8376]
+const TIONE_SORGENTE = [45.3315, 10.8760]
+const AREA_HAWK = [45.3650, 10.8150]
+
+const AREA_OASI_BORA = [
+  [45.3560, 10.8360], [45.3560, 10.8395], [45.3536, 10.8395], [45.3536, 10.8360],
+]
+
+const AREA_PARCO_TIONE = [
+  [45.3520, 10.8330], [45.3520, 10.8400], [45.3495, 10.8400], [45.3495, 10.8330],
 ]
 
 export default function Mappa() {
@@ -115,6 +136,44 @@ export default function Mappa() {
                 <strong>{t('mappa.villa_canossa')}</strong><br />{t('mappa.villa_canossa_body')}
               </Popup>
             </Marker>
+
+            {/* Aree verdi protette */}
+            <Polygon
+              positions={AREA_OASI_BORA}
+              pathOptions={{ color: '#15803d', fillColor: '#4ade80', fillOpacity: 0.3, weight: 1.5 }}
+            >
+              <Popup>
+                <strong>{t('mappa.oasi_bora_title')}</strong><br />{t('mappa.oasi_bora_body')}
+              </Popup>
+            </Polygon>
+
+            <Polygon
+              positions={AREA_PARCO_TIONE}
+              pathOptions={{ color: '#15803d', fillColor: '#4ade80', fillOpacity: 0.22, weight: 1.5, dashArray: '4 4' }}
+            >
+              <Popup>
+                <strong>{t('mappa.parco_tione_title')}</strong><br />{t('mappa.parco_tione_body')}
+              </Popup>
+            </Polygon>
+
+            {/* Altri punti d'acqua */}
+            <CircleMarker center={FOSSA_MORETTA} radius={7} pathOptions={{ color: '#0e7490', fillColor: '#22d3ee', fillOpacity: 0.9, weight: 2 }}>
+              <Popup>
+                <strong>{t('mappa.fossa_moretta_title')}</strong><br />{t('mappa.fossa_moretta_body')}
+              </Popup>
+            </CircleMarker>
+
+            <CircleMarker center={TIONE_SORGENTE} radius={7} pathOptions={{ color: '#0e7490', fillColor: '#22d3ee', fillOpacity: 0.9, weight: 2 }}>
+              <Popup>
+                <strong>{t('mappa.tione_title')}</strong><br />{t('mappa.tione_body')}
+              </Popup>
+            </CircleMarker>
+
+            <CircleMarker center={AREA_HAWK} radius={8} pathOptions={{ color: '#15803d', fillColor: '#86efac', fillOpacity: 0.9, weight: 2 }}>
+              <Popup>
+                <strong>{t('mappa.hawk_title')}</strong><br />{t('mappa.hawk_body')}
+              </Popup>
+            </CircleMarker>
           </MapContainer>
         </div>
 
@@ -136,6 +195,14 @@ export default function Mappa() {
           <div className="flex items-center gap-2 text-xs text-stone-600">
             <span className="w-3.5 h-3.5 rounded-sm flex-shrink-0" style={{ background: 'rgba(59,130,246,0.3)', border: '1px solid #2563eb' }} />
             {t('mappa.demanio_title')}
+          </div>
+          <div className="flex items-center gap-2 text-xs text-stone-600">
+            <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: '#22d3ee', border: '2px solid #0e7490' }} />
+            {t('mappa.legend_water')}
+          </div>
+          <div className="flex items-center gap-2 text-xs text-stone-600">
+            <span className="w-3.5 h-3.5 rounded-sm flex-shrink-0" style={{ background: 'rgba(74,222,128,0.35)', border: '1px solid #15803d' }} />
+            {t('mappa.legend_green')}
           </div>
         </div>
 

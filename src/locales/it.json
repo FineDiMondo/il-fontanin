@@ -109,8 +109,20 @@
   },
   "mappa": {
     "title": "Mappa del Fontanin",
-    "intro": "Punti di interesse e aree della zona: la sorgiva, il Fosso Nuovo e i dintorni di Villa Canossa. Confini indicativi, in fase di verifica.",
+    "intro": "Punti di interesse e aree della zona: la sorgiva, il Fosso Nuovo, i dintorni di Villa Canossa, altre risorgive e le aree verdi protette vicine. Confini e posizioni indicativi, in fase di verifica.",
     "legend": "Legenda",
+    "legend_water": "Altri punti d'acqua",
+    "legend_green": "Aree verdi protette",
+    "oasi_bora_title": "Oasi della Bora (WWF)",
+    "oasi_bora_body": "Area boschiva protetta di circa 1,5 ettari a Povegliano Veronese, nata nel 1992 su un ex terreno agricolo. Al suo interno scorre la risorgiva Fossa Bora; ospita oltre 40 specie arboree autoctone e fauna protetta (martin pescatore, sparviere, tritone crestato).",
+    "parco_tione_title": "Parco del Tione",
+    "parco_tione_body": "Parco urbano di circa 150.000 mq lungo il fiume Tione a Villafranca, riqualificato nel 2021-2023 con percorso pedonale di 7,5 km, aree sportive e per famiglie.",
+    "fossa_moretta_title": "Fossa Moretta",
+    "fossa_moretta_body": "Risorgiva a circa 200 metri dal Fontanin, in territorio di Povegliano Veronese: due teste d'acqua storicamente usate per irrigare le risaie della zona.",
+    "tione_title": "Sorgente del fiume Tione",
+    "tione_body": "Il Tione nasce dalle risorgive di Grezzano (Mozzecane) e attraversa Villafranca, Mozzecane e la bassa pianura veronese fino a confluire nel Tartaro.",
+    "hawk_title": "Ex base Hawk – Parco Diffuso delle Risorgive",
+    "hawk_body": "Area della ex base militare NATO a Povegliano, al centro del progetto \"Fontanili di Povegliano: Biodiversità Bene Comune\" (2025-2026): 14 ettari da restituire alla comunità come parco naturalistico diffuso, in collegamento con i fontanili di Villafranca.",
     "fontanin": "Il Fontanin",
     "fontanin_body": "La sorgiva storica, scavata nel 1682.",
     "villa_canossa": "Villa Canossa",
@@ -120,7 +132,7 @@
     "canossa_body": "Boschetto e area della villa (confini indicativi).",
     "demanio_title": "Aree demaniali · Consorzio di Bonifica",
     "demanio_body": "Rive del fosso e aree di manutenzione gestite dal Consorzio di Bonifica Veronese (confini indicativi).",
-    "disclaimer": "Mappa illustrativa: le aree colorate sono bozze tracciate a mano e vanno verificate su base catastale. Segnala eventuali correzioni alla community."
+    "disclaimer": "Mappa illustrativa: aree colorate e posizioni dei punti d'acqua sono bozze tracciate a mano, non un rilievo cartografico ufficiale, e vanno verificate su base catastale/geoportale regionale. Segnala eventuali correzioni alla community."
   },
   "numeri": {
     "title": "Numeri utili",

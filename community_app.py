@@ -1,0 +1,62 @@
+"""
+Entry point FastAPI per il Community Module di Fine di Mondo APS.
+Deployato come servizio separato su Cloud Run: freedomrun-community.
+
+Avvio locale:
+  uvicorn community_app:app --host 0.0.0.0 --port 8081 --reload
+"""
+
+import os
+import logging
+from dotenv import load_dotenv
+
+load_dotenv(".env.local")
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from community_module.community_main import community_router
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+app = FastAPI(
+    title="Fine di Mondo APS — Community API",
+    description="Forum, Chat, Esperimenti Sociali, Gestione Eventi",
+    version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=os.getenv("CORS_ORIGINS", "*").split(","),
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(community_router)
+
+
+@app.get("/")
+def root():
+    return {
+        "service": "Fine di Mondo Community API",
+        "version": "1.0.0",
+        "docs": "/docs",
+        "endpoints": {
+            "auth": "/community/auth",
+            "forum": "/community/forum",
+            "chat": "/community/chat",
+            "events": "/community/events",
+            "research": "/community/research",
+            "admin": "/community/admin",
+        },
+    }
+
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8081))
+    uvicorn.run("community_app:app", host="0.0.0.0", port=port, reload=False)

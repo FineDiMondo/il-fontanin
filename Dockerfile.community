@@ -1,0 +1,16 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY requirements_community.txt .
+RUN pip install --no-cache-dir -r requirements_community.txt
+
+COPY community_module/ ./community_module/
+COPY community_app.py .
+COPY pec_manager.py .
+COPY whatsapp_manager.py .
+COPY gemini_jackass_ai.py .
+
+EXPOSE 8080
+
+CMD uvicorn community_app:app --host 0.0.0.0 --port ${PORT:-8080}
