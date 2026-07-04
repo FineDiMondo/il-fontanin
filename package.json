@@ -9,6 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/cli": "^8.4.1",
+    "@capacitor/core": "^8.4.1",
+    "@capacitor/ios": "^8.4.1",
     "@web3auth/ethereum-provider": "^9.7.0",
     "@web3auth/single-factor-auth": "^9.5.0",
     "algosdk": "^3.6.0",
