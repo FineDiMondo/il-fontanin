@@ -5,6 +5,7 @@
 
 | Commit    | Autore                  | Contenuto                                      |
 |-----------|-------------------------|------------------------------------------------|
+| 998de45   | Antigravity             | Allineamento e deploy delle versioni (1.1.0) per Firebase, Vercel redirect, OpenAPI spec |
 | 1e51445   | Sessione Fontanin       | FASE 5: saldo gettoni f in WalletCard.jsx (ASA ID via env, Algorand indexer) |
 | 9e7ae19   | Sessione Nuova          | chore: aggiorna COORDINATION.md — finding #3   |
 | 5cb9660   | Sessione Nuova          | docs: Finding #3 governance memo esperimenti   |
@@ -35,6 +36,5 @@
 
 ## Prossimi step
 
-Tutti i finding con codice sono COMMITTATI (#1, #2, #3, #5). #4 resta BLOCCATO (delibera Consiglio).
-Nessun deploy (Hosting/Cloud Run) né merge su main finché l'utente non conferma esplicitamente in chat.
-Sessione Fontanin → in attesa: report finale 7 punti incarico, poi disponibile per nuove assegnazioni.
+Tutti i finding con codice sono COMMITTATI e DEPLOYATI live (#1, #2, #3, #5). Il finding #4 (Recovery wallet) resta BLOCCATO in attesa di delibera del Consiglio.
+Il deploy di backend e frontend è allineato alla versione 1.1.0 e il redirect permanente da Vercel è attivo.

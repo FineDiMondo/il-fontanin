@@ -69,10 +69,11 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-04 17:30 | Gemini/Antigravity | WRITING | feature/algorand-wallet-mpc | root, community_module, android, ios, desktop, CLI | Audit e allineamento Firebase e versioni applicative |
+| (vuoto — nessuno scrittore attivo) | | | | | |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-04 17:30 | Gemini/Antigravity | DONE | 998de45 | Audit e allineamento Firebase, versioni applicative (1.1.0) e OpenAPI |
 | 2026-07-04 | Gemini/Antigravity | DONE | 1ea21c4 | Integrazione tokens+LoginBanner+WalletCard, fix viewport, deploy FE |
 | 2026-07-04 | Cowork | ABORTED | — | Gate falliti: file handoff mancanti + scrittore concorrente (corretto per R1) |
