@@ -10,3 +10,6 @@ dist/
 
 .firebase/
 firebase-debug.log
+__pycache__/
+*.pyc
+chrome-profile/
