@@ -1,14 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext.jsx'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import LanguageSelector from '../components/LanguageSelector.jsx'
 
 export default function Login() {
-  const { loginWithGoogle, loading } = useAuth()
+  const { loginWithGoogle, loading, error: authError } = useAuth()
   const navigate = useNavigate()
   const { t } = useTranslation()
   const [error, setError] = useState('')
+
+  // Sincronizza l'errore globale del context con lo stato locale
+  useEffect(() => {
+    if (authError) {
+      setError(authError)
+    }
+  }, [authError])
 
   async function handleGoogle() {
     setError('')

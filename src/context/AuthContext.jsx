@@ -15,6 +15,7 @@ export function AuthProvider({ children }) {
     return saved ? JSON.parse(saved) : null
   })
   const [loading, setLoading] = useState(true) // true finché non controlliamo il redirect
+  const [error, setError] = useState(null)
 
   // Gestisce il risultato del redirect Google al ritorno sulla pagina
   useEffect(() => {
@@ -26,10 +27,13 @@ export function AuthProvider({ children }) {
           localStorage.setItem('fdm_token', data.access_token)
           localStorage.setItem('fdm_user', JSON.stringify(data))
           setUser(data)
+          setError(null)
         }
       })
       .catch((err) => {
-        console.error('[Auth] Redirect result error:', err.code, err.message)
+        console.error('[Auth] Redirect result error:', err)
+        const errMsg = err.response?.data?.detail || err.code || err.message
+        setError(errMsg)
       })
       .finally(() => {
         setLoading(false)
@@ -39,11 +43,13 @@ export function AuthProvider({ children }) {
   // Avvia il redirect verso Google (non apre popup)
   async function loginWithGoogle() {
     setLoading(true)
+    setError(null)
     try {
       await signInWithRedirect(auth, googleProvider)
       // La pagina verrà reindirizzata — il codice sotto non viene mai eseguito
     } catch (err) {
       console.error('[Auth] signInWithRedirect error:', err.code, err.message)
+      setError(err.code || err.message)
       setLoading(false)
       throw err
     }
@@ -54,10 +60,11 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('fdm_token')
     localStorage.removeItem('fdm_user')
     setUser(null)
+    setError(null)
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, loginWithGoogle, logout }}>
+    <AuthContext.Provider value={{ user, loading, error, loginWithGoogle, logout }}>
       {children}
     </AuthContext.Provider>
   )
