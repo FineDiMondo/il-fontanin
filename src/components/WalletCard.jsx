@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useWallet } from "../context/WalletContext.jsx";
 
 function shorten(addr) {
@@ -6,10 +6,70 @@ function shorten(addr) {
   return `${addr.slice(0, 6)}…${addr.slice(-6)}`;
 }
 
+// ASA ID del gettone «f»: mai hardcodato. Se la env var non è impostata,
+// la sezione saldo mostra un placeholder invece di un numero (o di un errore).
+const ASA_ID = import.meta.env.VITE_FONTANIN_ASA_ID || null;
+const INDEXER_BASE = "https://mainnet-idx.algonode.cloud/v2";
+
+function formatTokenAmount(rawAmount, decimals) {
+  if (!decimals) return String(rawAmount);
+  const value = rawAmount / 10 ** decimals;
+  return value.toLocaleString("it-IT", { maximumFractionDigits: decimals });
+}
+
 export default function WalletCard() {
   const { isConnected, connectWallet, algorandAddress: address } = useWallet();
   const [status, setStatus] = useState("idle"); // idle | connecting | error
   const [copied, setCopied] = useState(false);
+
+  // ---- Saldo gettoni «f» via Algorand indexer (sola lettura, nessuna chiave coinvolta) ----
+  const [tokenStatus, setTokenStatus] = useState("idle"); // idle | loading | ready | error | unavailable
+  const [tokenBalance, setTokenBalance] = useState(null);
+  const [tokenUnitName, setTokenUnitName] = useState("");
+
+  useEffect(() => {
+    if (!isConnected || !address) return;
+    if (!ASA_ID) {
+      setTokenStatus("unavailable");
+      return;
+    }
+
+    let cancelled = false;
+    setTokenStatus("loading");
+
+    (async () => {
+      try {
+        const [assetsRes, assetInfoRes] = await Promise.all([
+          fetch(`${INDEXER_BASE}/accounts/${address}/assets`),
+          fetch(`${INDEXER_BASE}/assets/${ASA_ID}`),
+        ]);
+        if (!assetsRes.ok || !assetInfoRes.ok) {
+          throw new Error("Indexer non raggiungibile");
+        }
+        const assetsData = await assetsRes.json();
+        const assetInfo = await assetInfoRes.json();
+
+        const held = (assetsData.assets || []).find(
+          (a) => String(a["asset-id"]) === String(ASA_ID)
+        );
+        const decimals = assetInfo?.asset?.params?.decimals ?? 0;
+        const unitName = assetInfo?.asset?.params?.["unit-name"] || "";
+
+        if (cancelled) return;
+        setTokenUnitName(unitName);
+        setTokenBalance(formatTokenAmount(Number(held?.amount ?? 0), decimals));
+        setTokenStatus("ready");
+      } catch (err) {
+        if (cancelled) return;
+        console.error("Saldo token 'f' non disponibile:", err?.message); // mai loggare oggetti chiave
+        setTokenStatus("error");
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isConnected, address]);
 
   const handleConnect = useCallback(async () => {
     setStatus("connecting");
@@ -175,6 +235,83 @@ export default function WalletCard() {
               >
                 Vedi su Algorand
               </a>
+            </div>
+
+            {/* ---- Saldo gettoni «f» ---------------------------------- */}
+            <div
+              style={{
+                marginTop: "1rem",
+                paddingTop: "1rem",
+                borderTop: "1px solid var(--fn-humus-100)",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "var(--fn-text-sm)",
+                  color: "var(--fn-humus-700)",
+                  margin: "0 0 .375rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "var(--fn-tracking-caps)",
+                }}
+              >
+                Saldo gettoni «f»
+              </p>
+
+              {tokenStatus === "unavailable" && (
+                <p
+                  style={{
+                    fontSize: "var(--fn-text-base)",
+                    color: "var(--fn-humus-700)",
+                    margin: 0,
+                  }}
+                >
+                  Saldo non disponibile
+                </p>
+              )}
+
+              {tokenStatus === "loading" && (
+                <p
+                  role="status"
+                  aria-live="polite"
+                  style={{
+                    fontSize: "var(--fn-text-base)",
+                    color: "var(--fn-humus-700)",
+                    margin: 0,
+                  }}
+                >
+                  Verifica del saldo in corso…
+                </p>
+              )}
+
+              {tokenStatus === "error" && (
+                <p
+                  role="alert"
+                  style={{
+                    fontSize: "var(--fn-text-sm)",
+                    color: "var(--fn-humus-900)",
+                    background: "var(--fn-humus-100)",
+                    borderRadius: 8,
+                    padding: ".5rem .75rem",
+                    margin: 0,
+                  }}
+                >
+                  Saldo non disponibile al momento. Riprova più tardi.
+                </p>
+              )}
+
+              {tokenStatus === "ready" && (
+                <p
+                  style={{
+                    fontSize: "var(--fn-text-xl)",
+                    color: "var(--fn-humus-900)",
+                    fontWeight: 700,
+                    margin: 0,
+                  }}
+                >
+                  {tokenBalance} {tokenUnitName}
+                </p>
+              )}
             </div>
           </div>
         )}
