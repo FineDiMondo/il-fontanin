@@ -74,6 +74,7 @@ Al check-out:
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-04 22:22 | Gemini/Antigravity | DONE | b044ee5 | Aggiornamento Firebase npm SDK a v12.15.0 e allineamento dipendenze |
 | 2026-07-04 22:20 | Gemini/Antigravity | DONE | 18851d3 | Corretto category_id, IP client nei survey, riutilizzo engine DB, ASA ID, SocioRoute per chat e user_id Bar; rimossi .pyc e integrato Secret Manager |
 | 2026-07-04 18:04 | Gemini/Antigravity | DONE | 48a4e37 | Aggiunta sezioni Mappa e Numeri Utili nella Homepage |
 | 2026-07-04 18:02 | Gemini/Antigravity | DONE | 2121b81 | Risoluzione bug di overflow-hidden nel selettore lingua |
