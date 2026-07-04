@@ -88,7 +88,7 @@ function Show-MainMenu {
     if ($null -eq $global:AuthToken) {
         Write-Host "│  $ClrOro[1]$ClrWhite Login con Email e Password                        │"
         Write-Host "│  $ClrOro[2]$ClrWhite Registra Nuovo Account (Guest/Visitatore)         │"
-        Write-Host "│  $ClrOro[3]$ClrWhite Login con Google (Apre Chrome + Incolla Token)    │"
+        Write-Host "│  $ClrOro[3]$ClrWhite Login con Google (Loopback Automatico)           │"
         Write-Host "│  $ClrOro[4]$ClrWhite Apri Applicazione Web Online (Chrome)             │"
     } else {
         Write-Host "│  $ClrOro[1]$ClrWhite Logout (Disconnetti sessione)                    │"
