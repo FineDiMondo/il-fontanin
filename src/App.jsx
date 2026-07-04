@@ -16,13 +16,16 @@ import Guida from './pages/Guida.jsx'
 import LoadingSpinner from './components/LoadingSpinner.jsx'
 
 function ProtectedRoute({ children }) {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
+  if (loading) return <LoadingSpinner />
   if (!user) return <Navigate to="/login" replace />
   return children
 }
 
 function AppRoutes() {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
+  // Attende getRedirectResult prima di mostrare qualsiasi route
+  if (loading) return <LoadingSpinner />
   return (
     <Routes>
       <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
