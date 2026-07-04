@@ -17,7 +17,7 @@
     "@web3auth/single-factor-auth": "^9.5.0",
     "algosdk": "^3.6.0",
     "axios": "^1.7.2",
-    "firebase": "^10.12.2",
+    "firebase": "^12.15.0",
     "i18next": "^26.3.4",
     "i18next-browser-languagedetector": "^8.2.1",
     "leaflet": "^1.9.4",
