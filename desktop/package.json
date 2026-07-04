@@ -23,7 +23,15 @@
       "target": "dmg"
     },
     "linux": {
-      "target": "AppImage"
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "arch": [
+        "x64",
+        "arm64",
+        "armv7l"
+      ]
     },
     "directories": {
       "output": "dist-desktop"

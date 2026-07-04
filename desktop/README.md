@@ -32,10 +32,16 @@ Esegui il comando di build per la tua piattaforma:
     ```
     *Il file installabile `.exe` verrà generato nella cartella `desktop/dist-desktop/`.*
 
-*   **Per Linux (Genera un pacchetto `.AppImage`):**
+*   **Per Linux x64 (Genera pacchetti `.AppImage` e `.deb`):**
     ```bash
     npm run dist -- --linux
     ```
+
+*   **Per Linux ARM / Raspberry Pi (Genera pacchetti per Raspberry Pi 32-bit e 64-bit):**
+    ```bash
+    npm run dist -- --linux --arm64 --armv7l
+    ```
+    *Questo genererà file `.AppImage` e `.deb` pronti per l'installazione su Raspberry Pi OS.*
 
 *   **Per macOS (Genera un file installer `.dmg`):**
     ```bash
