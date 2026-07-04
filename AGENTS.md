@@ -1,24 +1,78 @@
-<!-- VERCEL BEST PRACTICES START -->
-## Best practices for developing on Vercel
+# AGENTS.md — Protocollo di coordinamento multi-agente
+Repository: fontanin (El Fontanin — Fine di Mondo APS)
+Posizione: root del repository (D:\Progetti GCloud\fontanin\AGENTS.md)
+Autorità: questo file è la fonte di verità sul coordinamento.
+In caso di conflitto tra un prompt di sessione e questo file, vince
+il più restrittivo dei due.
 
-These defaults are optimized for AI coding agents (and humans) working on apps that deploy to Vercel.
+OGNI AGENTE (Cowork, Gemini/Antigravity, Claude, altri) DEVE:
+1. Leggere questo file PRIMA di qualsiasi lettura/scrittura sul repo.
+2. Registrarsi nella sezione SESSIONI ATTIVE prima di scrivere.
+3. Aggiornare la sezione all'uscita (check-out), anche in caso di errore.
 
-- Treat Vercel Functions as stateless + ephemeral (no durable RAM/FS, no background daemons), use Blob or marketplace integrations for preserving state
-- Edge Functions (standalone) are deprecated; prefer Vercel Functions
-- Don't start new projects on Vercel KV/Postgres (both discontinued); use Marketplace Redis/Postgres instead
-- Store secrets in Vercel Env Variables; not in git or `NEXT_PUBLIC_*`
-- Provision Marketplace native integrations with `vercel integration add` (CI/agent-friendly)
-- Sync env + project settings with `vercel env pull` / `vercel pull` when you need local/offline parity
-- Use `waitUntil` for post-response work; avoid the deprecated Function `context` parameter
-- Set Function regions near your primary data source; avoid cross-region DB/service roundtrips
-- Tune Fluid Compute knobs (e.g., `maxDuration`, memory/CPU) for long I/O-heavy calls (LLMs, APIs)
-- Use Runtime Cache for fast **regional** caching + tag invalidation (don't treat it as global KV)
-- Use Cron Jobs for schedules; cron runs in UTC and triggers your production URL via HTTP GET
-- Use Vercel Blob for uploads/media; Use Edge Config for small, globally-read config
-- If Enable Deployment Protection is enabled, use a bypass secret to directly access them
-- Add OpenTelemetry via `@vercel/otel` on Node; don't expect OTEL support on the Edge runtime
-- Enable Web Analytics + Speed Insights early
-- Use AI Gateway for model routing, set AI_GATEWAY_API_KEY, using a model string (e.g. 'anthropic/claude-sonnet-4.6'), Gateway is already default in AI SDK
-  needed. Always curl https://ai-gateway.vercel.sh/v1/models first; never trust model IDs from memory
-- For durable agent loops or untrusted code: use Workflow (pause/resume/state) + Sandbox; use Vercel MCP for secure infra access
-<!-- VERCEL BEST PRACTICES END -->
+---
+
+## R1 — REGOLA DEL SINGOLO SCRITTORE
+- Un solo agente in scrittura sul repository alla volta.
+- Prima di scrivere: verificare che SESSIONI ATTIVE non contenga
+  altri agenti in stato WRITING. Se ne contiene: FERMARSI e segnalare
+  all'utente. Non esistono eccezioni, nemmeno su file "diversi":
+  package.json, lockfile e .git sono risorse condivise.
+- La lettura è sempre consentita (stato READING, registrazione facoltativa).
+
+## R2 — CHECK-IN / CHECK-OUT (obbligatorio per la scrittura)
+Al check-in, aggiungere una riga alla tabella SESSIONI ATTIVE:
+  data/ora | agente | stato WRITING | branch | moduli toccati | incarico
+Al check-out:
+  - portare lo stato a DONE (o ABORTED, con motivo)
+  - committare o stashare TUTTE le proprie modifiche: vietato lasciare
+    il working tree sporco per la sessione successiva
+  - spostare la riga in STORICO SESSIONI
+
+## R3 — POLICY DI BRANCH E DEPLOY
+- Branch attivo di sviluppo: feature/algorand-wallet-mpc
+- Vietato: commit diretti su main; merge su main senza istruzione
+  esplicita dell'utente in chat.
+- Vietato: deploy (Firebase Hosting, Vercel, backend Cloud Run,
+  Cloud Build APK) senza conferma esplicita dell'utente nella
+  sessione corrente. "Era nel piano" non è una conferma.
+- Ogni commit: messaggio descrittivo, scope minimo, mai mescolare
+  igiene repo e feature nello stesso commit.
+
+## R4 — MODULI PROTETTI (modifica solo su istruzione esplicita)
+- src/context/AuthContext.jsx      (logica auth: consumare, non modificare)
+- src/context/WalletContext.jsx    (logica MPC: consumare, non modificare)
+- Firestore Security Rules / Custom Claims (RBAC)
+- index.html meta viewport         (fix WCAG 1.4.4 già applicato: non regredire)
+
+## R5 — DECISIONI RISERVATE ALL'UMANO (mai decidere in autonomia)
+| # | Decisione | Decisore | Stato |
+|---|---|---|---|
+| 1 | Policy di recovery del wallet (ADR-001) | Consiglio Direttivo | PENDENTE |
+| 2 | ASA ID token "f" su Mainnet | Utente (Daniel) | PENDENTE — mai hardcodare; usare VITE_F_TOKEN_ASA_ID |
+| 3 | Visibilità pubblica GET /community/research/experiments | Consiglio Direttivo | PENDENTE — solo segnalare |
+| 4 | Autorizzazione di ogni deploy | Utente (Daniel) | PER-SESSIONE |
+
+## R6 — CONVENZIONI DI HANDOFF
+- I deliverable in ingresso da sessioni Claude arrivano in claude-files/
+  con un README_HANDOFF.md come manifest: leggerlo sempre per primo.
+- Documenti architetturali (ADR) in docs/ ; l'ADR vigente sul wallet
+  è ADR-001 (MPC non-custodial, Opzione B — implementata, commit 1ea21c4).
+- Test Visitatore: test_visitatore.py nella root, accanto a
+  test_backend.py. Contratto congelato al perimetro rilevato il
+  4/7/2026; non riscrivere, estendere.
+- Report di fine sessione: file modificati con motivo, log dei test
+  eseguiti, punti aperti umani (vedi R5), commit prodotti.
+
+---
+
+## SESSIONI ATTIVE
+| Data/ora | Agente | Stato | Branch | Moduli | Incarico |
+|---|---|---|---|---|---|
+| (vuoto — nessuno scrittore attivo) | | | | | |
+
+## STORICO SESSIONI
+| Data | Agente | Esito | Commit | Note |
+|---|---|---|---|---|
+| 2026-07-04 | Gemini/Antigravity | DONE | 1ea21c4 | Integrazione tokens+LoginBanner+WalletCard, fix viewport, deploy FE |
+| 2026-07-04 | Cowork | ABORTED | — | Gate falliti: file handoff mancanti + scrittore concorrente (corretto per R1) |
