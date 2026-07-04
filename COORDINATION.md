@@ -5,6 +5,7 @@
 
 | Commit    | Autore                  | Contenuto                                      |
 |-----------|-------------------------|------------------------------------------------|
+| 6007785   | Antigravity             | Adattamento layout responsive per schermi grandi (desktop) |
 | 998de45   | Antigravity             | Allineamento e deploy delle versioni (1.1.0) per Firebase, Vercel redirect, OpenAPI spec |
 | 1e51445   | Sessione Fontanin       | FASE 5: saldo gettoni f in WalletCard.jsx (ASA ID via env, Algorand indexer) |
 | 9e7ae19   | Sessione Nuova          | chore: aggiorna COORDINATION.md — finding #3   |
