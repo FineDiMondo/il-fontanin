@@ -1,5 +1,9 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { signInWithPopup, signOut as firebaseSignOut } from 'firebase/auth'
+import {
+  signInWithRedirect,
+  getRedirectResult,
+  signOut as firebaseSignOut,
+} from 'firebase/auth'
 import { auth, googleProvider } from '../firebase.js'
 import api from '../api/client.js'
 
@@ -10,21 +14,38 @@ export function AuthProvider({ children }) {
     const saved = localStorage.getItem('fdm_user')
     return saved ? JSON.parse(saved) : null
   })
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true) // true finché non controlliamo il redirect
 
+  // Gestisce il risultato del redirect Google al ritorno sulla pagina
+  useEffect(() => {
+    getRedirectResult(auth)
+      .then(async (result) => {
+        if (result?.user) {
+          const idToken = await result.user.getIdToken()
+          const { data } = await api.post('/auth/google-login', { id_token: idToken })
+          localStorage.setItem('fdm_token', data.access_token)
+          localStorage.setItem('fdm_user', JSON.stringify(data))
+          setUser(data)
+        }
+      })
+      .catch((err) => {
+        console.error('[Auth] Redirect result error:', err.code, err.message)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [])
+
+  // Avvia il redirect verso Google (non apre popup)
   async function loginWithGoogle() {
     setLoading(true)
     try {
-      const result = await signInWithPopup(auth, googleProvider)
-      const idToken = await result.user.getIdToken()
-
-      const { data } = await api.post('/auth/google-login', { id_token: idToken })
-      localStorage.setItem('fdm_token', data.access_token)
-      localStorage.setItem('fdm_user', JSON.stringify(data))
-      setUser(data)
-      return data
-    } finally {
+      await signInWithRedirect(auth, googleProvider)
+      // La pagina verrà reindirizzata — il codice sotto non viene mai eseguito
+    } catch (err) {
+      console.error('[Auth] signInWithRedirect error:', err.code, err.message)
       setLoading(false)
+      throw err
     }
   }
 

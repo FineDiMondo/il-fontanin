@@ -16,7 +16,14 @@ export default function Login() {
       await loginWithGoogle()
       navigate('/')
     } catch (e) {
-      setError(e?.response?.data?.detail || t('login.error_default'))
+      // Mostra il codice errore Firebase preciso (es. auth/popup-blocked, auth/unauthorized-domain)
+      const firebaseCode = e?.code
+      const backendDetail = e?.response?.data?.detail
+      const msg = firebaseCode
+        ? `Errore Firebase: ${firebaseCode}`
+        : backendDetail || 'Accesso non riuscito. Riprova.'
+      console.error('[Login] Auth error:', e?.code, e?.message)
+      setError(msg)
     }
   }
 
