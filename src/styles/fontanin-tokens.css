@@ -152,6 +152,27 @@
               transform var(--fn-dur-page) var(--fn-ease);
 }
 
+/* ---- VARIANTE SCURA DI .fn-card --------------------------------
+   Verifica regressione tema scuro (2026-07-04): i banner guest
+   originali erano su palette scura noce/oro; .fn-card è chiara e in
+   alcuni punti (es. ForumThread) viene annidata dentro un contenitore
+   bg-noce scuro. Le custom property CSS sono ereditate dai discendenti
+   (anche dagli stili inline dei componenti), quindi wrappare con questa
+   classe corregge bg/testo/bordo SENZA modificare LoginBanner.jsx o
+   WalletCard.jsx. Contrasto invariato: stessa coppia carta-50/humus-900
+   già verificata 14.8:1 sopra, solo invertita. */
+.fn-card--dark {
+  --fn-carta-50: #2c1a06;   /* sfondo card: da chiaro a humus-900 */
+  --fn-humus-900: #faf6ee;  /* testo principale: da scuro a carta-50 */
+  --fn-humus-700: #e9e0d2;  /* testo secondario: chiaro, ex humus-100 */
+  --fn-humus-100: #4a3113;  /* bordo card: scuro, ex humus-700 */
+}
+/* Il bottone primario (bg verde bambu-700) deve restare leggibile anche
+   se --fn-carta-50 qui sopra è stato invertito a scuro: testo fisso chiaro. */
+.fn-card--dark .fn-btn--primary {
+  color: #faf6ee;
+}
+
 /* ---- NOTA DI INTEGRAZIONE INDEX.HTML --------------------------
    RIMUOVERE da index.html:  maximum-scale=1.0, user-scalable=no
    Sostituire con:

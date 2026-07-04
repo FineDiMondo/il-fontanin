@@ -159,7 +159,7 @@ export default function ForumThread() {
       )}
 
       {!user && (
-        <div className="p-3 bg-noce border-t border-pietra-border">
+        <div className="p-3 bg-noce border-t border-pietra-border fn-card--dark">
           <LoginBanner context="thread" />
         </div>
       )}
