@@ -31,7 +31,7 @@ router = APIRouter(prefix="/forum", tags=["forum"])
 # CATEGORIE
 # =============================================================================
 
-@router.get("/categories", response_model=List[CategoryOut])
+@router.get("/categories", response_model=List[CategoryOut], openapi_extra={"security": []})
 def list_categories(current_user: Optional[CommunityUser] = Depends(get_current_user_optional)):
     session = get_session()
     try:
@@ -125,7 +125,7 @@ def get_thread(
         session.close()
 
 
-@router.get("/search", response_model=List[ThreadList])
+@router.get("/search", response_model=List[ThreadList], openapi_extra={"security": []})
 def search_threads(
     q: str = Query(min_length=3),
     page: int = Query(1, ge=1),

@@ -58,7 +58,7 @@ def create_experiment(
         session.close()
 
 
-@router.get("/experiments", response_model=List[ExperimentOut])
+@router.get("/experiments", response_model=List[ExperimentOut], openapi_extra={"security": []})
 def list_experiments(
     stato: Optional[str] = Query(None),
     current_user: Optional[CommunityUser] = Depends(get_current_user_optional),

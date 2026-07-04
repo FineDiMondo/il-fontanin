@@ -39,7 +39,7 @@ BASE_URL = os.getenv("COMMUNITY_BASE_URL", "https://freedomrun-491323.ey.r.appsp
 # EVENTI
 # =============================================================================
 
-@router.get("", response_model=List[EventOut])
+@router.get("", response_model=List[EventOut], openapi_extra={"security": []})
 def list_events(
     page: int = Query(1, ge=1),
     per_page: int = Query(20, ge=1, le=100),
