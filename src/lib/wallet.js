@@ -1,11 +1,15 @@
-// Gestione locale del saldo in punti F, per singolo utente.
+// Gestione locale del saldo in monete F, per singolo utente.
+// Schema monetario community (2026-07-04): F = moneta base, 1 F = 1 €.
+// Tagli: G = 10 F (moneta grande), J = 2 F. Al bar si comprano "biglietti"
+// a prezzo fisso per categoria (B birra 3F, C cocktail 4F, P panino/pasta 3F,
+// R risotto 4F) — vedi src/pages/Bar.jsx.
 // NOTA: implementazione mock su localStorage in attesa di individuare e
 // collegare il servizio reale di wallet/ledger (vedi progetto "Ledger & Audit").
 // Sostituire con chiamate a `api` (gia' autenticate via JWT) quando
 // l'endpoint reale sara' disponibile: le firme delle funzioni sono pensate
 // per restare compatibili con una versione async collegata al backend.
 
-const DEFAULT_BALANCE = 120
+const DEFAULT_BALANCE = 20 // 20 F = 20 €, omaggio di benvenuto
 
 function balanceKey(userId) {
   return `fdm_wallet_f_${userId}`

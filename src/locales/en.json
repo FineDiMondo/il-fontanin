@@ -92,11 +92,13 @@
     "cat_beer": "Beer",
     "cat_wine": "Wine and bubbles",
     "cat_cocktail": "International cocktails",
+    "cat_kitchen": "Kitchen",
     "cat_snack": "Snacks",
     "recent": "Your recent contributions",
     "insufficient": "Not enough F points",
     "contributed": "You contributed {{amount}} F for {{item}}",
-    "support_link": "Want to contribute with a bank transfer too? Support the community →"
+    "support_link": "Want to contribute with a bank transfer too? Support the community →",
+    "rate_note": "1 F = 1 €"
   },
   "dona": {
     "title": "Support the community",
@@ -114,6 +116,7 @@
       { "title": "Chat", "body": "Real-time messaging rooms: public, private, or tied to an event." },
       { "title": "Events", "body": "Calendar of clean-up days, meetups and activities. Register and show your QR at the entrance." },
       { "title": "Bar and F points", "body": "Every drink at the bar is a contribution in F points to the community, tracked on your profile." },
+      { "title": "Fontanin coins", "body": "F is the base coin (1 F = 1 €), G is worth 10 F (large denomination) and J is worth 2 F. At the bar you'll also find fixed-price \"tickets\": B beer 3F, C cocktail 4F, P sandwich/pasta 3F, R risotto 4F." },
       { "title": "Support the community", "body": "Want to contribute with a bank transfer? Scan the QR with your banking app: no fees." },
       { "title": "Changing language", "body": "Tap the language icon at the top to pick any of the available languages at any time." }
     ]

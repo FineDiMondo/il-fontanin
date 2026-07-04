@@ -92,11 +92,13 @@
     "cat_beer": "Birre",
     "cat_wine": "Vino e bollicine",
     "cat_cocktail": "Cocktail internazionali",
+    "cat_kitchen": "Cucina",
     "cat_snack": "Da sgranocchiare",
     "recent": "I tuoi contributi recenti",
     "insufficient": "Punti F insufficienti",
     "contributed": "Hai contribuito {{amount}} F per {{item}}",
-    "support_link": "Vuoi contribuire anche con un bonifico? Sostieni la community →"
+    "support_link": "Vuoi contribuire anche con un bonifico? Sostieni la community →",
+    "rate_note": "1 F = 1 €"
   },
   "dona": {
     "title": "Sostieni la community",
@@ -114,6 +116,7 @@
       { "title": "Chat", "body": "Stanze di messaggistica in tempo reale: pubbliche, private o legate a un evento." },
       { "title": "Eventi", "body": "Calendario delle giornate di pulizia, incontri e attività. Iscriviti e mostra il tuo QR all'ingresso." },
       { "title": "Bar e punti F", "body": "Ogni consumazione al bar è un contributo in punti F alla community, tracciato sul tuo profilo." },
+      { "title": "Le monete del Fontanin", "body": "F è la moneta base (1 F = 1 €), G vale 10 F (taglio grande) e J vale 2 F. Al bar trovi anche i \"biglietti\" a prezzo fisso: B birra 3F, C cocktail 4F, P panino/pasta 3F, R risotto 4F." },
       { "title": "Sostieni la community", "body": "Vuoi contribuire con un bonifico? Inquadra il QR con l'app della tua banca: nessuna commissione." },
       { "title": "Cambiare lingua", "body": "Tocca l'icona della lingua in alto per scegliere tra le lingue disponibili in qualsiasi momento." }
     ]

@@ -7,8 +7,10 @@ import { useAuth } from '../context/AuthContext.jsx'
 import { getBalance, getContributions, contribute } from '../lib/wallet.js'
 import { useTranslation } from 'react-i18next'
 
-// Menu tipico di un bar internazionale veronese, prezzi in punti F
-// (coerenti con il tasso community: 10 F ~ 1 ora di volontariato)
+// Menu tipico di un bar internazionale veronese, prezzi in monete F.
+// Schema monetario community (2026-07-04): F = moneta base (1 F = 1 €),
+// G = 10 F (taglio grande), J = 2 F. Al bar si usano "biglietti" a prezzo
+// fisso per categoria: B birra 3F, C cocktail 4F, P panino/pasta 3F, R risotto 4F.
 // catKey rimanda alla chiave di traduzione della categoria (vedi locales/*.json bar.cat_*)
 const MENU = [
   { categoria: 'Caffetteria', catKey: 'bar.cat_coffee', voci: [
@@ -24,22 +26,27 @@ const MENU = [
     { nome: 'Tè freddo', prezzo: 2 },
     { nome: 'Chinotto', prezzo: 2 },
   ]},
-  { categoria: 'Birre', catKey: 'bar.cat_beer', voci: [
+  { categoria: 'Birre', catKey: 'bar.cat_beer', ticket: 'B', voci: [
     { nome: 'Birra piccola 0,2L', prezzo: 3 },
-    { nome: 'Birra media 0,4L', prezzo: 5 },
-    { nome: 'Birra artigianale', prezzo: 6 },
+    { nome: 'Birra media 0,4L', prezzo: 3 },
+    { nome: 'Birra artigianale', prezzo: 3 },
   ]},
   { categoria: 'Vino e bollicine', catKey: 'bar.cat_wine', voci: [
     { nome: 'Calice vino rosso', prezzo: 4 },
     { nome: 'Calice vino bianco', prezzo: 4 },
     { nome: 'Prosecco', prezzo: 4 },
   ]},
-  { categoria: 'Cocktail internazionali', catKey: 'bar.cat_cocktail', voci: [
-    { nome: 'Spritz Aperol', prezzo: 5 },
-    { nome: 'Gin Tonic', prezzo: 7 },
-    { nome: 'Mojito', prezzo: 7 },
-    { nome: 'Negroni', prezzo: 7 },
-    { nome: 'Moscow Mule', prezzo: 7 },
+  { categoria: 'Cocktail internazionali', catKey: 'bar.cat_cocktail', ticket: 'C', voci: [
+    { nome: 'Spritz Aperol', prezzo: 4 },
+    { nome: 'Gin Tonic', prezzo: 4 },
+    { nome: 'Mojito', prezzo: 4 },
+    { nome: 'Negroni', prezzo: 4 },
+    { nome: 'Moscow Mule', prezzo: 4 },
+  ]},
+  { categoria: 'Cucina', catKey: 'bar.cat_kitchen', voci: [
+    { nome: 'Panino', prezzo: 3, ticket: 'P' },
+    { nome: 'Pasta del giorno', prezzo: 3, ticket: 'P' },
+    { nome: 'Risotto del giorno', prezzo: 4, ticket: 'R' },
   ]},
   { categoria: 'Da sgranocchiare', catKey: 'bar.cat_snack', voci: [
     { nome: 'Patatine / noccioline', prezzo: 2 },
@@ -79,6 +86,7 @@ export default function Bar() {
           <div>
             <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">{t('bar.balance_of', { name: user?.nome || t('bar.you') })}</p>
             <p className="text-2xl font-medium text-noce mt-0.5">{balance} F</p>
+            <p className="text-[10px] text-stone-400 mt-0.5">{t('bar.rate_note')}</p>
           </div>
           <svg className="w-8 h-8 text-oro flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="9" />
@@ -91,9 +99,14 @@ export default function Bar() {
         </p>
         {MENU.map(sezione => (
           <div key={sezione.categoria} className="mb-4">
-            <div className="px-4 mb-1">
+            <div className="px-4 mb-1 flex items-center gap-1.5">
               <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">{t(sezione.catKey)}</p>
-              <div className="h-px bg-pietra-border mt-1 mb-2" />
+              {sezione.ticket && (
+                <span className="text-[9px] font-bold text-oro-dark bg-oro/10 border border-pietra-border rounded-full w-4 h-4 flex items-center justify-center">
+                  {sezione.ticket}
+                </span>
+              )}
+              <div className="h-px bg-pietra-border flex-1" />
             </div>
             <div className="px-4 space-y-2">
               {sezione.voci.map(voce => (
@@ -103,7 +116,14 @@ export default function Bar() {
                   disabled={balance < voce.prezzo}
                   className="stone-card w-full flex items-center justify-between active:scale-[0.98] transition-transform disabled:opacity-40"
                 >
-                  <span className="text-sm text-stone-700">{voce.nome}</span>
+                  <span className="text-sm text-stone-700 flex items-center gap-1.5">
+                    {voce.nome}
+                    {voce.ticket && (
+                      <span className="text-[9px] font-bold text-oro-dark bg-oro/10 border border-pietra-border rounded-full w-4 h-4 flex items-center justify-center">
+                        {voce.ticket}
+                      </span>
+                    )}
+                  </span>
                   <span className="text-sm font-medium text-oro-dark flex-shrink-0 ml-3">{voce.prezzo} F</span>
                 </button>
               ))}

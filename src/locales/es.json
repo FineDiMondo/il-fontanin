@@ -92,11 +92,13 @@
     "cat_beer": "Cervezas",
     "cat_wine": "Vino y espumantes",
     "cat_cocktail": "Cócteles internacionales",
+    "cat_kitchen": "Cocina",
     "cat_snack": "Para picar",
     "recent": "Tus contribuciones recientes",
     "insufficient": "Puntos F insuficientes",
     "contributed": "Has contribuido con {{amount}} F por {{item}}",
-    "support_link": "¿Quieres contribuir también con una transferencia bancaria? Apoya a la comunidad →"
+    "support_link": "¿Quieres contribuir también con una transferencia bancaria? Apoya a la comunidad →",
+    "rate_note": "1 F = 1 €"
   },
   "dona": {
     "title": "Apoya a la comunidad",
@@ -114,6 +116,7 @@
       { "title": "Chat", "body": "Salas de mensajería en tiempo real: públicas, privadas o vinculadas a un evento." },
       { "title": "Eventos", "body": "Calendario de jornadas de limpieza, encuentros y actividades. Inscríbete y muestra tu QR en la entrada." },
       { "title": "Bar y puntos F", "body": "Cada consumición en el bar es una contribución en puntos F a la comunidad, registrada en tu perfil." },
+      { "title": "Las monedas del Fontanin", "body": "F es la moneda base (1 F = 1 €), G vale 10 F (billete grande) y J vale 2 F. En el bar también encontrarás \"fichas\" de precio fijo: B cerveza 3F, C cóctel 4F, P bocadillo/pasta 3F, R risotto 4F." },
       { "title": "Apoya a la comunidad", "body": "¿Quieres contribuir con una transferencia bancaria? Escanea el QR con la app de tu banco: sin comisiones." },
       { "title": "Cambiar de idioma", "body": "Toca el icono de idioma en la parte superior para elegir entre los idiomas disponibles en cualquier momento." }
     ]
