@@ -5,13 +5,13 @@ steps:
       - '-f'
       - 'Dockerfile.community'
       - '-t'
-      - 'europe-west1-docker.pkg.dev/freedomrun-491323/finedimondo/finedimondo-backend:v1-0-8'
+      - 'europe-west1-docker.pkg.dev/freedomrun-491323/finedimondo/finedimondo-backend:v1-1-0'
       - '.'
 
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'europe-west1-docker.pkg.dev/freedomrun-491323/finedimondo/finedimondo-backend:v1-0-8'
+      - 'europe-west1-docker.pkg.dev/freedomrun-491323/finedimondo/finedimondo-backend:v1-1-0'
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
@@ -19,13 +19,13 @@ steps:
       - 'run'
       - 'deploy'
       - 'finedimondo-backend'
-      - '--image=europe-west1-docker.pkg.dev/freedomrun-491323/finedimondo/finedimondo-backend:v1-0-8'
+      - '--image=europe-west1-docker.pkg.dev/freedomrun-491323/finedimondo/finedimondo-backend:v1-1-0'
       - '--region=europe-west1'
       - '--platform=managed'
       - '--allow-unauthenticated'
       - '--set-env-vars=JACKASS_DB_HOST=35.241.200.140,JACKASS_DB_PORT=5432,JACKASS_DB_USER=jackass_admin,JACKASS_DB_NAME=jackass_verona,JACKASS_DB_PASSWORD=JackassAdmin_GCP2026!,GOOGLE_CLOUD_PROJECT=el-fontanin'
 
 images:
-  - 'europe-west1-docker.pkg.dev/freedomrun-491323/finedimondo/finedimondo-backend:v1-0-8'
+  - 'europe-west1-docker.pkg.dev/freedomrun-491323/finedimondo/finedimondo-backend:v1-1-0'
 
 timeout: '1200s'
