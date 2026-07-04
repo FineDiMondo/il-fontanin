@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import AppHeader from '../components/AppHeader.jsx'
 import BottomNav from '../components/BottomNav.jsx'
 import UserAvatar from '../components/UserAvatar.jsx'
@@ -155,6 +155,15 @@ export default function ForumThread() {
             </svg>
           </button>
         </form>
+      )}
+
+      {!user && (
+        <div className="flex-shrink-0 border-t border-pietra-border bg-noce px-4 py-3 flex items-center justify-between">
+          <span className="text-xs text-oro/90 font-medium">Vuoi commentare questa discussione?</span>
+          <Link to="/login" className="bg-oro text-noce text-[10px] font-semibold px-3 py-1.5 rounded-lg active:scale-95 transition-transform uppercase tracking-wider">
+            Accedi con Google
+          </Link>
+        </div>
       )}
 
       <BottomNav />

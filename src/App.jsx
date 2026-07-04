@@ -26,26 +26,23 @@ function ProtectedRoute({ children }) {
 }
 
 function AppRoutes() {
-  const { user, loading } = useAuth()
-  // Attende getRedirectResult prima di mostrare qualsiasi route
-  if (loading) return <LoadingSpinner />
   return (
     <Routes>
-      <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
-      <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-      <Route path="/forum" element={<ProtectedRoute><Forum /></ProtectedRoute>} />
-      <Route path="/forum/:slug" element={<ProtectedRoute><ForumCategory /></ProtectedRoute>} />
-      <Route path="/forum/thread/:id" element={<ProtectedRoute><ForumThread /></ProtectedRoute>} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/forum" element={<Forum />} />
+      <Route path="/forum/:slug" element={<ForumCategory />} />
+      <Route path="/forum/thread/:id" element={<ForumThread />} />
       <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
       <Route path="/chat/:slug" element={<ProtectedRoute><ChatRoom /></ProtectedRoute>} />
-      <Route path="/events" element={<ProtectedRoute><Events /></ProtectedRoute>} />
-      <Route path="/events/:id" element={<ProtectedRoute><EventDetail /></ProtectedRoute>} />
-      <Route path="/research" element={<ProtectedRoute><Research /></ProtectedRoute>} />
-      <Route path="/bar" element={<ProtectedRoute><Bar /></ProtectedRoute>} />
-      <Route path="/dona" element={<ProtectedRoute><Dona /></ProtectedRoute>} />
-      <Route path="/guida" element={<ProtectedRoute><Guida /></ProtectedRoute>} />
-      <Route path="/mappa" element={<ProtectedRoute><Mappa /></ProtectedRoute>} />
-      <Route path="/numeri-utili" element={<ProtectedRoute><NumeriUtili /></ProtectedRoute>} />
+      <Route path="/events" element={<Events />} />
+      <Route path="/events/:id" element={<EventDetail />} />
+      <Route path="/research" element={<Research />} />
+      <Route path="/bar" element={<Bar />} />
+      <Route path="/dona" element={<Dona />} />
+      <Route path="/guida" element={<Guida />} />
+      <Route path="/mappa" element={<Mappa />} />
+      <Route path="/numeri-utili" element={<NumeriUtili />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

@@ -1,10 +1,39 @@
 import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useAuth } from '../context/AuthContext.jsx'
+import UserAvatar from './UserAvatar.jsx'
 import LanguageSelector from './LanguageSelector.jsx'
 
 export default function AppHeader({ title, showBack = false, rightSlot }) {
   const navigate = useNavigate()
   const { t } = useTranslation()
+  const { user, logout } = useAuth()
+
+  const headerRight = rightSlot || (
+    <div className="flex items-center gap-2">
+      {user ? (
+        <div className="flex items-center gap-2">
+          <UserAvatar name={`${user.nome} ${user.cognome || ''}`} size="sm" />
+          <button
+            className="touch-target text-oro-muted hover:text-oro transition-colors"
+            onClick={logout}
+            aria-label={t('common.logout')}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+          </button>
+        </div>
+      ) : (
+        <Link
+          to="/login"
+          className="text-oro border border-oro/30 bg-oro/10 hover:bg-oro/20 transition-all text-xs font-semibold px-2.5 py-1.5 rounded-lg active:scale-[0.97]"
+        >
+          {t('common.login', 'Accedi')}
+        </Link>
+      )}
+    </div>
+  )
 
   return (
     <header className="bg-noce flex-shrink-0 relative overflow-hidden">
@@ -52,7 +81,7 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
         </div>
 
         <div className="flex items-center gap-2">
-          {rightSlot}
+          {headerRight}
           {!showBack && (
             <Link
               to="/guida"

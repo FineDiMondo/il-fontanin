@@ -1,0 +1,31 @@
+steps:
+  # 1. Installa i moduli npm
+  - name: 'node:18'
+    entrypoint: npm
+    args: ['install']
+
+  # 2. Compila il bundle React per produzione
+  - name: 'node:18'
+    entrypoint: npm
+    args: ['run', 'build']
+
+  # 3. Sincronizza i file web nella cartella nativa di Android
+  - name: 'node:18'
+    entrypoint: npx
+    args: ['cap', 'sync', 'android']
+
+  # 4. Compila l'APK Android in modalità Debug/Release tramite Gradle
+  - name: 'mingc/android-build-box:latest'
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        cd android
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+# Salva l'APK compilato come artefatto nel bucket GCS di Cloud Build
+artifacts:
+  objects:
+    location: 'gs://freedomrun-491323_cloudbuild/apk/'
+    paths: ['android/app/build/outputs/apk/debug/app-debug.apk']

@@ -1,0 +1,9 @@
+{
+  "appId": "com.ilfontanin.app",
+  "appName": "El Fontanin",
+  "webDir": "dist",
+  "server": {
+    "url": "https://el-fontanin.web.app",
+    "cleartext": true
+  }
+}

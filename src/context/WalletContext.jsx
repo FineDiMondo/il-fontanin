@@ -50,64 +50,12 @@ export function WalletProvider({ children }) {
     initWeb3Auth()
   }, [])
 
-  // 2. Ascolto dello stato Firebase Auth per attivare la derivazione della chiave
+  // 2. Ascolto dello stato Firebase Auth per gestire il logout automatico del wallet
   useEffect(() => {
     if (!web3auth) return
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        setLoading(true)
-        try {
-          const idToken = await firebaseUser.getIdToken()
-          console.log('[Wallet] Connessione a Web3Auth MPC tramite Firebase JWT...')
-
-          let provider
-          if (web3auth.connected) {
-            provider = web3auth.provider
-          } else {
-            provider = await web3auth.connect({
-              verifier: VERIFIER_NAME,
-              verifierId: firebaseUser.email || firebaseUser.uid,
-              idToken,
-            })
-          }
-
-          // Estrazione della chiave privata grezza client-side via MPC/Shamir
-          const privateKeyHex = await provider.request({
-            method: 'private_key',
-          })
-
-          if (!privateKeyHex) {
-            throw new Error('Nessuna chiave privata restituita da Web3Auth.')
-          }
-
-          // Conversione della chiave privata hex a byte array (Uint8Array)
-          const cleanHex = privateKeyHex.startsWith('0x') ? privateKeyHex.slice(2) : privateKeyHex
-          const privateKeyBytes = new Uint8Array(
-            cleanHex.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))
-          )
-
-          // Derivazione del keypair Algorand dal seed MPC tramite tweetnacl
-          const keys = nacl.sign.keyPair.fromSeed(privateKeyBytes)
-          const secretKey = new Uint8Array(64)
-          secretKey.set(keys.secretKey)
-
-          const algorandAccount = {
-            addr: algosdk.encodeAddress(keys.publicKey),
-            sk: secretKey,
-          }
-
-          console.log('[Wallet] Wallet Algorand MPC derivato con successo:', algorandAccount.addr)
-          setWallet(algorandAccount)
-          setError(null)
-        } catch (err) {
-          console.error('[Wallet] Errore derivazione wallet MPC:', err)
-          setError(err.message)
-          setWallet(null)
-        } finally {
-          setLoading(false)
-        }
-      } else {
+      if (!firebaseUser) {
         // Utente disconnesso, ripulisci lo stato del wallet
         if (web3auth.connected) {
           try {
@@ -123,6 +71,72 @@ export function WalletProvider({ children }) {
 
     return () => unsubscribe()
   }, [web3auth])
+
+  // Funzione manuale per connettere e derivare il wallet Algorand MPC
+  const connectWallet = async () => {
+    if (!web3auth) {
+      throw new Error('Web3Auth non ancora inizializzato.')
+    }
+    if (!auth.currentUser) {
+      throw new Error('Effettua prima l\'accesso con Google per sbloccare il Wallet.')
+    }
+
+    setLoading(true)
+    setError(null)
+    try {
+      const firebaseUser = auth.currentUser
+      const idToken = await firebaseUser.getIdToken()
+      console.log('[Wallet] Connessione manuale a Web3Auth MPC...')
+
+      let provider
+      if (web3auth.connected) {
+        provider = web3auth.provider
+      } else {
+        provider = await web3auth.connect({
+          verifier: VERIFIER_NAME,
+          verifierId: firebaseUser.email || firebaseUser.uid,
+          idToken,
+        })
+      }
+
+      // Estrazione della chiave privata grezza client-side via MPC/Shamir
+      const privateKeyHex = await provider.request({
+        method: 'private_key',
+      })
+
+      if (!privateKeyHex) {
+        throw new Error('Nessuna chiave privata restituita da Web3Auth.')
+      }
+
+      // Conversione della chiave privata hex a byte array (Uint8Array)
+      const cleanHex = privateKeyHex.startsWith('0x') ? privateKeyHex.slice(2) : privateKeyHex
+      const privateKeyBytes = new Uint8Array(
+        cleanHex.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))
+      )
+
+      // Derivazione del keypair Algorand dal seed MPC tramite tweetnacl
+      const keys = nacl.sign.keyPair.fromSeed(privateKeyBytes)
+      const secretKey = new Uint8Array(64)
+      secretKey.set(keys.secretKey)
+
+      const algorandAccount = {
+        addr: algosdk.encodeAddress(keys.publicKey),
+        sk: secretKey,
+      }
+
+      console.log('[Wallet] Wallet Algorand MPC derivato con successo:', algorandAccount.addr)
+      setWallet(algorandAccount)
+      setError(null)
+      return algorandAccount.addr
+    } catch (err) {
+      console.error('[Wallet] Errore derivazione wallet MPC:', err)
+      setError(err.message)
+      setWallet(null)
+      throw err
+    } finally {
+      setLoading(false)
+    }
+  }
 
   // TODO: Implementare policy di recovery del wallet MPC
   // NOTA: Come da ADR-001, la policy di recovery è una decisione di governance
@@ -151,6 +165,7 @@ export function WalletProvider({ children }) {
         algorandAddress: wallet ? wallet.addr : null,
         loading,
         error,
+        connectWallet,
         signTransaction,
         isConnected: !!wallet,
       }}

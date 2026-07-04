@@ -97,6 +97,15 @@ export default function ForumCategory() {
         </div>
       </div>
 
+      {!user && (
+        <div className="absolute bottom-[53px] left-0 right-0 p-3 bg-noce/95 border-t border-oro/20 flex items-center justify-between px-4 z-10 backdrop-blur-sm">
+          <span className="text-xs text-oro/90 font-medium">Vuoi creare discussioni o rispondere?</span>
+          <Link to="/login" className="bg-oro text-noce text-[10px] font-semibold px-3 py-1.5 rounded-lg active:scale-95 transition-transform uppercase tracking-wider">
+            Accedi con Google
+          </Link>
+        </div>
+      )}
+
       {canPost && !showNew && (
         <button
           onClick={() => setShowNew(true)}

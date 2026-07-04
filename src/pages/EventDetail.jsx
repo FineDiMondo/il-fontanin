@@ -120,6 +120,19 @@ export default function EventDetail() {
               </button>
             )}
 
+            {!user && (
+              <div className="bg-noce-light rounded-2xl p-4 text-center border border-oro/20">
+                <p className="text-oro font-medium text-sm mb-1.5">Vuoi partecipare a questo evento?</p>
+                <p className="text-xs text-oro-dark mb-4">L'iscrizione e il check-in con QR code sono riservati ai membri.</p>
+                <button
+                  onClick={() => navigate('/login')}
+                  className="w-full bg-oro text-noce py-3 rounded-xl font-semibold text-xs uppercase tracking-wider active:scale-95 transition-transform"
+                >
+                  Accedi con Google
+                </button>
+              </div>
+            )}
+
             {registered && (
               <div className="bg-muschio/10 border border-muschio/30 rounded-2xl p-4 text-center">
                 <p className="text-muschio font-medium text-sm">Iscrizione confermata!</p>

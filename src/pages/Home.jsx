@@ -62,24 +62,16 @@ export default function Home() {
         </div>
       )}
 
-      <AppHeader
-        rightSlot={
-          <button
-            className="touch-target text-oro-dark hover:text-oro transition-colors"
-            onClick={logout}
-            aria-label={t('common.logout')}
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-          </button>
-        }
-      />
+      <AppHeader />
 
       <div className="scroll-content">
         {/* Benvenuto */}
         <div className="px-4 pt-4 pb-2">
-          <p className="text-stone-500 text-xs">{t('home.welcome')}, <span className="text-stone-700 font-medium">{user?.nome}</span></p>
+          {user ? (
+            <p className="text-stone-500 text-xs">{t('home.welcome')}, <span className="text-stone-700 font-medium">{user.nome}</span></p>
+          ) : (
+            <p className="text-stone-500 text-xs">{t('home.welcome')}, <span className="text-stone-700 font-medium">{t('home.visitor', 'Visitatore')}</span></p>
+          )}
         </div>
 
         {/* Banner evento prossimo */}
