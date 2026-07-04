@@ -74,6 +74,7 @@ Al check-out:
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-04 22:30 | Codex | DONE | d4cab15 | Fix crash homepage live su Stella/toFixed; deploy Firebase Hosting verificato |
 | 2026-07-04 22:24 | Gemini/Antigravity | DONE | — | Deploy frontend Firebase Hosting |
 | 2026-07-04 22:22 | Gemini/Antigravity | DONE | b044ee5 | Aggiornamento Firebase npm SDK a v12.15.0 e allineamento dipendenze |
 | 2026-07-04 22:20 | Gemini/Antigravity | DONE | 18851d3 | Corretto category_id, IP client nei survey, riutilizzo engine DB, ASA ID, SocioRoute per chat e user_id Bar; rimossi .pyc e integrato Secret Manager |
