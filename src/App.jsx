@@ -20,6 +20,8 @@ import Storia from './pages/Storia.jsx'
 import Geologia from './pages/Geologia.jsx'
 import AnalisiAcqua from './pages/AnalisiAcqua.jsx'
 import LavoriProgetto from './pages/LavoriProgetto.jsx'
+import Media from './pages/Media.jsx'
+import { MediaProvider } from './context/MediaContext.jsx'
 import LoadingSpinner from './components/LoadingSpinner.jsx'
 
 function ProtectedRoute({ children }) {
@@ -61,6 +63,7 @@ function AppRoutes() {
       <Route path="/geologia" element={<Geologia />} />
       <Route path="/analisi-acqua" element={<AnalisiAcqua />} />
       <Route path="/lavori" element={<LavoriProgetto />} />
+      <Route path="/media" element={<Media />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
@@ -70,9 +73,11 @@ export default function App() {
   return (
     <AuthProvider>
       <WalletProvider>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
+        <MediaProvider>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </MediaProvider>
       </WalletProvider>
     </AuthProvider>
   )

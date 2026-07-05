@@ -9,6 +9,7 @@ import { showToast } from '../components/Toast.jsx'
 import ToastContainer from '../components/Toast.jsx'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext.jsx'
+import Media from './Media.jsx'
 
 function SurveyForm({ survey, onDone, t }) {
   const [answers, setAnswers] = useState({})
@@ -118,6 +119,7 @@ export default function Research() {
   const [loading, setLoading] = useState(true)
   const [loadingSurvey, setLoadingSurvey] = useState(false)
   const [done, setDone] = useState(new Set())
+  const [activeTab, setActiveTab] = useState('sondaggi')
 
   useEffect(() => {
     Promise.all([
@@ -161,6 +163,23 @@ export default function Research() {
       <ToastContainer />
       <AppHeader title={t('research.title')} showBack={false} />
 
+      {import.meta.env.VITE_ENABLE_MEDIA_FEATURE === 'true' && !selected && (
+        <div className="flex border-b border-pietra-border text-sm px-4 pt-2 bg-stone-50 gap-4">
+          <button
+            onClick={() => setActiveTab('sondaggi')}
+            className={`pb-2 font-medium ${activeTab === 'sondaggi' ? 'text-muschio border-b-2 border-muschio' : 'text-stone-500'}`}
+          >
+            Sondaggi & Lavori
+          </button>
+          <button
+            onClick={() => setActiveTab('media')}
+            className={`pb-2 font-medium ${activeTab === 'media' ? 'text-muschio border-b-2 border-muschio' : 'text-stone-500'}`}
+          >
+            Galleria Media
+          </button>
+        </div>
+      )}
+
       <div className="scroll-content px-4 py-4 space-y-4">
         {selected ? (
           <>
@@ -197,6 +216,8 @@ export default function Research() {
               )
             }
           </>
+        ) : activeTab === 'media' && import.meta.env.VITE_ENABLE_MEDIA_FEATURE === 'true' ? (
+          <Media embedded={true} />
         ) : (
           <>
             {/* SEZIONE ESPERIMENTI */}

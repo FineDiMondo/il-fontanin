@@ -69,7 +69,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| (vuoto — nessuno scrittore attivo) | | | | | |
+| 2026-07-05 10:26 | Gemini/Antigravity | WRITING | feature/algorand-wallet-mpc | Media Feature | Sviluppo e integrazione modulo Media in Research tab |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
