@@ -264,6 +264,47 @@ class CheckinOut(BaseModel):
     class Config:
         from_attributes = True
 
+class LavoriCreate(BaseModel):
+    titolo: str
+    descrizione: Optional[str] = None
+    tipo: str
+    lat: Optional[str] = None
+    lng: Optional[str] = None
+    attrezzi: Optional[Dict[str, Any]] = None
+    video_url: Optional[str] = None
+    immagini: Optional[List[str]] = None
+    note: Optional[str] = None
+
+class LavoriUpdate(BaseModel):
+    titolo: Optional[str] = None
+    descrizione: Optional[str] = None
+    stato: Optional[str] = None
+    data_inizio: Optional[datetime] = None
+    data_fine: Optional[datetime] = None
+    attrezzi: Optional[Dict[str, Any]] = None
+    video_url: Optional[str] = None
+    immagini: Optional[List[str]] = None
+    note: Optional[str] = None
+
+class LavoriOut(BaseModel):
+    id: UUID
+    titolo: str
+    descrizione: Optional[str] = None
+    tipo: str
+    stato: str
+    lat: Optional[str] = None
+    lng: Optional[str] = None
+    attrezzi: Optional[Dict[str, Any]] = None
+    video_url: Optional[str] = None
+    immagini: Optional[List[str]] = None
+    note: Optional[str] = None
+    created_by: Optional[UUID] = None
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        from_attributes = True
+
 
 # =============================================================================
 # NOTIFICHE

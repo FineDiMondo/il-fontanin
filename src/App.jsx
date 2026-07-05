@@ -19,6 +19,7 @@ import NumeriUtili from './pages/NumeriUtili.jsx'
 import Storia from './pages/Storia.jsx'
 import Geologia from './pages/Geologia.jsx'
 import AnalisiAcqua from './pages/AnalisiAcqua.jsx'
+import LavoriProgetto from './pages/LavoriProgetto.jsx'
 import LoadingSpinner from './components/LoadingSpinner.jsx'
 
 function ProtectedRoute({ children }) {
@@ -59,6 +60,7 @@ function AppRoutes() {
       <Route path="/storia" element={<Storia />} />
       <Route path="/geologia" element={<Geologia />} />
       <Route path="/analisi-acqua" element={<AnalisiAcqua />} />
+      <Route path="/lavori" element={<LavoriProgetto />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

@@ -294,6 +294,34 @@ class EventCheckin(Base):
     event = relationship("CommunityEvent", back_populates="checkins")
 
 
+class LavoriProgetto(Base):
+    __tablename__ = "lavori_progetti"
+
+    id          = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    titolo      = Column(String(200), nullable=False)
+    descrizione = Column(Text)
+    tipo        = Column(String(50), nullable=False)  # 'scaletta', 'argine', 'piscinetta'
+    stato       = Column(String(20), nullable=False, default="pianificato")  # pianificato, in_corso, completato
+    data_inizio = Column(DateTime(timezone=True))
+    data_fine   = Column(DateTime(timezone=True))
+    
+    # Geolocalizzazione
+    lat         = Column(String(20))  # Salva come stringa per semplicità
+    lng         = Column(String(20))
+    
+    # Metadata
+    attrezzi    = Column(JSONB)  # {"cariola": True, "pala": True, ...}
+    video_url   = Column(String(500))
+    immagini    = Column(JSONB)  # Lista di URL
+    note        = Column(Text)
+    
+    created_by  = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    created_at  = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at  = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+
+    creator     = relationship("CommunityUser")
+
+
 # =============================================================================
 # NOTIFICHE
 # =============================================================================
