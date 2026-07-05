@@ -69,11 +69,12 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-05 10:26 | Gemini/Antigravity | WRITING | feature/algorand-wallet-mpc | Media Feature | Sviluppo e integrazione modulo Media in Research tab |
+| (vuoto — nessuno scrittore attivo) | | | | | |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-05 10:26 | Gemini/Antigravity | DONE | cfba7a0 | Implementazione modulo Galleria Media con integrazione Google Drive, Firestore rules e feature flags |
 | 2026-07-05 10:02 | Gemini/Antigravity | DONE | d36872b | Implementazione tool experimental Lavori (Argini e Scalette) e aggiornamento thread forum |
 | 2026-07-04 22:30 | Codex | DONE | d4cab15 | Fix crash homepage live su Stella/toFixed; deploy Firebase Hosting verificato |
 | 2026-07-04 22:24 | Gemini/Antigravity | DONE | — | Deploy frontend Firebase Hosting |
