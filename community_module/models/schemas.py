@@ -3,7 +3,8 @@ Pydantic schemas per request/response della Community API.
 """
 
 from uuid import UUID
-from datetime import datetime
+from datetime import datetime, date
+from decimal import Decimal
 from typing import Optional, List, Any, Dict
 from pydantic import BaseModel, EmailStr, Field
 
@@ -456,6 +457,99 @@ class RicettarioRaccoltaOut(BaseModel):
     pubblica: bool
     created_at: datetime
     creato_da: UUID
+
+    class Config:
+        from_attributes = True
+
+# =============================================================================
+# CATALOGAZIONE TERRITORIALE
+# =============================================================================
+
+class CatalogoSottocategoriaOut(BaseModel):
+    id: UUID
+    codice: str
+    nome: str
+    ordine: int
+
+    class Config:
+        from_attributes = True
+
+class CatalogoCategoriaOut(BaseModel):
+    id: UUID
+    codice: str
+    nome: str
+    metadata_schema: Optional[Dict[str, Any]] = None
+    attivo: bool
+    sottocategorie: List[CatalogoSottocategoriaOut] = []
+
+    class Config:
+        from_attributes = True
+
+class CatalogoMediaBase(BaseModel):
+    tipo: str
+    modalita_acquisizione: str = "upload_server"
+    url_esterno: Optional[str] = None
+    drive_file_id: Optional[str] = None
+    nome_file: Optional[str] = None
+    descrizione: Optional[str] = None
+
+class CatalogoMediaCreate(CatalogoMediaBase):
+    pass
+
+class CatalogoMediaOut(CatalogoMediaBase):
+    id: UUID
+    scheda_id: UUID
+    uploaded_by: Optional[UUID] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+class CatalogoSchedaBase(BaseModel):
+    categoria_id: UUID
+    sottocategoria_id: Optional[UUID] = None
+    nome: str
+    lat: Decimal = Field(..., ge=-90, le=90, description="Obbligatorio anche per le bozze")
+    lng: Decimal = Field(..., ge=-180, le=180, description="Obbligatorio anche per le bozze")
+    descrizione: Optional[str] = None
+    cronologia_storica: Optional[str] = None
+    evidenza_livello: Optional[str] = None
+    evidenza_fonte: Optional[str] = None
+    evidenza_data_verifica: Optional[date] = None
+    metadata_specifici: Optional[Dict[str, Any]] = None
+
+class CatalogoSchedaCreate(CatalogoSchedaBase):
+    pass
+
+class CatalogoSchedaUpdate(BaseModel):
+    sottocategoria_id: Optional[UUID] = None
+    nome: Optional[str] = None
+    lat: Optional[Decimal] = Field(None, ge=-90, le=90)
+    lng: Optional[Decimal] = Field(None, ge=-180, le=180)
+    descrizione: Optional[str] = None
+    cronologia_storica: Optional[str] = None
+    evidenza_livello: Optional[str] = None
+    evidenza_fonte: Optional[str] = None
+    evidenza_data_verifica: Optional[date] = None
+    metadata_specifici: Optional[Dict[str, Any]] = None
+
+class CatalogoSchedaValida(BaseModel):
+    approvata: bool
+    nota_validazione: Optional[str] = None
+
+class CatalogoSchedaOut(CatalogoSchedaBase):
+    id: UUID
+    stato: str
+    scheda_precedente_id: Optional[UUID] = None
+    creato_da: UUID
+    validato_da: Optional[UUID] = None
+    validato_at: Optional[datetime] = None
+    nota_validazione: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+    
+    categoria: Optional[CatalogoCategoriaOut] = None
+    media: List[CatalogoMediaOut] = []
 
     class Config:
         from_attributes = True

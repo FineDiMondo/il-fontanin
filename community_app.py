@@ -72,7 +72,9 @@ def custom_openapi():
         "/community/canzoniere/brani",
         "/community/canzoniere/raccolte",
         "/community/ricettario/ricette",
-        "/community/ricettario/raccolte"
+        "/community/ricettario/raccolte",
+        "/community/catalogo/categorie",
+        "/community/catalogo/schede"
     }
     for path in public_paths:
         if path in openapi_schema.get("paths", {}):

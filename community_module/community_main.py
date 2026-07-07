@@ -28,6 +28,9 @@ community_router.include_router(auth_router)
 community_router.include_router(forum_router)
 community_router.include_router(chat_router)
 community_router.include_router(research_router)
+
+from community_module.api.catalogo import router as catalogo_router
+community_router.include_router(catalogo_router)
 community_router.include_router(events_router)
 community_router.include_router(lavori_router)
 community_router.include_router(media_router)

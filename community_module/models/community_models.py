@@ -9,7 +9,7 @@ from datetime import datetime
 from typing import Optional
 
 from sqlalchemy import (
-    create_engine, Column, String, Boolean, Integer, Text, Numeric,
+    create_engine, Column, String, Boolean, Integer, Text, Numeric, Date,
     DateTime, ForeignKey, UniqueConstraint, Index
 )
 from sqlalchemy.dialects.postgresql import UUID, JSONB, TSVECTOR
@@ -462,4 +462,78 @@ class RicettarioRaccoltaRicetta(Base):
     raccolta_id = Column(UUID(as_uuid=True), ForeignKey("ricettario_raccolte.id", ondelete="CASCADE"), primary_key=True)
     ricetta_id  = Column(UUID(as_uuid=True), ForeignKey("ricettario_ricette.id", ondelete="CASCADE"), primary_key=True)
     ordine      = Column(Integer, nullable=False, default=0)
+
+# =============================================================================
+# CATALOGAZIONE TERRITORIALE
+# =============================================================================
+
+class CatalogoCategoria(Base):
+    __tablename__ = "catalogo_categorie"
+
+    id              = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    codice          = Column(String(50), unique=True, nullable=False)
+    nome            = Column(String(100), nullable=False)
+    metadata_schema = Column(JSONB)
+    attivo          = Column(Boolean, nullable=False, default=True)
+    created_at      = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+    sottocategorie  = relationship("CatalogoSottocategoria", back_populates="categoria")
+
+class CatalogoSottocategoria(Base):
+    __tablename__ = "catalogo_sottocategorie"
+
+    id           = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    categoria_id = Column(UUID(as_uuid=True), ForeignKey("catalogo_categorie.id", ondelete="CASCADE"), nullable=False)
+    codice       = Column(String(50), nullable=False)
+    nome         = Column(String(100), nullable=False)
+    ordine       = Column(Integer, nullable=False, default=0)
+
+    categoria    = relationship("CatalogoCategoria", back_populates="sottocategorie")
+
+class CatalogoScheda(Base):
+    __tablename__ = "catalogo_schede"
+
+    id                    = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    categoria_id          = Column(UUID(as_uuid=True), ForeignKey("catalogo_categorie.id"), nullable=False)
+    sottocategoria_id     = Column(UUID(as_uuid=True), ForeignKey("catalogo_sottocategorie.id"))
+    nome                  = Column(String(200), nullable=False)
+    lat                   = Column(Numeric(9, 6), nullable=False)
+    lng                   = Column(Numeric(9, 6), nullable=False)
+    descrizione           = Column(Text)
+    cronologia_storica    = Column(Text)
+    
+    evidenza_livello      = Column(String(1)) # 'C'|'D'|'I'|'L'
+    evidenza_fonte        = Column(Text)
+    evidenza_data_verifica= Column(Date)
+    metadata_specifici    = Column(JSONB)
+    
+    stato                 = Column(String(20), nullable=False, default="bozza")
+    scheda_precedente_id  = Column(UUID(as_uuid=True), ForeignKey("catalogo_schede.id"))
+    
+    creato_da             = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    validato_da           = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    validato_at           = Column(DateTime(timezone=True))
+    nota_validazione      = Column(Text)
+    
+    created_at            = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at            = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+
+    categoria             = relationship("CatalogoCategoria")
+    media                 = relationship("CatalogoMedia", back_populates="scheda")
+
+class CatalogoMedia(Base):
+    __tablename__ = "catalogo_media"
+
+    id                    = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    scheda_id             = Column(UUID(as_uuid=True), ForeignKey("catalogo_schede.id", ondelete="CASCADE"), nullable=False)
+    tipo                  = Column(String(20), nullable=False) # foto|video|documento
+    modalita_acquisizione = Column(String(20), nullable=False, default="upload_server")
+    url_esterno           = Column(Text)
+    drive_file_id         = Column(String(200))
+    nome_file             = Column(String(300))
+    descrizione           = Column(Text)
+    uploaded_by           = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    created_at            = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+    scheda                = relationship("CatalogoScheda", back_populates="media")
 
