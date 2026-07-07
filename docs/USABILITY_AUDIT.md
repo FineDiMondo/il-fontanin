@@ -5,9 +5,11 @@ Questo documento riassume i test e gli interventi di usabilità eseguiti sui mod
 ## 1. Problemi Riscontrati e Risolti
 
 ### Forum
-- **Problema**: L'endpoint `GET /community/forum/categories/{slug}/threads` restituiva un errore HTTP `500` in produzione.
-- **Causa**: `DetachedInstanceError` generato da SQLAlchemy. Il thread.user veniva richiesto (lazy loading) dopo che la sessione del database era stata chiusa.
-- **Risoluzione**: Implementato `joinedload(ForumThread.user)` e `joinedload(ForumPost.user)` nelle query principali del forum per forzare l'eager loading delle relazioni.
+- **Problema**: L'endpoint `GET /community/forum/categories/{slug}/threads` e le scritture `POST` restituivano un errore HTTP `500` in produzione.
+- **Causa**: `DetachedInstanceError` generato da SQLAlchemy. Il thread.user e post.user venivano richiesti (lazy loading o in serializzazione) dopo che la sessione del database era stata chiusa.
+- **Risoluzione**: 
+  - Sulle GET: Implementato `joinedload(ForumThread.user)` e `joinedload(ForumPost.user)` nelle query principali del forum per forzare l'eager loading delle relazioni.
+  - Sulle POST (`create_thread`, `create_post`): L'oggetto appena creato ora viene associato esplicitamente al `current_user` in memoria (`thread.user = current_user` e `post.user = current_user`) prima del ritorno, bypassando il lazy loading a sessione chiusa.
 
 ### Canzoniere e Ricettario
 - **Problema**: Le pagine React mostravano lo stato vuoto ("Canzoniere vuoto" / "Ricettario vuoto") qualora l'API restituisse un errore (es. `404` se il backend non era ancora deployato con le nuove rotte).
@@ -23,6 +25,8 @@ Questo documento riassume i test e gli interventi di usabilità eseguiti sui mod
 - **Risoluzione**: Aggiornati i riferimenti in frontend.
 - **Problema**: Visualizzazione date errate nell'area validazione.
 - **Risoluzione**: Allineati i nomi campi a `created_at` e `updated_at`.
+- **Problema**: Stato "Scheda Respinta" non definito.
+- **Risoluzione**: Implementato lo stato `richiesta_modifiche` all'interno del flusso di validazione. Una volta respinta, il creatore può modificarla e viene automaticamente riportata in `bozza`.
 - **Sicurezza**: Aggiornato lo script `create_catalogo_tables.py` in root con `argparse` e vincoli di ambiente (`--env staging`, `--yes`) per prevenire reset accidentali.
 
 ### Localizzazione (i18n)
@@ -48,5 +52,4 @@ Sono state create due suite di test in Python (`pytest`) per la verifica dell'in
    - Messa in sicurezza dietro una variabile d'ambiente (`FONTANIN_WRITE_TESTS=1`) per evitare scritture accidentali non previste durante i normali task di CI/CD.
 
 ## 3. Punti Aperti
-- **Deploy**: I fix per il Canzoniere, Ricettario e Catalogo sono stati risolti lato frontend, ma per riflettersi in produzione è necessario eseguire il **Deploy su Cloud Run**.
-- **Flusso "Scheda Respinta"**: Attendiamo indicazioni se una scheda respinta debba ritornare in stato `bozza` o ottenere uno stato `richiesta_modifiche`.
+- **Deploy**: I fix per il Canzoniere, Ricettario, Catalogo e Forum sono stati risolti e testati localmente. Per riflettersi in produzione è necessario eseguire il **Deploy su Cloud Run** e **Firebase Hosting**.

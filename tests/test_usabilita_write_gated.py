@@ -27,10 +27,11 @@ def test_forum_create_thread_gated():
 
 def test_catalogo_create_scheda_gated():
     payload = {
-        "titolo": "Test Scheda",
+        "nome": "Test Scheda",
         "descrizione": "Descrizione scheda",
-        "categoria_id": 1,
-        "comune": "Villafranca"
+        "categoria_id": "00000000-0000-0000-0000-000000000000",
+        "lat": 45.352,
+        "lng": 10.841,
     }
     response = client.post("/community/catalogo/schede", json=payload)
     assert response.status_code in [401, 200, 201]

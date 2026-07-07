@@ -98,6 +98,7 @@ def create_thread(
         session.add(thread)
         session.commit()
         session.refresh(thread)
+        thread.user = current_user
         return thread
     finally:
         session.close()
@@ -232,6 +233,7 @@ def create_post(
 
         session.commit()
         session.refresh(post)
+        post.user = current_user
         return post
     finally:
         session.close()

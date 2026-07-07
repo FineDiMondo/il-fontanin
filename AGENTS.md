@@ -69,6 +69,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-07 11:15 | Gemini/Antigravity | WRITING | feature/algorand-wallet-mpc | forum, test, docs | Fix DetachedInstanceError su POST forum, update audit, fix mock data in test write_gated |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
