@@ -21,8 +21,8 @@ export default function CatalogoDettaglio() {
   const fetchData = async () => {
     try {
       const [schRes, catRes] = await Promise.all([
-        api.get(`/community/catalogo/schede/${id}`),
-        api.get('/community/catalogo/categorie')
+        api.get(`/catalogo/schede/${id}`),
+        api.get('/catalogo/categorie')
       ]);
       setScheda(schRes.data);
       setCategorie(catRes.data);
@@ -37,7 +37,7 @@ export default function CatalogoDettaglio() {
 
   const handleUpdate = async (formData) => {
     try {
-      await api.patch(`/community/catalogo/schede/${id}`, formData);
+      await api.patch(`/catalogo/schede/${id}`, formData);
       alert("Scheda aggiornata");
       fetchData();
     } catch (err) {
@@ -49,11 +49,11 @@ export default function CatalogoDettaglio() {
   const handleAttachMedia = async (payload) => {
     try {
       if (payload.type === 'upload') {
-        await api.post(`/community/catalogo/schede/${id}/media`, payload.data, {
+        await api.post(`/catalogo/schede/${id}/media`, payload.data, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
       } else {
-        await api.post(`/community/catalogo/schede/${id}/media/link`, payload.data);
+        await api.post(`/catalogo/schede/${id}/media/link`, payload.data);
       }
       alert("Media allegato con successo!");
       fetchData();
@@ -65,7 +65,7 @@ export default function CatalogoDettaglio() {
 
   const handleValidation = async (approvata) => {
     try {
-      await api.post(`/community/catalogo/schede/${id}/valida`, {
+      await api.post(`/catalogo/schede/${id}/valida`, {
         approvata,
         nota_validazione: notaValidazione || "Nessuna nota"
       });
@@ -79,7 +79,7 @@ export default function CatalogoDettaglio() {
 
   if (loading || !scheda) return <div className="p-8 text-center">Caricamento...</div>;
 
-  const isCreatorOrAdmin = user?.ruolo === 'admin' || scheda.creato_da === user?.id;
+  const isCreatorOrAdmin = user?.ruolo === 'admin' || scheda.creato_da === user?.user_id;
   const canEdit = scheda.stato === 'bozza' && isCreatorOrAdmin;
 
   return (

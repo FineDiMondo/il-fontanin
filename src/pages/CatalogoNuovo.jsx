@@ -10,7 +10,7 @@ export default function CatalogoNuovo() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    api.get('/community/catalogo/categorie')
+    api.get('/catalogo/categorie')
       .then(res => setCategorie(res.data))
       .catch(err => console.error("Errore fetch categorie", err))
       .finally(() => setLoading(false));
@@ -20,7 +20,7 @@ export default function CatalogoNuovo() {
     setSubmitting(true);
     try {
       // In creazione, salviamo prima la scheda
-      const res = await api.post('/community/catalogo/schede', formData);
+      const res = await api.post('/catalogo/schede', formData);
       const newScheda = res.data;
       alert("Scheda salvata in bozza con successo! ID: " + newScheda.id);
       navigate(`/catalogo/scheda/${newScheda.id}`); // Si può poi reindirizzare al dettaglio per aggiungere media o chiederne la validazione

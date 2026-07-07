@@ -109,6 +109,7 @@ function RicettaViewer({ ricetta, onBack }) {
 export default function Ricettario() {
   const [ricette, setRicette] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
   const [selectedRicetta, setSelectedRicetta] = useState(null)
   
   const { user } = useAuth()
@@ -121,8 +122,14 @@ export default function Ricettario() {
   const fetchRicette = () => {
     setLoading(true)
     api.get('/ricettario/ricette')
-      .then(r => setRicette(r.data.items || []))
-      .catch(e => console.error("Errore fetch ricette", e))
+      .then(r => {
+        setRicette(r.data.items || [])
+        setError(false)
+      })
+      .catch(e => {
+        console.error("Errore fetch ricette", e)
+        setError(true)
+      })
       .finally(() => setLoading(false))
   }
 
@@ -137,6 +144,11 @@ export default function Ricettario() {
       <div className="scroll-content bg-stone-50 p-4">
         {loading ? (
           <LoadingSpinner />
+        ) : error ? (
+          <EmptyState 
+            title="Servizio non disponibile" 
+            message="Si è verificato un errore durante il caricamento del ricettario. Riprova più tardi." 
+          />
         ) : ricette.length === 0 ? (
           <EmptyState 
             title="Ricettario vuoto" 

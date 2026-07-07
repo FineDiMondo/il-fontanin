@@ -22,8 +22,8 @@ export default function Catalogo() {
     setLoading(true);
     try {
       const [catRes, schedeRes] = await Promise.all([
-        api.get('/community/catalogo/categorie'),
-        api.get(`/community/catalogo/schede?stato=pubblicato${selectedCategoria ? `&categoria_id=${selectedCategoria}` : ''}`)
+        api.get('/catalogo/categorie'),
+        api.get(`/catalogo/schede?stato=pubblicato${selectedCategoria ? `&categoria_id=${selectedCategoria}` : ''}`)
       ]);
       setCategorie(catRes.data);
       setSchede(schedeRes.data);

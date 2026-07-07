@@ -69,12 +69,12 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| (vuoto — nessuno scrittore attivo) | | | | | |
-| 2026-07-07 10:38 | Gemini/Antigravity | WRITING | feature/algorand-wallet-mpc | catalogo | Implementazione Motore Catalogazione |
+| 2026-07-07 10:51 | Gemini/Antigravity (Claude) | WRITING | feature/algorand-wallet-mpc | forum, test, ui | Bugfix forum 500, test usabilità, manuale utente, empty state UI |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-07 10:38 | Gemini/Antigravity | DONE | 62a5dad | Implementazione Motore Catalogazione |
 | 2026-07-07 10:25 | Gemini/Antigravity | DONE | 92974e8 | Implementazione Canzoniere e Ricettario (DB, API, UI) + Deploy |
 | 2026-07-07 09:36 | Gemini/Antigravity | DONE | a56ef46 | Correzione stemmi Povegliano/Vigasio e testi, aggiunta placeholder Erbè/Trevenzuolo/Nogara; deploy Firebase Hosting |
 | 2026-07-05 10:26 | Gemini/Antigravity | DONE | cfba7a0 | Implementazione modulo Galleria Media con integrazione Google Drive, Firestore rules e feature flags |

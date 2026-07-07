@@ -158,10 +158,14 @@ def update_scheda(
     if scheda.creato_da != current_user.id and current_user.ruolo != "admin":
         raise HTTPException(status_code=403, detail="Non autorizzato")
         
-    if scheda.stato != "bozza" and current_user.ruolo != "admin":
-        raise HTTPException(status_code=400, detail="Solo l'admin può modificare schede già pubblicate")
+    if scheda.stato not in ["bozza", "richiesta_modifiche"] and current_user.ruolo != "admin":
+        raise HTTPException(status_code=400, detail="Solo l'admin può modificare schede in questo stato")
         
     update_data = scheda_in.model_dump(exclude_unset=True)
+    
+    # Se la scheda era in richiesta_modifiche e viene modificata dal creatore, torna in bozza
+    if scheda.stato == "richiesta_modifiche":
+        scheda.stato = "bozza"
     
     # Validazione campi se aggiorniamo metadata
     if "metadata_specifici" in update_data:
@@ -304,7 +308,7 @@ def valida_scheda(
     else:
         if not payload.nota_validazione:
             raise HTTPException(status_code=422, detail="nota_validazione obbligatoria per respingere")
-        scheda.stato = "in_validazione" # O resta bozza, ma l'utente sa che l'ha letta
+        scheda.stato = "richiesta_modifiche"
         
     scheda.validato_da = current_user.id
     scheda.validato_at = datetime.now(timezone.utc)

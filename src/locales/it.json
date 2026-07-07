@@ -30,7 +30,9 @@
     "attendees": "iscritti",
     "territory": "Il territorio",
     "territory_link": "Storia del territorio",
-    "territory_sub": "Villafranca · Povegliano · Mozzecane · Vigasio"
+    "territory_sub": "Villafranca · Povegliano · Mozzecane · Vigasio",
+    "map_button": "Mappa",
+    "numbers_button": "Numeri Utili"
   },
   "forum": {
     "title": "Forum",

@@ -20,7 +20,7 @@ export default function CatalogoValidazione() {
 
   const fetchBozze = async () => {
     try {
-      const res = await api.get('/community/catalogo/schede?stato=bozza');
+      const res = await api.get('/catalogo/schede?stato=bozza');
       setSchede(res.data);
     } catch (err) {
       console.error(err);
@@ -71,7 +71,7 @@ export default function CatalogoValidazione() {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500">
-                    {new Date(scheda.modificato_at || scheda.creato_at).toLocaleDateString()}
+                    {new Date(scheda.updated_at || scheda.created_at).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <button onClick={() => navigate(`/catalogo/scheda/${scheda.id}`)} className="text-oro hover:text-yellow-600 font-bold">

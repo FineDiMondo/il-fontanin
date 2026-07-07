@@ -72,6 +72,7 @@ function BranoViewer({ brano, onBack }) {
 export default function Canzoniere() {
   const [brani, setBrani] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
   const [selectedBrano, setSelectedBrano] = useState(null)
   
   const { user } = useAuth()
@@ -84,8 +85,14 @@ export default function Canzoniere() {
   const fetchBrani = () => {
     setLoading(true)
     api.get('/canzoniere/brani')
-      .then(r => setBrani(r.data.items || []))
-      .catch(e => console.error("Errore fetch brani", e))
+      .then(r => {
+        setBrani(r.data.items || [])
+        setError(false)
+      })
+      .catch(e => {
+        console.error("Errore fetch brani", e)
+        setError(true)
+      })
       .finally(() => setLoading(false))
   }
 
@@ -100,6 +107,11 @@ export default function Canzoniere() {
       <div className="scroll-content bg-stone-50 p-4">
         {loading ? (
           <LoadingSpinner />
+        ) : error ? (
+          <EmptyState 
+            title="Servizio non disponibile" 
+            message="Si è verificato un errore durante il caricamento del canzoniere. Riprova più tardi." 
+          />
         ) : brani.length === 0 ? (
           <EmptyState 
             title="Canzoniere vuoto" 

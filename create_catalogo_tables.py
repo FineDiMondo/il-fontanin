@@ -1,9 +1,25 @@
 import os
+import sys
+import argparse
 from sqlalchemy import create_engine
 from community_module.models.community_models import Base, CatalogoCategoria, get_session, get_engine
 import dotenv
 
-dotenv.load_dotenv(".env.local")
+parser = argparse.ArgumentParser(description="Create catalog tables and seed categories.")
+parser.add_argument("--yes", action="store_true", help="Confirm execution")
+parser.add_argument("--env", type=str, choices=["local", "staging"], required=True, help="Environment to target (local or staging)")
+args = parser.parse_args()
+
+if not args.yes:
+    print("Error: --yes flag is required to run this script.")
+    sys.exit(1)
+
+if args.env == "local":
+    dotenv.load_dotenv(".env.local")
+elif args.env == "staging":
+    dotenv.load_dotenv(".env.staging")
+
+print(f"Targeting {args.env} environment. DB_HOST={os.getenv('JACKASS_DB_HOST', 'default')}")
 
 engine = get_engine()
 

@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 
 from fastapi import APIRouter, HTTPException, Depends, Query
 from sqlalchemy import text
+from sqlalchemy.orm import joinedload
 
 from community_module.models.community_models import (
     get_session, CommunityUser,
@@ -64,6 +65,7 @@ def list_threads(
 
         q = (
             session.query(ForumThread)
+            .options(joinedload(ForumThread.user))
             .filter(ForumThread.category_id == cat.id)
             .order_by(ForumThread.pinned.desc(), ForumThread.last_reply_at.desc().nullslast(), ForumThread.created_at.desc())
         )
@@ -108,7 +110,7 @@ def get_thread(
 ):
     session = get_session()
     try:
-        thread = session.query(ForumThread).filter(ForumThread.id == thread_id).first()
+        thread = session.query(ForumThread).options(joinedload(ForumThread.user)).filter(ForumThread.id == thread_id).first()
         if not thread:
             raise HTTPException(status_code=404, detail="Thread non trovato")
 
@@ -138,6 +140,7 @@ def search_threads(
         is_socio = current_user and current_user.ruolo in ("socio", "admin")
         base_q = (
             session.query(ForumThread)
+            .options(joinedload(ForumThread.user))
             .join(ForumCategory, ForumThread.category_id == ForumCategory.id)
         )
         if not is_socio:
@@ -179,6 +182,7 @@ def list_posts(
 
         posts = (
             session.query(ForumPost)
+            .options(joinedload(ForumPost.user))
             .filter(ForumPost.thread_id == thread_id, ForumPost.moderato == False)
             .order_by(ForumPost.created_at)
             .offset((page - 1) * per_page)
