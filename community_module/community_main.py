@@ -12,6 +12,8 @@ from community_module.api.research import router as research_router
 from community_module.api.events import router as events_router
 from community_module.api.lavori import router as lavori_router
 from community_module.api.media import router as media_router
+from community_module.api.canzoniere import router as canzoniere_router
+from community_module.api.ricettario import router as ricettario_router
 from community_module.integrations.analytics import stats_community, aggrega_risposte_survey, analisi_ai_survey
 from community_module.models.community_models import CommunityUser, CommunityNotification, get_session
 from community_module.models.schemas import NotificationOut
@@ -29,6 +31,8 @@ community_router.include_router(research_router)
 community_router.include_router(events_router)
 community_router.include_router(lavori_router)
 community_router.include_router(media_router)
+community_router.include_router(canzoniere_router)
+community_router.include_router(ricettario_router)
 
 
 # =============================================================================

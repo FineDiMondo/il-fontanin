@@ -9,7 +9,7 @@ from datetime import datetime
 from typing import Optional
 
 from sqlalchemy import (
-    create_engine, Column, String, Boolean, Integer, Text,
+    create_engine, Column, String, Boolean, Integer, Text, Numeric,
     DateTime, ForeignKey, UniqueConstraint, Index
 )
 from sqlalchemy.dialects.postgresql import UUID, JSONB, TSVECTOR
@@ -337,3 +337,129 @@ class CommunityNotification(Base):
     letta      = Column(Boolean, nullable=False, default=False)
     link       = Column(String(500))
     created_at = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+# =============================================================================
+# CANZONIERE
+# =============================================================================
+
+class CanzoniereBrano(Base):
+    __tablename__ = "canzoniere_brani"
+
+    id                 = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    titolo             = Column(String(200), nullable=False)
+    autore             = Column(String(200))
+    tipo               = Column(String(50), nullable=False, default="autore") # tradizionale, autore, cover
+    tonalita_originale = Column(String(10))
+    capotasto          = Column(Integer, default=0)
+    tempo_bpm          = Column(Integer)
+    ritmo_strumming    = Column(Text)
+    testo_accordi      = Column(Text, nullable=False) # Markdown/ChordPro
+    fonte              = Column(String(50), default="manuale")
+    fonte_url          = Column(String(500))
+    licenza            = Column(String(50))
+    
+    creato_da          = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    modificato_da      = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    created_at         = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at         = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+    
+    versione           = Column(Integer, nullable=False, default=1)
+
+class CanzoniereVersione(Base):
+    __tablename__ = "canzoniere_versioni"
+
+    id                 = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    brano_id           = Column(UUID(as_uuid=True), ForeignKey("canzoniere_brani.id", ondelete="CASCADE"), nullable=False)
+    versione           = Column(Integer, nullable=False)
+    contenuto_testo    = Column(Text, nullable=False)
+    modificato_da      = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    created_at         = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+class CanzoniereRaccolta(Base):
+    __tablename__ = "canzoniere_raccolte"
+
+    id          = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    nome        = Column(String(200), nullable=False)
+    descrizione = Column(Text)
+    pubblica    = Column(Boolean, nullable=False, default=False)
+    creato_da   = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    created_at  = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+class CanzoniereRaccoltaBrano(Base):
+    __tablename__ = "canzoniere_raccolte_brani"
+    __table_args__ = (UniqueConstraint("raccolta_id", "brano_id"),)
+
+    raccolta_id = Column(UUID(as_uuid=True), ForeignKey("canzoniere_raccolte.id", ondelete="CASCADE"), primary_key=True)
+    brano_id    = Column(UUID(as_uuid=True), ForeignKey("canzoniere_brani.id", ondelete="CASCADE"), primary_key=True)
+    ordine      = Column(Integer, nullable=False, default=0)
+
+
+# =============================================================================
+# RICETTARIO
+# =============================================================================
+
+class RicettarioRicetta(Base):
+    __tablename__ = "ricettario_ricette"
+
+    id                = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    nome              = Column(String(200), nullable=False)
+    categoria         = Column(String(100))
+    tipo_cucina       = Column(String(100))
+    porzioni_base     = Column(Integer, nullable=False, default=4)
+    tempo_prep_min    = Column(Integer)
+    tempo_cottura_min = Column(Integer)
+    difficolta        = Column(String(50)) # Facile, Media, Complessa
+    procedimento      = Column(JSONB, nullable=False) # Array di step strutturati
+    tag_dietetici     = Column(JSONB) # Array di stringhe
+    
+    fonte             = Column(String(50), default="manuale")
+    fonte_url         = Column(String(500))
+    licenza           = Column(String(100))
+    foto_drive_id     = Column(String(200))
+    
+    creato_da         = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    modificato_da     = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    created_at        = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at        = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+    versione          = Column(Integer, nullable=False, default=1)
+
+class RicettarioIngrediente(Base):
+    __tablename__ = "ricettario_ingredienti"
+
+    id         = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    ricetta_id = Column(UUID(as_uuid=True), ForeignKey("ricettario_ricette.id", ondelete="CASCADE"), nullable=False)
+    nome       = Column(String(200), nullable=False)
+    quantita   = Column(Numeric(10, 2))
+    unita      = Column(String(50))
+    opzionale  = Column(Boolean, default=False)
+    note       = Column(String(200))
+    ordine     = Column(Integer, default=0)
+
+class RicettarioVersione(Base):
+    __tablename__ = "ricettario_versioni"
+
+    id                 = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    ricetta_id         = Column(UUID(as_uuid=True), ForeignKey("ricettario_ricette.id", ondelete="CASCADE"), nullable=False)
+    versione           = Column(Integer, nullable=False)
+    contenuto_json     = Column(JSONB, nullable=False)
+    modificato_da      = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    created_at         = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+class RicettarioRaccolta(Base):
+    __tablename__ = "ricettario_raccolte"
+
+    id          = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    nome        = Column(String(200), nullable=False)
+    descrizione = Column(Text)
+    pubblica    = Column(Boolean, nullable=False, default=False)
+    creato_da   = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    created_at  = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+class RicettarioRaccoltaRicetta(Base):
+    __tablename__ = "ricettario_raccolte_ricette"
+    __table_args__ = (UniqueConstraint("raccolta_id", "ricetta_id"),)
+
+    raccolta_id = Column(UUID(as_uuid=True), ForeignKey("ricettario_raccolte.id", ondelete="CASCADE"), primary_key=True)
+    ricetta_id  = Column(UUID(as_uuid=True), ForeignKey("ricettario_ricette.id", ondelete="CASCADE"), primary_key=True)
+    ordine      = Column(Integer, nullable=False, default=0)
+

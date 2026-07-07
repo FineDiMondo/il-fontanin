@@ -337,3 +337,125 @@ class PaginatedResponse(BaseModel):
     page: int
     per_page: int
     pages: int
+
+# =============================================================================
+# CANZONIERE
+# =============================================================================
+
+class CanzoniereBranoCreate(BaseModel):
+    titolo: str = Field(min_length=2)
+    autore: Optional[str] = None
+    tipo: str = "autore"
+    tonalita_originale: Optional[str] = None
+    capotasto: int = 0
+    tempo_bpm: Optional[int] = None
+    ritmo_strumming: Optional[str] = None
+    testo_accordi: str = Field(min_length=10)
+    fonte: str = "manuale"
+    fonte_url: Optional[str] = None
+    licenza: Optional[str] = None
+
+class CanzoniereBranoOut(BaseModel):
+    id: UUID
+    titolo: str
+    autore: Optional[str] = None
+    tipo: str
+    tonalita_originale: Optional[str] = None
+    capotasto: int
+    tempo_bpm: Optional[int] = None
+    ritmo_strumming: Optional[str] = None
+    testo_accordi: str
+    fonte: str
+    fonte_url: Optional[str] = None
+    licenza: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+    versione: int
+    creato_da: UUID
+
+    class Config:
+        from_attributes = True
+
+class CanzoniereRaccoltaCreate(BaseModel):
+    nome: str = Field(min_length=2)
+    descrizione: Optional[str] = None
+    pubblica: bool = False
+
+class CanzoniereRaccoltaOut(BaseModel):
+    id: UUID
+    nome: str
+    descrizione: Optional[str] = None
+    pubblica: bool
+    created_at: datetime
+    creato_da: UUID
+
+    class Config:
+        from_attributes = True
+
+
+# =============================================================================
+# RICETTARIO
+# =============================================================================
+
+class IngredienteStrutturato(BaseModel):
+    nome: str = Field(min_length=2)
+    quantita: Optional[float] = None
+    unita: Optional[str] = None
+    opzionale: bool = False
+    note: Optional[str] = None
+
+class RicettarioRicettaCreate(BaseModel):
+    nome: str = Field(min_length=2)
+    categoria: Optional[str] = None
+    tipo_cucina: Optional[str] = None
+    porzioni_base: int = 4
+    tempo_prep_min: Optional[int] = None
+    tempo_cottura_min: Optional[int] = None
+    difficolta: Optional[str] = None
+    procedimento: List[str]
+    tag_dietetici: Optional[List[str]] = None
+    ingredienti: List[IngredienteStrutturato]
+    fonte: str = "manuale"
+    fonte_url: Optional[str] = None
+    licenza: Optional[str] = None
+    foto_drive_id: Optional[str] = None
+
+class RicettarioRicettaOut(BaseModel):
+    id: UUID
+    nome: str
+    categoria: Optional[str] = None
+    tipo_cucina: Optional[str] = None
+    porzioni_base: int
+    tempo_prep_min: Optional[int] = None
+    tempo_cottura_min: Optional[int] = None
+    difficolta: Optional[str] = None
+    procedimento: List[str]
+    tag_dietetici: Optional[List[str]] = None
+    fonte: str
+    fonte_url: Optional[str] = None
+    licenza: Optional[str] = None
+    foto_drive_id: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+    versione: int
+    creato_da: UUID
+    ingredienti: Optional[List[Dict[str, Any]]] = None # per output arricchito
+
+    class Config:
+        from_attributes = True
+
+class RicettarioRaccoltaCreate(BaseModel):
+    nome: str = Field(min_length=2)
+    descrizione: Optional[str] = None
+    pubblica: bool = False
+
+class RicettarioRaccoltaOut(BaseModel):
+    id: UUID
+    nome: str
+    descrizione: Optional[str] = None
+    pubblica: bool
+    created_at: datetime
+    creato_da: UUID
+
+    class Config:
+        from_attributes = True

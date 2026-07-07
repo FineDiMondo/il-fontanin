@@ -68,7 +68,11 @@ def custom_openapi():
         "/community/forum/categories",
         "/community/events",
         "/community/forum/search",
-        "/community/research/experiments"
+        "/community/research/experiments",
+        "/community/canzoniere/brani",
+        "/community/canzoniere/raccolte",
+        "/community/ricettario/ricette",
+        "/community/ricettario/raccolte"
     }
     for path in public_paths:
         if path in openapi_schema.get("paths", {}):

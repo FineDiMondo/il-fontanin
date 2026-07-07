@@ -70,6 +70,7 @@ Al check-out:
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
 | (vuoto — nessuno scrittore attivo) | | | | | |
+| 2026-07-07 10:25 | Gemini/Antigravity | WRITING | feature/algorand-wallet-mpc | canzoniere, ricettario | Implementazione Canzoniere e Ricettario |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |

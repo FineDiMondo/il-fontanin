@@ -21,6 +21,8 @@ import Geologia from './pages/Geologia.jsx'
 import AnalisiAcqua from './pages/AnalisiAcqua.jsx'
 import LavoriProgetto from './pages/LavoriProgetto.jsx'
 import Media from './pages/Media.jsx'
+import Canzoniere from './pages/Canzoniere.jsx'
+import Ricettario from './pages/Ricettario.jsx'
 import { MediaProvider } from './context/MediaContext.jsx'
 import LoadingSpinner from './components/LoadingSpinner.jsx'
 
@@ -64,6 +66,8 @@ function AppRoutes() {
       <Route path="/analisi-acqua" element={<AnalisiAcqua />} />
       <Route path="/lavori" element={<LavoriProgetto />} />
       <Route path="/media" element={<Media />} />
+      <Route path="/canzoniere" element={<Canzoniere />} />
+      <Route path="/ricettario" element={<Ricettario />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
