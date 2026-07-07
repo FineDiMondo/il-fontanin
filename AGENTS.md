@@ -69,11 +69,11 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-07 11:15 | Gemini/Antigravity | WRITING | feature/algorand-wallet-mpc | forum, test, docs | Fix DetachedInstanceError su POST forum, update audit, fix mock data in test write_gated |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-07 11:15 | Gemini/Antigravity | DONE | 2cc0d1f | Fix DetachedInstanceError su POST forum, update audit, fix mock data in test write_gated |
 | 2026-07-07 10:51 | Gemini/Antigravity | DONE | 9bc0bc3 | Bugfix forum 500, test usabilità, manuale utente, empty state UI, fix stato richiesta_modifiche |
 | 2026-07-07 10:38 | Gemini/Antigravity | DONE | 62a5dad | Implementazione Motore Catalogazione |
 | 2026-07-07 10:25 | Gemini/Antigravity | DONE | 92974e8 | Implementazione Canzoniere e Ricettario (DB, API, UI) + Deploy |
