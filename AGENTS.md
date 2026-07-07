@@ -69,10 +69,11 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-07 15:33 | Gemini/Antigravity | WRITING | feature/algorand-wallet-mpc | AGENTS.md, COORDINATION.md, deploy | Verifica git status/diff, file non tracciati, pytest, build, env var ff_competenze, commit docs finding #6, deploy backend+frontend, verifica post-deploy |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
+|---|---|---|---|---|
+| 2026-07-07 15:33 | Gemini/Antigravity | DONE | a39e447, d4490e0 | Verifica git status/diff OK; rimosso .git/index.lock stantio (12:00, 0 byte, nessun processo); pytest 40 passed 2 skipped; npm build OK; VITE_ENABLE_COMPETENZE_FEATURE assente in tutti gli env (ff_competenze=OFF); commit docs finding #6 (a39e447, scope minimo: AGENTS.md+COORDINATION.md+test_security_fix.py+verify_security_fix.py); PDF Villafranca spostato in docs/comuni/villafranca-verona/ (d4490e0); deploy backend Cloud Run OK (revision finedimondo-backend-00017-hmv); deploy frontend Firebase OK (el-fontanin.web.app); VERIFICA POST-DEPLOY SUPERATA: GET /schede?stato=bozza con socio non-autore non-validatore → [] HTTP 200. |
 |---|---|---|---|---|
 | 2026-07-07 12:20 | Claude/Cowork | ABORTED | — | Documentazione AGENTS.md/COORDINATION.md preparata (non ancora committata) ma commit interrotto: .git/index.lock occupato da altro processo (probabile Antigravity già in scrittura). Rispettato R1, nessun tentativo di sblocco forzato. File nuovi non tracciati comparsi nel frattempo: test_security_fix.py, verify_security_fix.py, Villafranca_Verona_Storia_immagini_comunita_IT_2018_x_web.pdf — origine non verificata da questa sessione. |
 | 2026-07-07 11:59 | Claude/Cowork + Antigravity | DONE | a945aa0 | Fix bug sicurezza GET /schede (bozze visibili a chiunque autenticato): join SQL su CompetenzaDominio/CompetenzaUtente, autorizzazione a livello di query, bypass admin preservato (riga 71 catalogo.py, verificato). Renormalizzazione line-ending (.gitattributes text=lf, core.autocrlf false) 57→8 file. Verificato: pytest 27 passed, npm run build OK. NON ancora deployato in produzione a questa data. |
