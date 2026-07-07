@@ -69,10 +69,14 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-07 15:33 | Gemini/Antigravity | WRITING | feature/algorand-wallet-mpc | AGENTS.md, COORDINATION.md, deploy | Verifica git status/diff, file non tracciati, pytest, build, env var ff_competenze, commit docs finding #6, deploy backend+frontend, verifica post-deploy |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-07 12:20 | Claude/Cowork | ABORTED | — | Documentazione AGENTS.md/COORDINATION.md preparata (non ancora committata) ma commit interrotto: .git/index.lock occupato da altro processo (probabile Antigravity già in scrittura). Rispettato R1, nessun tentativo di sblocco forzato. File nuovi non tracciati comparsi nel frattempo: test_security_fix.py, verify_security_fix.py, Villafranca_Verona_Storia_immagini_comunita_IT_2018_x_web.pdf — origine non verificata da questa sessione. |
+| 2026-07-07 11:59 | Claude/Cowork + Antigravity | DONE | a945aa0 | Fix bug sicurezza GET /schede (bozze visibili a chiunque autenticato): join SQL su CompetenzaDominio/CompetenzaUtente, autorizzazione a livello di query, bypass admin preservato (riga 71 catalogo.py, verificato). Renormalizzazione line-ending (.gitattributes text=lf, core.autocrlf false) 57→8 file. Verificato: pytest 27 passed, npm run build OK. NON ancora deployato in produzione a questa data. |
+| 2026-07-07 ~11:50 | Antigravity | DONE | f2420d3 | Implementazione AT-COMPETENZE-002 (Profilo Competenze e Questionari): tabelle CompetenzaDominio/CompetenzaUtente, migrazione Alembic baseline+competenze, router /community/competenze/*, is_validatore_per_dominio, feature flag ff_competenze (default OFF), pagina Profilo.jsx dietro flag. Postgres confermato come layer di persistenza (supera assunzione Firestore in AF). |
 | 2026-07-07 11:35 | Gemini/Antigravity | DONE | c921f79 | Deploy Firebase e Cloud Run con fix db password in Secret Manager; verifica post-deploy in prod superata |
 | 2026-07-07 11:15 | Gemini/Antigravity | DONE | 2cc0d1f | Fix DetachedInstanceError su POST forum, update audit, fix mock data in test write_gated |
 | 2026-07-07 10:51 | Gemini/Antigravity | DONE | 9bc0bc3 | Bugfix forum 500, test usabilità, manuale utente, empty state UI, fix stato richiesta_modifiche |
