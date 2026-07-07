@@ -1,0 +1,21 @@
+# Normalizza i line endings a LF indipendentemente dalla config locale dell'operatore
+* text=lf
+*.py text=lf eol=lf
+*.js text=lf eol=lf
+*.jsx text=lf eol=lf
+*.ts text=lf eol=lf
+*.tsx text=lf eol=lf
+*.json text=lf eol=lf
+*.md text=lf eol=lf
+*.yaml text=lf eol=lf
+*.yml text=lf eol=lf
+
+# File binari
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary
+*.xlsx binary
+*.xls binary

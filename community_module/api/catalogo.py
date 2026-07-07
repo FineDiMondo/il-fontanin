@@ -55,16 +55,38 @@ def get_schede(
     session: Session = Depends(get_db_session),
     current_user: Optional[CommunityUser] = Depends(get_current_user_optional)
 ):
-    # Se lo stato non è 'pubblicato', l'utente deve essere almeno socio (e idealmente il creatore/validatore)
+    from sqlalchemy import and_, or_
+    from community_module.models.community_models import CompetenzaDominio, CompetenzaUtente
+
+    # Se lo stato non è 'pubblicato', l'utente DEVE essere autenticato
     if stato != "pubblicato":
         if not current_user:
             raise HTTPException(status_code=401, detail="Non autorizzato a vedere bozze")
-            
+
+    # Query base: schede per stato
     query = session.query(CatalogoScheda).filter(CatalogoScheda.stato == stato)
-    
+
+    # AUTORIZZAZIONE: Se stato != 'pubblicato' e utente NON è admin, filtra per visibilità
+    # Bozze visibili SOLO al creatore oppure ai validatori della categoria
+    if stato != "pubblicato" and current_user.ruolo != "admin":
+        query = query.outerjoin(CatalogoCategoria).outerjoin(
+            CompetenzaDominio, CatalogoCategoria.codice == CompetenzaDominio.codice
+        ).outerjoin(
+            CompetenzaUtente, and_(
+                CompetenzaUtente.dominio_id == CompetenzaDominio.id,
+                CompetenzaUtente.user_id == current_user.id,
+                CompetenzaUtente.livello_validato.isnot(None)
+            )
+        ).filter(
+            or_(
+                CatalogoScheda.creato_da == current_user.id,
+                CompetenzaUtente.id.isnot(None)
+            )
+        )
+
     if categoria_id:
         query = query.filter(CatalogoScheda.categoria_id == categoria_id)
-        
+
     if bbox:
         try:
             min_lng, min_lat, max_lng, max_lat = map(float, bbox.split(","))
@@ -76,17 +98,9 @@ def get_schede(
             )
         except ValueError:
             raise HTTPException(status_code=400, detail="Formato bbox non valido")
-            
+
     # Nel pilot limitiamo a 100
     schede = query.limit(100).all()
-    
-    if stato != "pubblicato" and current_user and current_user.ruolo != "admin":
-        schede_filtrate = []
-        for s in schede:
-            if s.creato_da == current_user.id or is_validatore_per_dominio(session, current_user, s.categoria.codice):
-                schede_filtrate.append(s)
-        return schede_filtrate
-        
     return schede
 
 def _valida_metadata_schema(schema_fields, data):
