@@ -23,8 +23,6 @@ steps:
       - '--region=europe-west1'
       - '--platform=managed'
       - '--allow-unauthenticated'
-      - '--set-env-vars=JACKASS_DB_HOST=35.241.200.140,JACKASS_DB_PORT=5432,JACKASS_DB_USER=jackass_admin,JACKASS_DB_NAME=jackass_verona,GOOGLE_CLOUD_PROJECT=el-fontanin'
-      - '--set-secrets=JACKASS_DB_PASSWORD=JACKASS_DB_PASSWORD:latest'
 
 images:
   - 'europe-west1-docker.pkg.dev/freedomrun-491323/finedimondo/finedimondo-backend:v1-1-0'
