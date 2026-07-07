@@ -537,3 +537,38 @@ class CatalogoMedia(Base):
 
     scheda                = relationship("CatalogoScheda", back_populates="media")
 
+# =============================================================================
+# COMPETENZE E VALIDATORI
+# =============================================================================
+
+class CompetenzaDominio(Base):
+    __tablename__ = "competenza_domini"
+
+    id           = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    codice       = Column(String(50), unique=True, nullable=False)   # es. "monumenti-cristiani"
+    nome         = Column(String(100), nullable=False)
+    descrizione  = Column(Text)
+    domande_json = Column(JSONB, nullable=False)   # lista {id, testo, tipo, opzioni?, scala_min?, scala_max?}
+    attivo       = Column(Boolean, nullable=False, default=True)
+    created_by   = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    created_at   = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at   = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+
+class CompetenzaUtente(Base):
+    __tablename__ = "competenza_utente"
+    __table_args__ = (UniqueConstraint("user_id", "dominio_id"),)
+
+    id                     = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    user_id                = Column(UUID(as_uuid=True), ForeignKey("community_users.id", ondelete="CASCADE"), nullable=False)
+    dominio_id             = Column(UUID(as_uuid=True), ForeignKey("competenza_domini.id", ondelete="CASCADE"), nullable=False)
+    livello_dichiarato     = Column(String(20), nullable=False, default="nessuna")  # nessuna|base|intermedia|esperta
+    livello_validato       = Column(String(20))  # stessa scala, null finché non validato
+    validato_da            = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    validato_at            = Column(DateTime(timezone=True))
+    fonte                  = Column(Text)   # es. "storico dell'arte", "archivista", "interesse personale"
+    risposte_json          = Column(JSONB)  # risposte al questionario di dominio
+    data_ultima_revisione  = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    created_at             = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at             = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+
+

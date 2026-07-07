@@ -4,16 +4,25 @@ import { useAuth } from '../context/AuthContext.jsx'
 import UserAvatar from './UserAvatar.jsx'
 import LanguageSelector from './LanguageSelector.jsx'
 
+import { isFeatureEnabled } from '../lib/featureFlags.js'
+
 export default function AppHeader({ title, showBack = false, rightSlot }) {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { user, logout } = useAuth()
+  const competenzeEnabled = isFeatureEnabled('COMPETENZE', user?.id)
 
   const headerRight = rightSlot || (
     <div className="flex items-center gap-2">
       {user ? (
         <div className="flex items-center gap-2">
-          <UserAvatar name={`${user.nome} ${user.cognome || ''}`} size="sm" />
+          {competenzeEnabled ? (
+            <Link to="/profilo" className="touch-target transition-transform active:scale-95" aria-label={t('common.profile', 'Profilo')}>
+              <UserAvatar name={`${user.nome} ${user.cognome || ''}`} size="sm" />
+            </Link>
+          ) : (
+            <UserAvatar name={`${user.nome} ${user.cognome || ''}`} size="sm" />
+          )}
           <button
             className="touch-target text-oro-muted hover:text-oro transition-colors"
             onClick={logout}

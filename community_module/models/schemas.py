@@ -553,3 +553,53 @@ class CatalogoSchedaOut(CatalogoSchedaBase):
 
     class Config:
         from_attributes = True
+
+# =============================================================================
+# COMPETENZE
+# =============================================================================
+
+class DomandaCompetenza(BaseModel):
+    id: str
+    testo: str
+    tipo: str  # testo | scelta_singola | scelta_multipla | scala
+    opzioni: Optional[List[str]] = None
+    scala_min: Optional[int] = None
+    scala_max: Optional[int] = None
+
+class DominioCreate(BaseModel):
+    codice: str = Field(min_length=2, max_length=50)
+    nome: str
+    descrizione: Optional[str] = None
+    domande: List[DomandaCompetenza]
+
+class DominioOut(BaseModel):
+    id: UUID
+    codice: str
+    nome: str
+    descrizione: Optional[str] = None
+    domande_json: List[Dict[str, Any]]
+    attivo: bool
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+class CompetenzaDichiarazione(BaseModel):
+    livello_dichiarato: str  # nessuna|base|intermedia|esperta
+    fonte: Optional[str] = None
+    risposte_json: Optional[Dict[str, Any]] = None
+
+class CompetenzaValida(BaseModel):
+    livello_validato: str
+    nota: Optional[str] = None
+
+class CompetenzaOut(BaseModel):
+    id: UUID
+    dominio_id: UUID
+    livello_dichiarato: str
+    livello_validato: Optional[str] = None
+    fonte: Optional[str] = None
+    data_ultima_revisione: datetime
+
+    class Config:
+        from_attributes = True

@@ -28,7 +28,7 @@
 | #2 OpenAPI | COMMITTATO | Sessione Cowork       | dac1843 - xfail rimane fino a deploy Cloud Run   |
 | #3 Governance experiments | COMMITTATO | Sessione Nuova | 5cb9660 - docs/GOVERNANCE_MEMO_experiments.md — ATTENDE DELIBERA CONSIGLIO |
 | #4 Recovery wallet | BLOCCATO | — | Attende delibera Consiglio, nessun codice       |
-| #5 ASA ID WalletCard | COMMITTATO | Sessione Fontanin | 1e51445 - VITE_FONTANIN_ASA_ID, indexer mainnet-idx.algonode.cloud, placeholder se env assente |
+| #5 ASA ID WalletCard | COMMITTATO | Sessione Fontanin | 1e51445 - VITE_F_TOKEN_ASA_ID, indexer mainnet-idx.algonode.cloud, placeholder se env assente |
 
 ## Regola scrittori attivi
 

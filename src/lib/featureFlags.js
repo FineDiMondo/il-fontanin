@@ -13,6 +13,13 @@ export const FEATURE_FLAGS = {
     description: 'Upload media to shared Fontanin Drive',
     enabled: import.meta.env.VITE_ENABLE_MEDIA_FEATURE === 'true',
     rolloutPercentage: 100
+  },
+  COMPETENZE: {
+    name: 'ff_competenze',
+    label: 'Modulo Competenze',
+    description: 'Gestione domini di competenza e questionari validazione',
+    enabled: import.meta.env.VITE_ENABLE_COMPETENZE_FEATURE === 'true',
+    rolloutPercentage: 100
   }
 }
 

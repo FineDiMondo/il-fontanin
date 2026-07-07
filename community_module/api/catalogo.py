@@ -78,7 +78,16 @@ def get_schede(
             raise HTTPException(status_code=400, detail="Formato bbox non valido")
             
     # Nel pilot limitiamo a 100
-    return query.limit(100).all()
+    schede = query.limit(100).all()
+    
+    if stato != "pubblicato" and current_user and current_user.ruolo != "admin":
+        schede_filtrate = []
+        for s in schede:
+            if s.creato_da == current_user.id or is_validatore_per_dominio(session, current_user, s.categoria.codice):
+                schede_filtrate.append(s)
+        return schede_filtrate
+        
+    return schede
 
 def _valida_metadata_schema(schema_fields, data):
     if not schema_fields:
