@@ -42,6 +42,7 @@
 
 Finding #1, #2, #3, #5 COMMITTATI e DEPLOYATI live. Finding #4 (Recovery wallet) resta BLOCCATO in attesa di delibera del Consiglio. Finding #6 (sicurezza GET /schede) COMMITTATO (a945aa0) ma in attesa di deploy in questa stessa sessione.
 
-Modulo Competenze (AT-COMPETENZE-002, commit f2420d3) implementato dietro feature flag `ff_competenze` (default OFF): non visibile in produzione finché il flag non viene attivato esplicitamente dopo il gate di qualità concordato con Daniel.
-
-Il deploy di backend e frontend più recente confermato in produzione è alle 11:35 (commit c921f79) — PRECEDENTE al modulo Competenze e al fix di sicurezza #6. Il deploy che porta a945aa0 in produzione va fatto in questa sessione, con `ff_competenze` OFF.
+Modifica sessione (2026-07-08):
+- **C0a/b**: Eseguito `alembic current` che ha restituito `44370175c503 (head)`. Il check è passato contro la produzione (IP `35.241.200.140` fallback di `.env.local`). Le tabelle DAW (`tracks`, `clips`, `midi_notes`, etc.) sono vive e vegete. La catena è stata quindi `stamp`-ata (o creata bypassando Alembic). Questo significa che lo script baseline velenoso non è stato eseguito, scongiurando l'incidente. Segnalato bisogno di pulizia della baseline come issue (C0c).
+- **A/B**: Risolto issue `cache-dependency-path` di pip in CI per farla passare verde.
+- **B1-B5**: Aperto PR, unito in main, taggato `v1.2.0-competenze`. Verificato che il workflow di produzione non partisse (mancano i secrets WIF) e configurata branch protection su `main` (requires CI, reviews, no force push). Pulito `feature/algorand-wallet-mpc` e creato `develop` da `main`.
