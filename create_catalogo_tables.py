@@ -3,6 +3,7 @@ import sys
 import argparse
 from sqlalchemy import create_engine
 from community_module.models.community_models import Base, CatalogoCategoria, get_session, get_engine
+from community_module.catalogo_schemas_seed import CATEGORIE_SCHEMAS, CATEGORIE_NOMI
 import dotenv
 
 parser = argparse.ArgumentParser(description="Create catalog tables and seed categories.")
@@ -30,17 +31,10 @@ print("Tables created.")
 print("Seeding categories...")
 session = get_session()
 
+# Fonte unica degli schemi: community_module/catalogo_schemas_seed.py (AF-ADD-02 §2.3)
 SEED_CATEGORIE = [
-    {"codice": "monumenti-cristiani", "nome": "Monumenti Cristiani", "schema": {"campi": [
-        {"chiave": "dedicazione", "tipo": "testo", "obbligatorio": False},
-        {"chiave": "stato_conservazione", "tipo": "scelta", "opzioni": ["buono","discreto","degradato"], "obbligatorio": True}
-    ]}},
-    {"codice": "idrico", "nome": "Idrico", "schema": {"campi": []}},
-    {"codice": "naturale", "nome": "Naturale", "schema": {"campi": []}},
-    {"codice": "storico", "nome": "Storico", "schema": {"campi": []}},
-    {"codice": "culturale", "nome": "Culturale", "schema": {"campi": []}},
-    {"codice": "economico", "nome": "Economico", "schema": {"campi": []}},
-    {"codice": "militare", "nome": "Militare", "schema": {"campi": []}},
+    {"codice": codice, "nome": CATEGORIE_NOMI[codice], "schema": schema}
+    for codice, schema in CATEGORIE_SCHEMAS.items()
 ]
 
 for cat_data in SEED_CATEGORIE:
