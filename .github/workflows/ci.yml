@@ -1,0 +1,62 @@
+# CI — build frontend + test backend
+# BOZZA (2026-07-08, Claude/Fable). Si attiva al primo push su GitHub.
+# Prerequisito per la protezione di main ("required status checks").
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  frontend:
+    name: Build frontend (Vite)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      # NB: npm ci con --include=dev per non dipendere da NODE_ENV dell'ambiente
+      - run: npm ci --include=dev
+      - run: npm run build
+
+  backend:
+    name: Test backend (pytest)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: jackass_admin
+          POSTGRES_PASSWORD: ci_test_password
+          POSTGRES_DB: jackass_verona
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U jackass_admin"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      JACKASS_DB_HOST: localhost
+      JACKASS_DB_PORT: '5432'
+      JACKASS_DB_USER: jackass_admin
+      JACKASS_DB_PASSWORD: ci_test_password
+      JACKASS_DB_NAME: jackass_verona
+      # COMMUNITY_JWT_SECRET ha un default nel codice: per CI va bene il default
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'  # allineato a Dockerfile.community
+          cache: pip
+          cache-dependency-path: requirements_community.txt
+      - run: pip install -r requirements_community.txt pytest httpx
+      # Schema DB: create_all + seed categorie.
+      # NON usare `alembic upgrade head`: la baseline f308e9f0394c contiene
+      # DROP di tabelle estranee (schema DAW del DB condiviso) e fallirebbe
+      # su un DB vuoto. Da correggere la baseline prima di usare Alembic in CI.
+      - run: python create_catalogo_tables.py --env local --yes
+      - run: python -m pytest tests/ -v

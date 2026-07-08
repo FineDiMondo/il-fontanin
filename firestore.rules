@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Media collection rules
+    match /communities/{cid}/media/{mid} {
+      allow read: if
+        resource.data.visibility == 'public' ||
+        request.auth.uid == resource.data.owner_id ||
+        (request.auth != null && request.auth.uid in resource.data.access_list.user_ids);
+      
+      allow write: if
+        request.auth != null && request.auth.uid == request.resource.data.owner_id;
+      
+      allow delete: if
+        request.auth != null && (
+          request.auth.uid == resource.data.owner_id ||
+          request.auth.token.ruolo == 'admin'
+        );
+    }
+    
+    // Media audit log rules
+    match /communities/{cid}/media_audit_log/{entry_id} {
+      allow read: if
+        request.auth != null && (
+          request.auth.uid == resource.data.actor_id ||
+          request.auth.token.ruolo == 'admin'
+        );
+      
+      allow create: if request.auth != null;
+    }
+  }
+}

@@ -1,16 +1,27 @@
 /**
  * StemmaComune — riproduzioni vettoriali degli stemmi civici ufficiali.
  *
+ * CORREZIONE 2026-07-07: gli stemmi di Povegliano Veronese e Vigasio erano
+ * scambiati. Verificato su Wikipedia IT (voci "Povegliano Veronese" e
+ * "Vigasio") e sul blasone ufficiale di Vigasio (stemma e gonfalone concessi
+ * con DPR 21 luglio 1965): la libellula è il simbolo civico di Povegliano
+ * (non di Vigasio); lo stemma di Vigasio è quello con gambero, radice e
+ * stelle — corretto anche il numero di stelle, 5 e non 6, disposte 2 in
+ * capo e 3 in punta come da blasone ufficiale, non simmetriche a coppie.
+ *
  * Blasoni riprodotti (semplificati, senza corona murale e fronde ornamentali):
  *  - villafranca : semipartito d'azzurro e di rosso, al castello d'oro
  *                  torricellato, merlato, aperto (Villafranca di Verona)
- *  - povegliano  : di rosso, al gambero e alla pastinaca al naturale,
- *                  accompagnati da sei stelle d'argento (Povegliano Veronese)
+ *  - povegliano  : d'azzurro, alla croce d'argento accantonata da quattro
+ *                  libellule — simbolo civico legato alle risorgive del
+ *                  paese (Povegliano Veronese)
  *  - mozzecane   : troncato: nel 1° d'azzurro, al braccio al naturale
  *                  sopra un braciere d'oro fiammeggiante di rosso; nel 2°
  *                  d'argento, al cane passante di rosso (Mozzecane)
- *  - vigasio     : d'azzurro, alla croce d'argento accantonata da quattro
- *                  libellule (Vigasio)
+ *  - vigasio     : di rosso, al gambero d'oro montante, sinistrato da una
+ *                  radice d'oro fogliata di verde, accompagnati da cinque
+ *                  stelle d'argento, due in capo e tre in punta (blasone
+ *                  ufficiale, DPR 21 luglio 1965) (Vigasio)
  *
  * Varianti d'uso (deterministiche, una per contesto):
  *  - "pieno"   : colori araldici ufficiali — card, elenchi, popup mappa
@@ -75,24 +86,29 @@ function Villafranca() {
   )
 }
 
-/* Di rosso, al gambero e alla pastinaca, con sei stelle d'argento */
+/* Di rosso, al gambero d'oro montante e alla radice d'oro fogliata di
+   verde, con cinque stelle d'argento (2 in capo, 3 in punta) — Vigasio */
 function Stella({ cx, cy, r = 3 }) {
+  const x = Number(cx)
+  const y = Number(cy)
+  const radius = Number(r)
   const pts = []
   for (let i = 0; i < 12; i++) {
     const a = (Math.PI / 6) * i - Math.PI / 2
-    const rr = i % 2 === 0 ? r : r * 0.45
-    pts.push(`${(cx + rr * Math.cos(a)).toFixed(2)},${(cy + rr * Math.sin(a)).toFixed(2)}`)
+    const rr = i % 2 === 0 ? radius : radius * 0.45
+    pts.push(`${(x + rr * Math.cos(a)).toFixed(2)},${(y + rr * Math.sin(a)).toFixed(2)}`)
   }
   return <polygon points={pts.join(' ')} fill={ARGENTO} stroke={ARGENTO_SCURO} strokeWidth="0.4" />
 }
 
-function Povegliano() {
+function Vigasio() {
   return (
     <>
       <rect x="6" y="6" width="52" height="66" fill={ROSSO} />
+      {/* 2 stelle in capo */}
       <Stella cx="22" cy="14" /><Stella cx="42" cy="14" />
-      <Stella cx="20" cy="52" /><Stella cx="44" cy="52" />
-      <Stella cx="26" cy="63" /><Stella cx="38" cy="63" />
+      {/* 3 stelle in punta */}
+      <Stella cx="18" cy="61" /><Stella cx="32" cy="66" /><Stella cx="46" cy="61" />
       {/* gambero d'oro (chele in alto) */}
       <g fill={ORO} stroke={ORO_SCURO} strokeWidth="0.8">
         <path d="M18 22 Q15 19 16.5 16.5 Q19 18 20.5 20.5 Z" />
@@ -104,7 +120,7 @@ function Povegliano() {
         <path d="M20 40 L23 38.5 L26 40 L23 43 Z" />
         <path d="M19 27 L15.5 25 M19 30 L15 30 M27 27 L30.5 25 M27 30 L31 30" fill="none" />
       </g>
-      {/* pastinaca al naturale */}
+      {/* radice d'oro fogliata di verde */}
       <g>
         <path d="M41 26 Q37.5 22 38.5 18.5 Q41.5 20.5 41.8 24 Z" fill={VERDE} />
         <path d="M42.5 25.5 Q42 20 44.5 17 Q46 21 44.5 25 Z" fill={VERDE} />
@@ -156,7 +172,9 @@ function Libellula({ x, y, flip = false }) {
   )
 }
 
-function Vigasio() {
+/* D'azzurro, alla croce d'argento accantonata da quattro libellule —
+   Povegliano Veronese */
+function Povegliano() {
   return (
     <>
       <rect x="6" y="6" width="52" height="66" fill={AZZURRO} />

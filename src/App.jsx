@@ -19,12 +19,32 @@ import NumeriUtili from './pages/NumeriUtili.jsx'
 import Storia from './pages/Storia.jsx'
 import Geologia from './pages/Geologia.jsx'
 import AnalisiAcqua from './pages/AnalisiAcqua.jsx'
+import LavoriProgetto from './pages/LavoriProgetto.jsx'
+import Media from './pages/Media.jsx'
+import Canzoniere from './pages/Canzoniere.jsx'
+import Ricettario from './pages/Ricettario.jsx'
+import Catalogo from './pages/Catalogo';
+import CatalogoNuovo from './pages/CatalogoNuovo';
+import CatalogoDettaglio from './pages/CatalogoDettaglio';
+import CatalogoValidazione from './pages/CatalogoValidazione';
+import Profilo from './pages/Profilo.jsx';
+import { MediaProvider } from './context/MediaContext.jsx'
 import LoadingSpinner from './components/LoadingSpinner.jsx'
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
   if (loading) return <LoadingSpinner />
   if (!user) return <Navigate to="/login" replace />
+  return children
+}
+
+function SocioRoute({ children }) {
+  const { user, loading } = useAuth()
+  if (loading) return <LoadingSpinner />
+  if (!user) return <Navigate to="/login" replace />
+  if (user.ruolo !== 'socio' && user.ruolo !== 'admin') {
+    return <Navigate to="/" replace />
+  }
   return children
 }
 
@@ -36,8 +56,8 @@ function AppRoutes() {
       <Route path="/forum" element={<Forum />} />
       <Route path="/forum/:slug" element={<ForumCategory />} />
       <Route path="/forum/thread/:id" element={<ForumThread />} />
-      <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
-      <Route path="/chat/:slug" element={<ProtectedRoute><ChatRoom /></ProtectedRoute>} />
+      <Route path="/chat" element={<SocioRoute><Chat /></SocioRoute>} />
+      <Route path="/chat/:slug" element={<SocioRoute><ChatRoom /></SocioRoute>} />
       <Route path="/events" element={<Events />} />
       <Route path="/events/:id" element={<EventDetail />} />
       <Route path="/research" element={<Research />} />
@@ -49,6 +69,21 @@ function AppRoutes() {
       <Route path="/storia" element={<Storia />} />
       <Route path="/geologia" element={<Geologia />} />
       <Route path="/analisi-acqua" element={<AnalisiAcqua />} />
+      <Route path="/lavori" element={<LavoriProgetto />} />
+      <Route path="/media" element={<Media />} />
+      <Route path="/canzoniere" element={<Canzoniere />} />
+      <Route path="/ricettario" element={<Ricettario />} />
+      
+      {/* Rotte Catalogo Territoriale */}
+      <Route path="/catalogo" element={<Catalogo />} />
+      <Route path="/catalogo/nuovo" element={<SocioRoute><CatalogoNuovo /></SocioRoute>} />
+      <Route path="/catalogo/validazione" element={<SocioRoute><CatalogoValidazione /></SocioRoute>} />
+      <Route path="/catalogo/scheda/:id" element={<CatalogoDettaglio />} />
+
+      {import.meta.env.VITE_ENABLE_COMPETENZE_FEATURE === 'true' && (
+        <Route path="/profilo" element={<SocioRoute><Profilo /></SocioRoute>} />
+      )}
+
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
@@ -58,9 +93,11 @@ export default function App() {
   return (
     <AuthProvider>
       <WalletProvider>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
+        <MediaProvider>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </MediaProvider>
       </WalletProvider>
     </AuthProvider>
   )

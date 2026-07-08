@@ -30,7 +30,9 @@
     "attendees": "iscritti",
     "territory": "Il territorio",
     "territory_link": "Storia del territorio",
-    "territory_sub": "Villafranca · Povegliano · Mozzecane · Vigasio"
+    "territory_sub": "Villafranca · Povegliano · Mozzecane · Vigasio",
+    "map_button": "Mappa",
+    "numbers_button": "Numeri Utili"
   },
   "forum": {
     "title": "Forum",
@@ -172,10 +174,13 @@
     "stemmi_note": "Gli stemmi mostrati sono riproduzioni vettoriali semplificate dei blasoni civici ufficiali (senza corona murale e fronde ornamentali), a scopo illustrativo e comunitario.",
     "comuni": [
       { "stemma": "villafranca", "nome": "Villafranca di Verona", "ruolo": "Città dell'armistizio", "sintesi": "Borgo franco fondato dal Comune di Verona nel 1185 lungo la via Postumia: il nome viene dall'esenzione fiscale (\"villa franca\") concessa ai coloni. Castello scaligero del 1202, capo occidentale del Serraglio, sede dell'armistizio del 1859. Nel suo territorio, in località Sant'Andrea, si trova il Fontanin (1682)." },
-      { "stemma": "povegliano", "nome": "Povegliano Veronese", "ruolo": "Risorgive ed eredità longobarda", "sintesi": "Comune principale della fascia delle risorgive: qui nascono Tartaro e numerosi fontanili (Fossa Bora, Fossa Moretta). Custodisce una delle più importanti necropoli longobarde del Veneto (VI-VII secolo), con corredi esposti al Museo Balladoro: un'eredità che lega il paese al ducato longobardo di Verona." },
+      { "stemma": "povegliano", "nome": "Povegliano Veronese", "ruolo": "Risorgive ed eredità longobarda", "sintesi": "Comune principale della fascia delle risorgive: qui nascono Tartaro e numerosi fontanili (Fossa Bora, Fossa Moretta) — le libellule dello stemma comunale raccontano proprio questo legame con l'acqua. Custodisce una delle più importanti necropoli longobarde del Veneto (VI-VII secolo), con corredi esposti al Museo Balladoro: un'eredità che lega il paese al ducato longobardo di Verona." },
       { "stemma": "mozzecane", "nome": "Mozzecane", "ruolo": "Terra dei Canossa", "sintesi": "Comune al confine mantovano, attraversato dal Tione che nasce dalle risorgive di Grezzano. A Grezzano i marchesi di Canossa — la famiglia il cui emblema parlante è il cane con l'osso — costruirono nel Settecento Villa Canossa, ancora oggi cuore della frazione e confinante con l'area del Fontanin." },
-      { "stemma": "vigasio", "nome": "Vigasio", "ruolo": "Acque e statuti antichi", "sintesi": "Borgo tra Tartaro e risorgive — le libellule dello stemma raccontano le sue acque — con statuti comunali già nel 1226, tra i più antichi della pianura veronese, e l'antica abbazia di San Zeno." },
-      { "stemma": null, "nome": "Valeggio sul Mincio", "ruolo": "Capo orientale del Serraglio", "sintesi": "Sul Mincio, con il castello scaligero di fine Duecento e il Ponte Visconteo di Borghetto (1393): capo orientale del Serraglio e cerniera storica tra Verona e Mantova, dalla preistoria palafitticola alle battaglie risorgimentali." }
+      { "stemma": "vigasio", "nome": "Vigasio", "ruolo": "Statuti antichi", "sintesi": "Borgo tra Tartaro e risorgive, con statuti comunali già nel 1226 — tra i più antichi della pianura veronese — e l'antica abbazia di San Zeno. Lo stemma comunale reca un gambero d'oro e cinque stelle d'argento." },
+      { "stemma": null, "nome": "Valeggio sul Mincio", "ruolo": "Capo orientale del Serraglio", "sintesi": "Sul Mincio, con il castello scaligero di fine Duecento e il Ponte Visconteo di Borghetto (1393): capo orientale del Serraglio e cerniera storica tra Verona e Mantova, dalla preistoria palafitticola alle battaglie risorgimentali." },
+      { "stemma": null, "nome": "Erbè", "ruolo": "Da completare", "sintesi": "Comune della bassa pianura veronese, nell'area delle risorgive: scheda in preparazione." },
+      { "stemma": null, "nome": "Trevenzuolo", "ruolo": "Da completare", "sintesi": "Comune della bassa pianura veronese, confinante con Vigasio: scheda in preparazione." },
+      { "stemma": null, "nome": "Nogara", "ruolo": "Da completare", "sintesi": "Comune della bassa pianura veronese, nella zona del Tartaro-Tione: scheda in preparazione." }
     ],
     "eras": [
       {

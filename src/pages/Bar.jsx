@@ -61,7 +61,7 @@ export default function Bar() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const { t, i18n } = useTranslation()
-  const userId = user?.id ?? user?.email ?? 'anon'
+  const userId = user?.user_id ?? user?.id ?? user?.email ?? 'anon'
   const [balance, setBalance] = useState(() => getBalance(userId))
   const [log, setLog] = useState(() => getContributions(userId))
 

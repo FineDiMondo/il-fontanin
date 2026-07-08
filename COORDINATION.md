@@ -1,5 +1,5 @@
 # COORDINATION — El Fontanin multi-sessione
-# Aggiornato: 4 lug 2026 — sessione Fontanin (finding #5 completato)
+# Aggiornato: 7 lug 2026 — sessione Cowork (finding #6 completato)
 
 ## Stato branch: feature/algorand-wallet-mpc
 
@@ -28,7 +28,8 @@
 | #2 OpenAPI | COMMITTATO | Sessione Cowork       | dac1843 - xfail rimane fino a deploy Cloud Run   |
 | #3 Governance experiments | COMMITTATO | Sessione Nuova | 5cb9660 - docs/GOVERNANCE_MEMO_experiments.md — ATTENDE DELIBERA CONSIGLIO |
 | #4 Recovery wallet | BLOCCATO | — | Attende delibera Consiglio, nessun codice       |
-| #5 ASA ID WalletCard | COMMITTATO | Sessione Fontanin | 1e51445 - VITE_FONTANIN_ASA_ID, indexer mainnet-idx.algonode.cloud, placeholder se env assente |
+| #5 ASA ID WalletCard | COMMITTATO | Sessione Fontanin | 1e51445 - VITE_F_TOKEN_ASA_ID, indexer mainnet-idx.algonode.cloud, placeholder se env assente |
+| #6 Sicurezza GET /schede bozze | COMMITTATO | Claude/Cowork + Antigravity | a945aa0 - bozze visibili a chiunque autenticato senza filtro; fix: join SQL su CompetenzaDominio/CompetenzaUtente, autorizzazione a query-level (creatore o validatore del dominio), bypass admin preservato (catalogo.py riga 71). Verificato pytest 27/27 + build OK. NON ancora deployato su Firebase/Cloud Run a questa data — vedi R3 AGENTS.md. |
 
 ## Regola scrittori attivi
 
@@ -39,5 +40,8 @@
 
 ## Prossimi step
 
-Tutti i finding con codice sono COMMITTATI e DEPLOYATI live (#1, #2, #3, #5). Il finding #4 (Recovery wallet) resta BLOCCATO in attesa di delibera del Consiglio.
-Il deploy di backend e frontend è allineato alla versione 1.1.0 e il redirect permanente da Vercel è attivo.
+Finding #1, #2, #3, #5 COMMITTATI e DEPLOYATI live. Finding #4 (Recovery wallet) resta BLOCCATO in attesa di delibera del Consiglio. Finding #6 (sicurezza GET /schede) COMMITTATO (a945aa0) ma in attesa di deploy in questa stessa sessione.
+
+Modulo Competenze (AT-COMPETENZE-002, commit f2420d3) implementato dietro feature flag `ff_competenze` (default OFF): non visibile in produzione finché il flag non viene attivato esplicitamente dopo il gate di qualità concordato con Daniel.
+
+Il deploy di backend e frontend più recente confermato in produzione è alle 11:35 (commit c921f79) — PRECEDENTE al modulo Competenze e al fix di sicurezza #6. Il deploy che porta a945aa0 in produzione va fatto in questa sessione, con `ff_competenze` OFF.

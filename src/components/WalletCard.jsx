@@ -8,7 +8,7 @@ function shorten(addr) {
 
 // ASA ID del gettone «f»: mai hardcodato. Se la env var non è impostata,
 // la sezione saldo mostra un placeholder invece di un numero (o di un errore).
-const ASA_ID = import.meta.env.VITE_FONTANIN_ASA_ID || null;
+const ASA_ID = import.meta.env.VITE_F_TOKEN_ASA_ID || null;
 const INDEXER_BASE = "https://mainnet-idx.algonode.cloud/v2";
 
 function formatTokenAmount(rawAmount, decimals) {

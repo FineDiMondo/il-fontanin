@@ -9,7 +9,7 @@ from datetime import datetime
 from typing import Optional
 
 from sqlalchemy import (
-    create_engine, Column, String, Boolean, Integer, Text,
+    create_engine, Column, String, Boolean, Integer, Text, Numeric, Date,
     DateTime, ForeignKey, UniqueConstraint, Index
 )
 from sqlalchemy.dialects.postgresql import UUID, JSONB, TSVECTOR
@@ -19,20 +19,27 @@ from sqlalchemy.sql import func
 Base = declarative_base()
 
 
+_engine = None
+_Session = None
+
 def get_engine():
-    db_host = os.getenv("JACKASS_DB_HOST", "35.241.200.140")
-    db_port = os.getenv("JACKASS_DB_PORT", "5432")
-    db_user = os.getenv("JACKASS_DB_USER", "jackass_admin")
-    db_pass = os.getenv("JACKASS_DB_PASSWORD", "")
-    db_name = os.getenv("JACKASS_DB_NAME", "jackass_verona")
-    url = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
-    return create_engine(url, pool_pre_ping=True, pool_size=5, max_overflow=10)
+    global _engine
+    if _engine is None:
+        db_host = os.getenv("JACKASS_DB_HOST", "35.241.200.140")
+        db_port = os.getenv("JACKASS_DB_PORT", "5432")
+        db_user = os.getenv("JACKASS_DB_USER", "jackass_admin")
+        db_pass = os.getenv("JACKASS_DB_PASSWORD", "")
+        db_name = os.getenv("JACKASS_DB_NAME", "jackass_verona")
+        url = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
+        _engine = create_engine(url, pool_pre_ping=True, pool_size=5, max_overflow=10)
+    return _engine
 
 
 def get_session():
-    engine = get_engine()
-    Session = sessionmaker(bind=engine)
-    return Session()
+    global _Session
+    if _Session is None:
+        _Session = sessionmaker(bind=get_engine())
+    return _Session()
 
 
 # =============================================================================
@@ -287,6 +294,34 @@ class EventCheckin(Base):
     event = relationship("CommunityEvent", back_populates="checkins")
 
 
+class LavoriProgetto(Base):
+    __tablename__ = "lavori_progetti"
+
+    id          = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    titolo      = Column(String(200), nullable=False)
+    descrizione = Column(Text)
+    tipo        = Column(String(50), nullable=False)  # 'scaletta', 'argine', 'piscinetta'
+    stato       = Column(String(20), nullable=False, default="pianificato")  # pianificato, in_corso, completato
+    data_inizio = Column(DateTime(timezone=True))
+    data_fine   = Column(DateTime(timezone=True))
+    
+    # Geolocalizzazione
+    lat         = Column(String(20))  # Salva come stringa per semplicità
+    lng         = Column(String(20))
+    
+    # Metadata
+    attrezzi    = Column(JSONB)  # {"cariola": True, "pala": True, ...}
+    video_url   = Column(String(500))
+    immagini    = Column(JSONB)  # Lista di URL
+    note        = Column(Text)
+    
+    created_by  = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    created_at  = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at  = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+
+    creator     = relationship("CommunityUser")
+
+
 # =============================================================================
 # NOTIFICHE
 # =============================================================================
@@ -302,3 +337,238 @@ class CommunityNotification(Base):
     letta      = Column(Boolean, nullable=False, default=False)
     link       = Column(String(500))
     created_at = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+# =============================================================================
+# CANZONIERE
+# =============================================================================
+
+class CanzoniereBrano(Base):
+    __tablename__ = "canzoniere_brani"
+
+    id                 = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    titolo             = Column(String(200), nullable=False)
+    autore             = Column(String(200))
+    tipo               = Column(String(50), nullable=False, default="autore") # tradizionale, autore, cover
+    tonalita_originale = Column(String(10))
+    capotasto          = Column(Integer, default=0)
+    tempo_bpm          = Column(Integer)
+    ritmo_strumming    = Column(Text)
+    testo_accordi      = Column(Text, nullable=False) # Markdown/ChordPro
+    fonte              = Column(String(50), default="manuale")
+    fonte_url          = Column(String(500))
+    licenza            = Column(String(50))
+    
+    creato_da          = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    modificato_da      = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    created_at         = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at         = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+    
+    versione           = Column(Integer, nullable=False, default=1)
+
+class CanzoniereVersione(Base):
+    __tablename__ = "canzoniere_versioni"
+
+    id                 = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    brano_id           = Column(UUID(as_uuid=True), ForeignKey("canzoniere_brani.id", ondelete="CASCADE"), nullable=False)
+    versione           = Column(Integer, nullable=False)
+    contenuto_testo    = Column(Text, nullable=False)
+    modificato_da      = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    created_at         = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+class CanzoniereRaccolta(Base):
+    __tablename__ = "canzoniere_raccolte"
+
+    id          = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    nome        = Column(String(200), nullable=False)
+    descrizione = Column(Text)
+    pubblica    = Column(Boolean, nullable=False, default=False)
+    creato_da   = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    created_at  = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+class CanzoniereRaccoltaBrano(Base):
+    __tablename__ = "canzoniere_raccolte_brani"
+    __table_args__ = (UniqueConstraint("raccolta_id", "brano_id"),)
+
+    raccolta_id = Column(UUID(as_uuid=True), ForeignKey("canzoniere_raccolte.id", ondelete="CASCADE"), primary_key=True)
+    brano_id    = Column(UUID(as_uuid=True), ForeignKey("canzoniere_brani.id", ondelete="CASCADE"), primary_key=True)
+    ordine      = Column(Integer, nullable=False, default=0)
+
+
+# =============================================================================
+# RICETTARIO
+# =============================================================================
+
+class RicettarioRicetta(Base):
+    __tablename__ = "ricettario_ricette"
+
+    id                = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    nome              = Column(String(200), nullable=False)
+    categoria         = Column(String(100))
+    tipo_cucina       = Column(String(100))
+    porzioni_base     = Column(Integer, nullable=False, default=4)
+    tempo_prep_min    = Column(Integer)
+    tempo_cottura_min = Column(Integer)
+    difficolta        = Column(String(50)) # Facile, Media, Complessa
+    procedimento      = Column(JSONB, nullable=False) # Array di step strutturati
+    tag_dietetici     = Column(JSONB) # Array di stringhe
+    
+    fonte             = Column(String(50), default="manuale")
+    fonte_url         = Column(String(500))
+    licenza           = Column(String(100))
+    foto_drive_id     = Column(String(200))
+    
+    creato_da         = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    modificato_da     = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    created_at        = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at        = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+    versione          = Column(Integer, nullable=False, default=1)
+
+class RicettarioIngrediente(Base):
+    __tablename__ = "ricettario_ingredienti"
+
+    id         = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    ricetta_id = Column(UUID(as_uuid=True), ForeignKey("ricettario_ricette.id", ondelete="CASCADE"), nullable=False)
+    nome       = Column(String(200), nullable=False)
+    quantita   = Column(Numeric(10, 2))
+    unita      = Column(String(50))
+    opzionale  = Column(Boolean, default=False)
+    note       = Column(String(200))
+    ordine     = Column(Integer, default=0)
+
+class RicettarioVersione(Base):
+    __tablename__ = "ricettario_versioni"
+
+    id                 = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    ricetta_id         = Column(UUID(as_uuid=True), ForeignKey("ricettario_ricette.id", ondelete="CASCADE"), nullable=False)
+    versione           = Column(Integer, nullable=False)
+    contenuto_json     = Column(JSONB, nullable=False)
+    modificato_da      = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    created_at         = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+class RicettarioRaccolta(Base):
+    __tablename__ = "ricettario_raccolte"
+
+    id          = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    nome        = Column(String(200), nullable=False)
+    descrizione = Column(Text)
+    pubblica    = Column(Boolean, nullable=False, default=False)
+    creato_da   = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    created_at  = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+class RicettarioRaccoltaRicetta(Base):
+    __tablename__ = "ricettario_raccolte_ricette"
+    __table_args__ = (UniqueConstraint("raccolta_id", "ricetta_id"),)
+
+    raccolta_id = Column(UUID(as_uuid=True), ForeignKey("ricettario_raccolte.id", ondelete="CASCADE"), primary_key=True)
+    ricetta_id  = Column(UUID(as_uuid=True), ForeignKey("ricettario_ricette.id", ondelete="CASCADE"), primary_key=True)
+    ordine      = Column(Integer, nullable=False, default=0)
+
+# =============================================================================
+# CATALOGAZIONE TERRITORIALE
+# =============================================================================
+
+class CatalogoCategoria(Base):
+    __tablename__ = "catalogo_categorie"
+
+    id              = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    codice          = Column(String(50), unique=True, nullable=False)
+    nome            = Column(String(100), nullable=False)
+    metadata_schema = Column(JSONB)
+    attivo          = Column(Boolean, nullable=False, default=True)
+    created_at      = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+    sottocategorie  = relationship("CatalogoSottocategoria", back_populates="categoria")
+
+class CatalogoSottocategoria(Base):
+    __tablename__ = "catalogo_sottocategorie"
+
+    id           = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    categoria_id = Column(UUID(as_uuid=True), ForeignKey("catalogo_categorie.id", ondelete="CASCADE"), nullable=False)
+    codice       = Column(String(50), nullable=False)
+    nome         = Column(String(100), nullable=False)
+    ordine       = Column(Integer, nullable=False, default=0)
+
+    categoria    = relationship("CatalogoCategoria", back_populates="sottocategorie")
+
+class CatalogoScheda(Base):
+    __tablename__ = "catalogo_schede"
+
+    id                    = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    categoria_id          = Column(UUID(as_uuid=True), ForeignKey("catalogo_categorie.id"), nullable=False)
+    sottocategoria_id     = Column(UUID(as_uuid=True), ForeignKey("catalogo_sottocategorie.id"))
+    nome                  = Column(String(200), nullable=False)
+    lat                   = Column(Numeric(9, 6), nullable=False)
+    lng                   = Column(Numeric(9, 6), nullable=False)
+    descrizione           = Column(Text)
+    cronologia_storica    = Column(Text)
+    
+    evidenza_livello      = Column(String(1)) # 'C'|'D'|'I'|'L'
+    evidenza_fonte        = Column(Text)
+    evidenza_data_verifica= Column(Date)
+    metadata_specifici    = Column(JSONB)
+    
+    stato                 = Column(String(20), nullable=False, default="bozza")
+    scheda_precedente_id  = Column(UUID(as_uuid=True), ForeignKey("catalogo_schede.id"))
+    
+    creato_da             = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
+    validato_da           = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    validato_at           = Column(DateTime(timezone=True))
+    nota_validazione      = Column(Text)
+    
+    created_at            = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at            = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+
+    categoria             = relationship("CatalogoCategoria")
+    media                 = relationship("CatalogoMedia", back_populates="scheda")
+
+class CatalogoMedia(Base):
+    __tablename__ = "catalogo_media"
+
+    id                    = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    scheda_id             = Column(UUID(as_uuid=True), ForeignKey("catalogo_schede.id", ondelete="CASCADE"), nullable=False)
+    tipo                  = Column(String(20), nullable=False) # foto|video|documento
+    modalita_acquisizione = Column(String(20), nullable=False, default="upload_server")
+    url_esterno           = Column(Text)
+    drive_file_id         = Column(String(200))
+    nome_file             = Column(String(300))
+    descrizione           = Column(Text)
+    uploaded_by           = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    created_at            = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+    scheda                = relationship("CatalogoScheda", back_populates="media")
+
+# =============================================================================
+# COMPETENZE E VALIDATORI
+# =============================================================================
+
+class CompetenzaDominio(Base):
+    __tablename__ = "competenza_domini"
+
+    id           = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    codice       = Column(String(50), unique=True, nullable=False)   # es. "monumenti-cristiani"
+    nome         = Column(String(100), nullable=False)
+    descrizione  = Column(Text)
+    domande_json = Column(JSONB, nullable=False)   # lista {id, testo, tipo, opzioni?, scala_min?, scala_max?}
+    attivo       = Column(Boolean, nullable=False, default=True)
+    created_by   = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    created_at   = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at   = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+
+class CompetenzaUtente(Base):
+    __tablename__ = "competenza_utente"
+    __table_args__ = (UniqueConstraint("user_id", "dominio_id"),)
+
+    id                     = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    user_id                = Column(UUID(as_uuid=True), ForeignKey("community_users.id", ondelete="CASCADE"), nullable=False)
+    dominio_id             = Column(UUID(as_uuid=True), ForeignKey("competenza_domini.id", ondelete="CASCADE"), nullable=False)
+    livello_dichiarato     = Column(String(20), nullable=False, default="nessuna")  # nessuna|base|intermedia|esperta
+    livello_validato       = Column(String(20))  # stessa scala, null finché non validato
+    validato_da            = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    validato_at            = Column(DateTime(timezone=True))
+    fonte                  = Column(Text)   # es. "storico dell'arte", "archivista", "interesse personale"
+    risposte_json          = Column(JSONB)  # risposte al questionario di dominio
+    data_ultima_revisione  = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    created_at             = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at             = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+
+

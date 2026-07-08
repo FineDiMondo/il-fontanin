@@ -3,7 +3,8 @@ Pydantic schemas per request/response della Community API.
 """
 
 from uuid import UUID
-from datetime import datetime
+from datetime import datetime, date
+from decimal import Decimal
 from typing import Optional, List, Any, Dict
 from pydantic import BaseModel, EmailStr, Field
 
@@ -70,7 +71,7 @@ class CategoryOut(BaseModel):
 # =============================================================================
 
 class ThreadCreate(BaseModel):
-    category_id: UUID
+    category_id: Optional[UUID] = None
     titolo: str = Field(min_length=5, max_length=300)
     corpo: str = Field(min_length=10)
 
@@ -264,6 +265,47 @@ class CheckinOut(BaseModel):
     class Config:
         from_attributes = True
 
+class LavoriCreate(BaseModel):
+    titolo: str
+    descrizione: Optional[str] = None
+    tipo: str
+    lat: Optional[str] = None
+    lng: Optional[str] = None
+    attrezzi: Optional[Dict[str, Any]] = None
+    video_url: Optional[str] = None
+    immagini: Optional[List[str]] = None
+    note: Optional[str] = None
+
+class LavoriUpdate(BaseModel):
+    titolo: Optional[str] = None
+    descrizione: Optional[str] = None
+    stato: Optional[str] = None
+    data_inizio: Optional[datetime] = None
+    data_fine: Optional[datetime] = None
+    attrezzi: Optional[Dict[str, Any]] = None
+    video_url: Optional[str] = None
+    immagini: Optional[List[str]] = None
+    note: Optional[str] = None
+
+class LavoriOut(BaseModel):
+    id: UUID
+    titolo: str
+    descrizione: Optional[str] = None
+    tipo: str
+    stato: str
+    lat: Optional[str] = None
+    lng: Optional[str] = None
+    attrezzi: Optional[Dict[str, Any]] = None
+    video_url: Optional[str] = None
+    immagini: Optional[List[str]] = None
+    note: Optional[str] = None
+    created_by: Optional[UUID] = None
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        from_attributes = True
+
 
 # =============================================================================
 # NOTIFICHE
@@ -296,3 +338,268 @@ class PaginatedResponse(BaseModel):
     page: int
     per_page: int
     pages: int
+
+# =============================================================================
+# CANZONIERE
+# =============================================================================
+
+class CanzoniereBranoCreate(BaseModel):
+    titolo: str = Field(min_length=2)
+    autore: Optional[str] = None
+    tipo: str = "autore"
+    tonalita_originale: Optional[str] = None
+    capotasto: int = 0
+    tempo_bpm: Optional[int] = None
+    ritmo_strumming: Optional[str] = None
+    testo_accordi: str = Field(min_length=10)
+    fonte: str = "manuale"
+    fonte_url: Optional[str] = None
+    licenza: Optional[str] = None
+
+class CanzoniereBranoOut(BaseModel):
+    id: UUID
+    titolo: str
+    autore: Optional[str] = None
+    tipo: str
+    tonalita_originale: Optional[str] = None
+    capotasto: int
+    tempo_bpm: Optional[int] = None
+    ritmo_strumming: Optional[str] = None
+    testo_accordi: str
+    fonte: str
+    fonte_url: Optional[str] = None
+    licenza: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+    versione: int
+    creato_da: UUID
+
+    class Config:
+        from_attributes = True
+
+class CanzoniereRaccoltaCreate(BaseModel):
+    nome: str = Field(min_length=2)
+    descrizione: Optional[str] = None
+    pubblica: bool = False
+
+class CanzoniereRaccoltaOut(BaseModel):
+    id: UUID
+    nome: str
+    descrizione: Optional[str] = None
+    pubblica: bool
+    created_at: datetime
+    creato_da: UUID
+
+    class Config:
+        from_attributes = True
+
+
+# =============================================================================
+# RICETTARIO
+# =============================================================================
+
+class IngredienteStrutturato(BaseModel):
+    nome: str = Field(min_length=2)
+    quantita: Optional[float] = None
+    unita: Optional[str] = None
+    opzionale: bool = False
+    note: Optional[str] = None
+
+class RicettarioRicettaCreate(BaseModel):
+    nome: str = Field(min_length=2)
+    categoria: Optional[str] = None
+    tipo_cucina: Optional[str] = None
+    porzioni_base: int = 4
+    tempo_prep_min: Optional[int] = None
+    tempo_cottura_min: Optional[int] = None
+    difficolta: Optional[str] = None
+    procedimento: List[str]
+    tag_dietetici: Optional[List[str]] = None
+    ingredienti: List[IngredienteStrutturato]
+    fonte: str = "manuale"
+    fonte_url: Optional[str] = None
+    licenza: Optional[str] = None
+    foto_drive_id: Optional[str] = None
+
+class RicettarioRicettaOut(BaseModel):
+    id: UUID
+    nome: str
+    categoria: Optional[str] = None
+    tipo_cucina: Optional[str] = None
+    porzioni_base: int
+    tempo_prep_min: Optional[int] = None
+    tempo_cottura_min: Optional[int] = None
+    difficolta: Optional[str] = None
+    procedimento: List[str]
+    tag_dietetici: Optional[List[str]] = None
+    fonte: str
+    fonte_url: Optional[str] = None
+    licenza: Optional[str] = None
+    foto_drive_id: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+    versione: int
+    creato_da: UUID
+    ingredienti: Optional[List[Dict[str, Any]]] = None # per output arricchito
+
+    class Config:
+        from_attributes = True
+
+class RicettarioRaccoltaCreate(BaseModel):
+    nome: str = Field(min_length=2)
+    descrizione: Optional[str] = None
+    pubblica: bool = False
+
+class RicettarioRaccoltaOut(BaseModel):
+    id: UUID
+    nome: str
+    descrizione: Optional[str] = None
+    pubblica: bool
+    created_at: datetime
+    creato_da: UUID
+
+    class Config:
+        from_attributes = True
+
+# =============================================================================
+# CATALOGAZIONE TERRITORIALE
+# =============================================================================
+
+class CatalogoSottocategoriaOut(BaseModel):
+    id: UUID
+    codice: str
+    nome: str
+    ordine: int
+
+    class Config:
+        from_attributes = True
+
+class CatalogoCategoriaOut(BaseModel):
+    id: UUID
+    codice: str
+    nome: str
+    metadata_schema: Optional[Dict[str, Any]] = None
+    attivo: bool
+    sottocategorie: List[CatalogoSottocategoriaOut] = []
+
+    class Config:
+        from_attributes = True
+
+class CatalogoMediaBase(BaseModel):
+    tipo: str
+    modalita_acquisizione: str = "upload_server"
+    url_esterno: Optional[str] = None
+    drive_file_id: Optional[str] = None
+    nome_file: Optional[str] = None
+    descrizione: Optional[str] = None
+
+class CatalogoMediaCreate(CatalogoMediaBase):
+    pass
+
+class CatalogoMediaOut(CatalogoMediaBase):
+    id: UUID
+    scheda_id: UUID
+    uploaded_by: Optional[UUID] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+class CatalogoSchedaBase(BaseModel):
+    categoria_id: UUID
+    sottocategoria_id: Optional[UUID] = None
+    nome: str
+    lat: Decimal = Field(..., ge=-90, le=90, description="Obbligatorio anche per le bozze")
+    lng: Decimal = Field(..., ge=-180, le=180, description="Obbligatorio anche per le bozze")
+    descrizione: Optional[str] = None
+    cronologia_storica: Optional[str] = None
+    evidenza_livello: Optional[str] = None
+    evidenza_fonte: Optional[str] = None
+    evidenza_data_verifica: Optional[date] = None
+    metadata_specifici: Optional[Dict[str, Any]] = None
+
+class CatalogoSchedaCreate(CatalogoSchedaBase):
+    pass
+
+class CatalogoSchedaUpdate(BaseModel):
+    sottocategoria_id: Optional[UUID] = None
+    nome: Optional[str] = None
+    lat: Optional[Decimal] = Field(None, ge=-90, le=90)
+    lng: Optional[Decimal] = Field(None, ge=-180, le=180)
+    descrizione: Optional[str] = None
+    cronologia_storica: Optional[str] = None
+    evidenza_livello: Optional[str] = None
+    evidenza_fonte: Optional[str] = None
+    evidenza_data_verifica: Optional[date] = None
+    metadata_specifici: Optional[Dict[str, Any]] = None
+
+class CatalogoSchedaValida(BaseModel):
+    approvata: bool
+    nota_validazione: Optional[str] = None
+
+class CatalogoSchedaOut(CatalogoSchedaBase):
+    id: UUID
+    stato: str
+    scheda_precedente_id: Optional[UUID] = None
+    creato_da: UUID
+    validato_da: Optional[UUID] = None
+    validato_at: Optional[datetime] = None
+    nota_validazione: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+    
+    categoria: Optional[CatalogoCategoriaOut] = None
+    media: List[CatalogoMediaOut] = []
+
+    class Config:
+        from_attributes = True
+
+# =============================================================================
+# COMPETENZE
+# =============================================================================
+
+class DomandaCompetenza(BaseModel):
+    id: str
+    testo: str
+    tipo: str  # testo | scelta_singola | scelta_multipla | scala
+    opzioni: Optional[List[str]] = None
+    scala_min: Optional[int] = None
+    scala_max: Optional[int] = None
+
+class DominioCreate(BaseModel):
+    codice: str = Field(min_length=2, max_length=50)
+    nome: str
+    descrizione: Optional[str] = None
+    domande: List[DomandaCompetenza]
+
+class DominioOut(BaseModel):
+    id: UUID
+    codice: str
+    nome: str
+    descrizione: Optional[str] = None
+    domande_json: List[Dict[str, Any]]
+    attivo: bool
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+class CompetenzaDichiarazione(BaseModel):
+    livello_dichiarato: str  # nessuna|base|intermedia|esperta
+    fonte: Optional[str] = None
+    risposte_json: Optional[Dict[str, Any]] = None
+
+class CompetenzaValida(BaseModel):
+    livello_validato: str
+    nota: Optional[str] = None
+
+class CompetenzaOut(BaseModel):
+    id: UUID
+    dominio_id: UUID
+    livello_dichiarato: str
+    livello_validato: Optional[str] = None
+    fonte: Optional[str] = None
+    data_ultima_revisione: datetime
+
+    class Config:
+        from_attributes = True

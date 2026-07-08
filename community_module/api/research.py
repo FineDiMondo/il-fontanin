@@ -11,7 +11,7 @@ import json
 from uuid import UUID, uuid4
 from typing import List, Optional
 
-from fastapi import APIRouter, HTTPException, Depends, Query
+from fastapi import APIRouter, HTTPException, Depends, Query, Request
 from fastapi.responses import StreamingResponse
 
 from community_module.models.community_models import (
@@ -166,7 +166,7 @@ def list_surveys(
 def submit_response(
     survey_id: UUID,
     data: SurveyResponseSubmit,
-    request_ip: Optional[str] = None,
+    request: Request,
     current_user: Optional[CommunityUser] = Depends(get_current_user_optional),
 ):
     session = get_session()
@@ -188,6 +188,7 @@ def submit_response(
             if existing:
                 raise HTTPException(status_code=409, detail="Hai già risposto a questo sondaggio")
 
+        request_ip = request.client.host if request.client else None
         ip_hash = None
         if request_ip:
             ip_hash = hashlib.sha256(request_ip.encode()).hexdigest()
