@@ -177,9 +177,9 @@ const isMediaEnabled = isFeatureEnabled('MEDIA_PERSONAL_PHOTOS', user?.id)
 
 **Non** in App.jsx routes (routes sempre definite, feature flag è runtime check).
 
-### Q: Cosa della "Vercel preview" e "canary 10% rollout"?
+### Q: Cosa dell'ambiente di anteprima e "canary 10% rollout"?
 **A**: ✅ Definito in EXPERIMENTAL_INTEGRATION.md:
-- **Staging (Vercel preview)**: `VITE_ENABLE_MEDIA_FEATURE=true` (100% rollout)
+- **Certification (anteprima)**: `VITE_ENABLE_MEDIA_FEATURE=true` (100% rollout)
 - **Production**: Canary graduale:
   - **Week 1-2**: rolloutPercentage=10%
   - **Week 3-4**: rolloutPercentage=50%

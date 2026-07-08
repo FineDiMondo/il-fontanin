@@ -36,7 +36,6 @@ Al check-out:
 - Vietato: deploy (Firebase Hosting, backend Cloud Run,
   Cloud Build APK) senza conferma esplicita dell'utente nella
   sessione corrente. "Era nel piano" non è una conferma.
-  (Vercel dismesso l'8 lug 2026 — decisione di Daniel.)
 - Ogni commit: messaggio descrittivo, scope minimo, mai mescolare
   igiene repo e feature nello stesso commit.
 

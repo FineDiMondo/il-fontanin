@@ -4,11 +4,11 @@
 Implementare sezione **Media** (foto/video/audio personale e collettiva) in app React El Fontanin secondo architettura sistematica e deterministica.
 
 ## CONTESTO PROGETTO
-- **App**: El Fontanin (React + Firebase/Firestore + Vercel)
+- **App**: El Fontanin (React + Firebase/Firestore + Firebase Hosting)
 - **Stack**: React 18, Firebase SDK, Vite, i18next (8 lingue)
 - **GCP Project**: `freedomrun-491323`
 - **Repo**: `D:\Progetti GCloud\fontanin\`
-- **Vercel deployment**: `il-fontanin.vercel.app`
+- **Deployment**: `el-fontanin.web.app` (Firebase Hosting)
 
 ## REQUISITI CONSOLIDATI
 1. **Media personali**: ogni membro collega suo Google Drive via OAuth (Google Picker API)
@@ -62,7 +62,7 @@ src/models/media.py                    — Pydantic schemas
 
 **Step**:
 1. Google Cloud Console: abilita Google Drive API, Google Picker API
-2. OAuth 2.0: aggiungi redirect URI (`https://il-fontanin.vercel.app/media/drive-callback`)
+2. OAuth 2.0: aggiungi redirect URI (`https://el-fontanin.web.app/media/drive-callback`)
 3. Service account: scarica JSON key, carica in Secret Manager GCP
 4. `.env.example` aggiornato con chiavi
 5. `firestore.indexes.json` con query indexes
@@ -173,7 +173,7 @@ src/models/media.py                    — Pydantic schemas
 
 4. Deployment:
    - Build checks (npm run build)
-   - Vercel deployment (staging + prod)
+   - Deploy frontend (certification + production, Firebase Hosting)
    - Firestore indexes deployed
    - Monitoring Sentry configured
 
@@ -243,7 +243,7 @@ Al termine di ogni fase:
 ## CONTATTI & SUPPORT
 - Project Owner: Daniel Giardina (daniel.giardina@gmail.com)
 - Repo: D:\Progetti GCloud\fontanin\
-- Environments: dev (localhost:5173), staging (vercel preview), prod (il-fontanin.vercel.app)
+- Environments: dev (localhost:5173), certification, prod (el-fontanin.web.app)
 
 ---
 

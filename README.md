@@ -11,7 +11,7 @@ e il movimento civico che chiede l'istituzione di un parco pubblico nell'area.
 - **Frontend**: React 18 + Vite + Tailwind CSS, PWA (vite-plugin-pwa)
 - **Autenticazione**: Firebase Auth (Google Sign-In)
 - **Backend**: API su Google Cloud Run
-- **Hosting**: Vercel
+- **Hosting**: Firebase Hosting (`el-fontanin.web.app`)
 
 ## Moduli
 
@@ -26,7 +26,7 @@ e il movimento civico che chiede l'istituzione di un parco pubblico nell'area.
 
 ## Setup locale
 
-Vedi [SETUP.md](./SETUP.md) per la configurazione completa di Firebase e il deploy su Vercel.
+Vedi [SETUP.md](./SETUP.md) per la configurazione completa di Firebase e il deploy su Firebase Hosting.
 
 ```bash
 npm install

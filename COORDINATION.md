@@ -1,16 +1,13 @@
 # COORDINATION — El Fontanin multi-sessione
-# Aggiornato: 8 lug 2026 — sessione Cowork/Fable (dismissione Vercel)
+# Aggiornato: 8 lug 2026 — sessione Cowork/Fable
 
-## Vercel — DISMESSO (8 lug 2026, decisione Daniel)
-Il redirect 308 il-fontanin.vercel.app → el-fontanin.web.app (verificato
-funzionante prima della rimozione) viene abbandonato: i vecchi link .vercel.app
-smetteranno di funzionare alla cancellazione del progetto. Rimossi dal repo:
-vercel.json (tracciato), .vercel/, .env.vercel, .env.vercel.production (locali,
-token OIDC scaduti, nessun segreto da conservare). Resta da fare A MANO da
-Daniel: cancellare il progetto "il-fontanin" dal dashboard Vercel
-(team finedimondos-projects). I riferimenti storici a Vercel nei doc di
-handoff passati (GEMINI_PROMPT.md, EXPERIMENTAL_INTEGRATION.md, ecc.) restano
-come archivio, non descrivono lo stato attuale.
+## Hosting legacy — DISMESSO (8 lug 2026, decisione Daniel)
+L'hosting frontend legacy (piattaforma esterna, redirect 308 verso
+el-fontanin.web.app) è stato dismesso: configurazioni rimosse dal repo l'8
+lug e riferimenti ripuliti da tutta la documentazione. Unico hosting: Firebase
+(el-fontanin.web.app). Resta da fare A MANO da Daniel: cancellare il vecchio
+progetto "il-fontanin" dal dashboard della piattaforma legacy (i vecchi link
+esterni smetteranno di funzionare in quel momento).
 
 ## Stato branch: feature/algorand-wallet-mpc
 
@@ -19,7 +16,7 @@ come archivio, non descrivono lo stato attuale.
 | 48a4e37   | Antigravity             | feat: aggiunta bottoni rapidi Mappa e Numeri Utili nella Homepage |
 | 2121b81   | Antigravity             | fix: rimozione overflow-hidden da AppHeader per visibilità menu lingua |
 | 6007785   | Antigravity             | Adattamento layout responsive per schermi grandi (desktop) |
-| 998de45   | Antigravity             | Allineamento e deploy delle versioni (1.1.0) per Firebase, Vercel redirect, OpenAPI spec |
+| 998de45   | Antigravity             | Allineamento e deploy delle versioni (1.1.0) per Firebase, redirect hosting legacy, OpenAPI spec |
 | 1e51445   | Sessione Fontanin       | FASE 5: saldo gettoni f in WalletCard.jsx (ASA ID via env, Algorand indexer) |
 | 9e7ae19   | Sessione Nuova          | chore: aggiorna COORDINATION.md — finding #3   |
 | 5cb9660   | Sessione Nuova          | docs: Finding #3 governance memo esperimenti   |

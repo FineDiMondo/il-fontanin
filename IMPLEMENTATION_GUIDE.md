@@ -25,7 +25,7 @@ GOOGLE_SERVICE_ACCOUNT_JSON='{"type":"service_account",...}' # Backend
    - Authorized redirect URIs:
      - `http://localhost:5173/media/drive-callback`
      - `http://localhost:3000/media/drive-callback`
-     - `https://il-fontanin.vercel.app/media/drive-callback`
+     - `https://el-fontanin.web.app/media/drive-callback`
 6. Scarica JSON, copia `client_id` in `.env.example` come `VITE_GOOGLE_APP_ID`
 7. Crea/scarica chiave API pubblica:
    - Restrictions: HTTP referrers
@@ -550,7 +550,7 @@ def test_upload_media(auth_token):
 
 ### Fase 5
 - [ ] Test coverage > 80%
-- [ ] Vercel build succeeds
+- [ ] Frontend build succeeds (`npm run build`)
 - [ ] No console errors in staging
 - [ ] Manual E2E test completed
 - [ ] `DEPLOY_CHECKLIST.md` signed off
@@ -578,9 +578,7 @@ python3 -m uvicorn src.main:app --reload
 # Deploy Firestore
 firebase deploy --only firestore:indexes,firestore:rules
 
-# Deploy Vercel staging
-vercel
-
-# Deploy Vercel prod
-vercel --prod
+# Deploy frontend (Firebase Hosting)
+npm run build
+firebase deploy --only hosting --project el-fontanin
 ```

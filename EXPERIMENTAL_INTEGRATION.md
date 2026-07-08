@@ -317,8 +317,8 @@ export function trackMediaEvent(action, properties = {}) {
 # Update .env.production
 VITE_ENABLE_MEDIA_FEATURE=false
 
-# Redeploy Vercel
-vercel --prod
+# Redeploy frontend
+npm run build && firebase deploy --only hosting --project el-fontanin
 ```
 
 **Option 2: Gradual Disable**
@@ -331,7 +331,7 @@ rolloutPercentage=5  # Drop to 5% of users
 ```bash
 git revert <commit-with-media-feature>
 git push
-vercel --prod
+npm run build && firebase deploy --only hosting --project el-fontanin
 ```
 
 ---

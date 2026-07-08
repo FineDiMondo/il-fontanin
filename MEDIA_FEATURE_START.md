@@ -317,7 +317,7 @@ Questi file seguono principi **sistemici** e **deterministici**:
 ## 📚 DOCUMENTAZIONE
 
 Leggi questi per contesto:
-- Project: [Il Fontanin on Vercel](https://il-fontanin.vercel.app)
+- Project: [Il Fontanin](https://el-fontanin.web.app)
 - GCP Project: `freedomrun-491323`
 - Stack: React 18 + Firebase/Firestore + Vite + i18next
 - Owner: Daniel Giardina (daniel.giardina@gmail.com)
