@@ -30,12 +30,13 @@ Al check-out:
   - spostare la riga in STORICO SESSIONI
 
 ## R3 — POLICY DI BRANCH E DEPLOY
-- Branch attivo di sviluppo: feature/algorand-wallet-mpc
+- Branch attivo di sviluppo: develop (main protetto, merge solo via PR)
 - Vietato: commit diretti su main; merge su main senza istruzione
   esplicita dell'utente in chat.
-- Vietato: deploy (Firebase Hosting, Vercel, backend Cloud Run,
+- Vietato: deploy (Firebase Hosting, backend Cloud Run,
   Cloud Build APK) senza conferma esplicita dell'utente nella
   sessione corrente. "Era nel piano" non è una conferma.
+  (Vercel dismesso l'8 lug 2026 — decisione di Daniel.)
 - Ogni commit: messaggio descrittivo, scope minimo, mai mescolare
   igiene repo e feature nello stesso commit.
 

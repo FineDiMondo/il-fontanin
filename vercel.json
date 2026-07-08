@@ -1,5 +1,0 @@
-{
-  "redirects": [
-    { "source": "/(.*)", "destination": "https://el-fontanin.web.app/$1", "statusCode": 308 }
-  ]
-}

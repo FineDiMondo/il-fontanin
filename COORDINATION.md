@@ -1,5 +1,16 @@
 # COORDINATION — El Fontanin multi-sessione
-# Aggiornato: 7 lug 2026 — sessione Cowork (finding #6 completato)
+# Aggiornato: 8 lug 2026 — sessione Cowork/Fable (dismissione Vercel)
+
+## Vercel — DISMESSO (8 lug 2026, decisione Daniel)
+Il redirect 308 il-fontanin.vercel.app → el-fontanin.web.app (verificato
+funzionante prima della rimozione) viene abbandonato: i vecchi link .vercel.app
+smetteranno di funzionare alla cancellazione del progetto. Rimossi dal repo:
+vercel.json (tracciato), .vercel/, .env.vercel, .env.vercel.production (locali,
+token OIDC scaduti, nessun segreto da conservare). Resta da fare A MANO da
+Daniel: cancellare il progetto "il-fontanin" dal dashboard Vercel
+(team finedimondos-projects). I riferimenti storici a Vercel nei doc di
+handoff passati (GEMINI_PROMPT.md, EXPERIMENTAL_INTEGRATION.md, ecc.) restano
+come archivio, non descrivono lo stato attuale.
 
 ## Stato branch: feature/algorand-wallet-mpc
 
