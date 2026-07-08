@@ -1,0 +1,70 @@
+# Deploy PRODUZIONE — solo su tag v*.*.*
+# BOZZA (2026-07-08, Claude/Fable). NON attiva finché non sono configurati:
+#   1. GitHub Environment "production" con REQUIRED REVIEWER = Daniel
+#      (questo è il gate umano richiesto da AGENTS.md R3, reso esplicito in pipeline)
+#   2. Secrets WIF + FIREBASE_SERVICE_ACCOUNT_EL_FONTANIN
+name: Deploy production
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    name: Deploy backend + frontend
+    runs-on: ubuntu-latest
+    # Il job resta in attesa finché Daniel non approva nell'Environment "production"
+    environment:
+      name: production
+      url: https://el-fontanin.web.app
+    steps:
+      - uses: actions/checkout@v4
+
+      # ---- Backend → Cloud Run ----
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      - uses: google-github-actions/setup-gcloud@v2
+      # TODO: dopo la parametrizzazione di cloudbuild_community.yaml usare
+      #       _IMAGE_TAG=${{ github.ref_name }} così ogni release ha la sua immagine
+      - run: |
+          gcloud builds submit \
+            --project=freedomrun-491323 \
+            --config=cloudbuild_community.yaml
+
+      # ---- Smoke test backend ----
+      - name: Smoke test /community/health
+        run: |
+          URL=$(gcloud run services describe finedimondo-backend \
+            --region=europe-west1 --project=freedomrun-491323 \
+            --format='value(status.url)')
+          curl --fail --retry 5 --retry-delay 5 "$URL/community/health"
+
+      # ---- Frontend → Firebase Hosting (canale live) ----
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --include=dev
+      - run: npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EL_FONTANIN }}
+          projectId: el-fontanin
+          channelId: live
+
+      # ---- Verifica post-deploy (fix sicurezza, vedi docs/ROLLBACK.md §8) ----
+      - name: Reminder verifica manuale
+        run: |
+          echo "::notice::Eseguire la verifica post-deploy manuale:"
+          echo "::notice::GET /community/catalogo/schede?stato=bozza con socio non-autore deve restituire []"
