@@ -97,11 +97,11 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-08 12:13 | Codex | WRITING | codex/h2-2026-plan | cloudbuild_community.yaml, deploy docs/workflows, AGENTS.md | H2 2026 Wave 0 — WO-01 parametrizzazione Cloud Build |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-08 12:13 | Codex | DONE | d944990 | H2 2026 Wave 0 WO-01: Cloud Build parametrico per develop/certification/production, workflow remoti Accenture-style, catalogo link ambienti/DB/endpoint in docs/ENVIRONMENTS.md, runbook deploy in docs/DEPLOY.md; verifiche: YAML parse OK, npm build OK, pytest 25 passed 2 skipped; gcloud builds submit --dry-run non supportato dalla CLI locale, nessun deploy eseguito |
 | 2026-07-08 12:06 | Codex | DONE | fbe783d | Recupero sessione stale Claude, aggiunta R7 branch multi-LLM, creato branch codex/h2-2026-plan; completato deploy ADD-02 autorizzato: pytest 25 passed 2 skipped, npm build OK, metadata_schema DB aggiornati e dry-run finale no-op, Cloud Run revision finedimondo-backend-00018-z8v, Firebase Hosting deploy OK, smoke test health/home/catalogo OK |
 | 2026-07-08 12:05 | Claude/Fable (Cowork) | ABORTED | 8b7010c | Sessione interrotta per esaurimento crediti; takeover amministrativo autorizzato da Daniel; working tree verificato pulito prima del recupero |
 | 2026-07-08 11:38 | Codex | DONE | — | Verificata connessione GCP/Firebase e reachability endpoint; deploy annullato su richiesta utente, nessun deploy/build eseguito |
