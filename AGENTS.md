@@ -97,6 +97,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-08 12:27 | Codex | WRITING | codex/h2-2026-plan | Cloud Run, Firebase Hosting, Cloud SQL, Secret Manager, workflow/env docs, AGENTS.md | Creazione risorse develop/certification/production baseline e deploy punto 0 autorizzati da Daniel |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
