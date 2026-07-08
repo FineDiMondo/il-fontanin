@@ -34,12 +34,11 @@ jobs:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
       - uses: google-github-actions/setup-gcloud@v2
-      # TODO: dopo la parametrizzazione di cloudbuild_community.yaml usare
-      #       _IMAGE_TAG=${{ github.ref_name }} così ogni release ha la sua immagine
       - run: |
           gcloud builds submit \
             --project=freedomrun-491323 \
-            --config=cloudbuild_community.yaml
+            --config=cloudbuild_community.yaml \
+            --substitutions=_STAGE=production,_SERVICE=finedimondo-backend,_REGION=europe-west1,_IMAGE_TAG=${{ github.ref_name }},_CLOUDSQL_INSTANCE=${{ vars.CLOUDSQL_INSTANCE }},_DB_HOST=${{ vars.JACKASS_DB_HOST }},_DB_PORT=${{ vars.JACKASS_DB_PORT }},_DB_USER=${{ vars.JACKASS_DB_USER }},_DB_NAME=${{ vars.JACKASS_DB_NAME }},_DB_PASSWORD_SECRET=${{ vars.JACKASS_DB_PASSWORD_SECRET }},_GOOGLE_CLOUD_PROJECT=${{ vars.GOOGLE_CLOUD_PROJECT }}
 
       # ---- Smoke test backend ----
       - name: Smoke test /community/health

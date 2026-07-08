@@ -1,5 +1,13 @@
 # COORDINATION — El Fontanin multi-sessione
-# Aggiornato: 7 lug 2026 — sessione Cowork (finding #6 completato)
+# Aggiornato: 8 lug 2026 — sessione Cowork/Fable
+
+## Hosting legacy — DISMESSO (8 lug 2026, decisione Daniel)
+L'hosting frontend legacy (piattaforma esterna, redirect 308 verso
+el-fontanin.web.app) è stato dismesso: configurazioni rimosse dal repo l'8
+lug e riferimenti ripuliti da tutta la documentazione. Unico hosting: Firebase
+(el-fontanin.web.app). Resta da fare A MANO da Daniel: cancellare il vecchio
+progetto "il-fontanin" dal dashboard della piattaforma legacy (i vecchi link
+esterni smetteranno di funzionare in quel momento).
 
 ## Stato branch: feature/algorand-wallet-mpc
 
@@ -8,7 +16,7 @@
 | 48a4e37   | Antigravity             | feat: aggiunta bottoni rapidi Mappa e Numeri Utili nella Homepage |
 | 2121b81   | Antigravity             | fix: rimozione overflow-hidden da AppHeader per visibilità menu lingua |
 | 6007785   | Antigravity             | Adattamento layout responsive per schermi grandi (desktop) |
-| 998de45   | Antigravity             | Allineamento e deploy delle versioni (1.1.0) per Firebase, Vercel redirect, OpenAPI spec |
+| 998de45   | Antigravity             | Allineamento e deploy delle versioni (1.1.0) per Firebase, redirect hosting legacy, OpenAPI spec |
 | 1e51445   | Sessione Fontanin       | FASE 5: saldo gettoni f in WalletCard.jsx (ASA ID via env, Algorand indexer) |
 | 9e7ae19   | Sessione Nuova          | chore: aggiorna COORDINATION.md — finding #3   |
 | 5cb9660   | Sessione Nuova          | docs: Finding #3 governance memo esperimenti   |
@@ -42,6 +50,7 @@
 
 Finding #1, #2, #3, #5 COMMITTATI e DEPLOYATI live. Finding #4 (Recovery wallet) resta BLOCCATO in attesa di delibera del Consiglio. Finding #6 (sicurezza GET /schede) COMMITTATO (a945aa0) ma in attesa di deploy in questa stessa sessione.
 
-Modulo Competenze (AT-COMPETENZE-002, commit f2420d3) implementato dietro feature flag `ff_competenze` (default OFF): non visibile in produzione finché il flag non viene attivato esplicitamente dopo il gate di qualità concordato con Daniel.
-
-Il deploy di backend e frontend più recente confermato in produzione è alle 11:35 (commit c921f79) — PRECEDENTE al modulo Competenze e al fix di sicurezza #6. Il deploy che porta a945aa0 in produzione va fatto in questa sessione, con `ff_competenze` OFF.
+Modifica sessione (2026-07-08):
+- **C0a/b**: Eseguito `alembic current` che ha restituito `44370175c503 (head)`. Il check è passato contro la produzione (IP `35.241.200.140` fallback di `.env.local`). Le tabelle DAW (`tracks`, `clips`, `midi_notes`, etc.) sono vive e vegete. La catena è stata quindi `stamp`-ata (o creata bypassando Alembic). Questo significa che lo script baseline velenoso non è stato eseguito, scongiurando l'incidente. Segnalato bisogno di pulizia della baseline come issue (C0c).
+- **A/B**: Risolto issue `cache-dependency-path` di pip in CI per farla passare verde.
+- **B1-B5**: Aperto PR, unito in main, taggato `v1.2.0-competenze`. Verificato che il workflow di produzione non partisse (mancano i secrets WIF) e configurata branch protection su `main` (requires CI, reviews, no force push). Pulito `feature/algorand-wallet-mpc` e creato `develop` da `main`.

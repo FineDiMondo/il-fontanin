@@ -1,3 +1,19 @@
+substitutions:
+  _REGION: europe-west1
+  _ARTIFACT_REGION: europe-west1
+  _ARTIFACT_REPOSITORY: finedimondo
+  _IMAGE_NAME: finedimondo-backend
+  _STAGE: develop
+  _IMAGE_TAG: manual
+  _SERVICE: finedimondo-backend-develop
+  _CLOUDSQL_INSTANCE: freedomrun-491323:europe-west1:jackass-verona-develop
+  _DB_HOST: 127.0.0.1
+  _DB_PORT: '5432'
+  _DB_USER: jackass_admin
+  _DB_NAME: jackass_verona_develop
+  _DB_PASSWORD_SECRET: JACKASS_DB_PASSWORD_DEVELOP
+  _GOOGLE_CLOUD_PROJECT: el-fontanin
+
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     args:
@@ -5,26 +21,29 @@ steps:
       - '-f'
       - 'Dockerfile.community'
       - '-t'
-      - 'europe-west1-docker.pkg.dev/freedomrun-491323/finedimondo/finedimondo-backend:v1-1-0'
+      - '${_ARTIFACT_REGION}-docker.pkg.dev/$PROJECT_ID/${_ARTIFACT_REPOSITORY}/${_IMAGE_NAME}:${_IMAGE_TAG}'
       - '.'
 
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'europe-west1-docker.pkg.dev/freedomrun-491323/finedimondo/finedimondo-backend:v1-1-0'
+      - '${_ARTIFACT_REGION}-docker.pkg.dev/$PROJECT_ID/${_ARTIFACT_REPOSITORY}/${_IMAGE_NAME}:${_IMAGE_TAG}'
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       - 'run'
       - 'deploy'
-      - 'finedimondo-backend'
-      - '--image=europe-west1-docker.pkg.dev/freedomrun-491323/finedimondo/finedimondo-backend:v1-1-0'
-      - '--region=europe-west1'
+      - '${_SERVICE}'
+      - '--image=${_ARTIFACT_REGION}-docker.pkg.dev/$PROJECT_ID/${_ARTIFACT_REPOSITORY}/${_IMAGE_NAME}:${_IMAGE_TAG}'
+      - '--region=${_REGION}'
       - '--platform=managed'
       - '--allow-unauthenticated'
+      - '--add-cloudsql-instances=${_CLOUDSQL_INSTANCE}'
+      - '--set-env-vars=FONTANIN_STAGE=${_STAGE},JACKASS_DB_HOST=${_DB_HOST},JACKASS_DB_PORT=${_DB_PORT},JACKASS_DB_USER=${_DB_USER},JACKASS_DB_NAME=${_DB_NAME},GOOGLE_CLOUD_PROJECT=${_GOOGLE_CLOUD_PROJECT}'
+      - '--set-secrets=JACKASS_DB_PASSWORD=${_DB_PASSWORD_SECRET}:latest'
 
 images:
-  - 'europe-west1-docker.pkg.dev/freedomrun-491323/finedimondo/finedimondo-backend:v1-1-0'
+  - '${_ARTIFACT_REGION}-docker.pkg.dev/$PROJECT_ID/${_ARTIFACT_REPOSITORY}/${_IMAGE_NAME}:${_IMAGE_TAG}'
 
 timeout: '1200s'

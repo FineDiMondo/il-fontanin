@@ -59,7 +59,7 @@ gcloud run services describe finedimondo-backend \
   --format="value(status.traffic)"
 ```
 
-**Avvertenza sul tag immagine:** `cloudbuild_community.yaml` pubblica sempre lo stesso tag (`:v1-1-0`), quindi il tag NON identifica una versione. Il rollback va fatto **sempre per revisione Cloud Run**, mai ri-deployando il tag. (Debito tecnico: passare a tag `$SHORT_SHA` in Cloud Build.)
+**Avvertenza sul rollback:** `cloudbuild_community.yaml` pubblica tag parametrizzati per stage/commit, ma il rollback applicativo va fatto **sempre per revisione Cloud Run**, non ri-deployando un tag immagine. La revisione Cloud Run è l'unico riferimento che identifica esattamente configurazione, immagine e traffico servito.
 
 **Roll-forward (annullare il rollback):** stesso comando `update-traffic` verso la revisione più recente.
 
@@ -146,7 +146,7 @@ La console Firebase conserva inoltre la cronologia delle regole pubblicate (Fire
 3. Login + un percorso utente completo su `el-fontanin.web.app`.
 4. Registrare l'evento in COORDINATION.md (data, componente, revisione da→a, motivo, esito).
 
-**Il punto 2 è il motivo per cui i test di rollback si fanno in staging, mai in produzione:** un rollback che riporta live una versione precedente al fix sicurezza riaprirebbe il bug delle bozze visibili.
+**Il punto 2 è il motivo per cui i test di rollback si fanno in certification, mai in produzione:** un rollback che riporta live una versione precedente al fix sicurezza riaprirebbe il bug delle bozze visibili.
 
 ---
 
@@ -162,7 +162,7 @@ La console Firebase conserva inoltre la cronologia delle regole pubblicate (Fire
 
 ## 10. Prerequisiti da completare (stato al 2026-07-08)
 
-- [ ] Ambiente di staging (workflow `deploy-staging.yml` previsto dalla strategia CI/CD) — finché non esiste, i test di rollback restano non provati.
-- [ ] Tag immagine per commit (`$SHORT_SHA`) in `cloudbuild_community.yaml` al posto del tag fisso `v1-1-0`.
+- [ ] Ambienti remoti `develop` e `certification` con workflow dedicati e servizi Cloud Run separati — finché non esistono, i test di rollback restano non provati.
+- [x] Tag immagine per stage/commit in `cloudbuild_community.yaml` al posto del tag fisso `v1-1-0` (WO-01 H2 2026).
 - [ ] Prova pratica di `alembic downgrade -1` su copia del DB (mai eseguita finora).
 - [ ] Politica di backup PostgreSQL schedulata (oggi i dump sono solo manuali).

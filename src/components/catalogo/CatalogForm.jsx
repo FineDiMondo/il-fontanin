@@ -16,7 +16,9 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-import MonumentiCristianiFields from './MonumentiCristianiFields';
+import MetadataFields from './MetadataFields';
+
+const LIVELLI_EVIDENZA = ['C', 'D', 'I', 'L'];
 
 const FONTANIN_DEFAULT = [45.3122, 10.8719]; // Coordinate di El Fontanin (circa Povegliano)
 const MAX_UPLOAD_SIZE = 28 * 1024 * 1024; // 28MB
@@ -261,9 +263,15 @@ export default function CatalogForm({
           </div>
         </div>
 
-        {/* CAMPI SPECIFICI DINAMICI */}
-        {selCategory && selCategory.codice === 'monumenti-cristiani' && (
-          <MonumentiCristianiFields data={formData.metadata_specifici} onChange={handleMetadataChange} readOnly={readOnly} />
+        {/* CAMPI SPECIFICI DINAMICI (AT-ADD-02 §4.3: renderer generico da metadata_schema) */}
+        {selCategory && (
+          <MetadataFields
+            schema={selCategory.metadata_schema}
+            categoriaNome={selCategory.nome}
+            data={formData.metadata_specifici}
+            onChange={handleMetadataChange}
+            readOnly={readOnly}
+          />
         )}
 
         {/* EVIDENZA E PUBBLICAZIONE */}
@@ -271,15 +279,17 @@ export default function CatalogForm({
           <h2 className="font-serif text-lg text-oro">Livello Evidenza e Fonti</h2>
           
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-stone-600">Sigla Evidenza (C/D/I/L)</label>
+            <label className="text-xs font-semibold text-stone-600">{t('catalogo.evidenza.label', 'Livello di certezza (C/D/I/L)')}</label>
             <select name="evidenza_livello" value={formData.evidenza_livello || ''} onChange={handleChange} disabled={readOnly}
               className="border border-stone-300 rounded p-2 text-sm focus:ring-oro">
-              <option value="">Non specificato</option>
-              <option value="C">C - (Da definire)</option>
-              <option value="D">D - (Da definire)</option>
-              <option value="I">I - (Da definire)</option>
-              <option value="L">L - Leggenda</option>
+              <option value="">{t('catalogo.evidenza.non_specificato', 'Non specificato')}</option>
+              {LIVELLI_EVIDENZA.map(sig => (
+                <option key={sig} value={sig}>{sig} - {t(`catalogo.evidenza.${sig}`, sig)}</option>
+              ))}
             </select>
+            {formData.evidenza_livello && (
+              <p className="text-xs text-stone-500 mt-1">{t(`catalogo.evidenza.help.${formData.evidenza_livello}`, '')}</p>
+            )}
           </div>
 
           <div className="flex flex-col gap-1">

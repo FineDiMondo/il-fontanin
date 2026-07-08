@@ -25,46 +25,28 @@ npm run dev
 # Apri http://localhost:5173
 ```
 
-## 3. Deploy su Vercel (link pubblico in 2 minuti)
+## 3. Deploy su Firebase Hosting
 
 ```bash
-# Installa Vercel CLI se non ce l'hai
-npm install -g vercel
+# Installa Firebase CLI se non ce l'hai
+npm install -g firebase-tools
+firebase login
 
-# Deploy dalla cartella fontanin/
+# Build e deploy dalla cartella fontanin/
 cd fontanin
-vercel
-
-# Alla prima run: login con email/GitHub, poi:
-# - Set up project: Yes
-# - Which scope: il tuo account
-# - Link to existing project: No
-# - Project name: il-fontanin
-# - Directory: ./
-# - Override settings: No
+npm run build
+firebase deploy --only hosting --project el-fontanin
 ```
 
-Vercel chiederà di configurare le variabili d'ambiente: aggiungile
-dalla dashboard Vercel oppure con:
-```bash
-vercel env add VITE_FIREBASE_API_KEY
-vercel env add VITE_FIREBASE_AUTH_DOMAIN
-vercel env add VITE_FIREBASE_PROJECT_ID
-vercel env add VITE_FIREBASE_APP_ID
-vercel env add VITE_API_BASE_URL
-```
+Le variabili d'ambiente (`VITE_FIREBASE_*`, `VITE_API_BASE_URL`) vanno
+in `.env.local` PRIMA della build: Vite le compila nel bundle.
 
-Poi deploy in produzione:
-```bash
-vercel --prod
-```
+L'app è servita su: `https://el-fontanin.web.app`.
 
-L'output sarà: `https://il-fontanin.vercel.app` (o simile).
-
-## 4. Aggiungi il dominio Vercel a Firebase
+## 4. Domini autorizzati su Firebase Auth
 
 1. Firebase Console → Authentication → Settings → Authorized domains
-2. Aggiungi: `il-fontanin.vercel.app`
+2. Verifica che `el-fontanin.web.app` sia presente (lo è di default)
 
 ## 5. Backend: configura Firebase Admin sul Community Module
 
@@ -92,6 +74,6 @@ fontanin/
 │   └── App.jsx
 ├── public/            favicon.svg
 ├── .env.local         (non committare!)
-├── vercel.json        (SPA routing)
+├── firebase.json      (hosting + SPA rewrite)
 └── package.json
 ```

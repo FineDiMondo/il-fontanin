@@ -1,0 +1,60 @@
+# Deploy CERTIFICATION — su push a certification
+# BOZZA (2026-07-08). Non attiva finché non sono configurati:
+#   1. GitHub Environment "certification"
+#   2. Secrets WIF (GCP_WORKLOAD_IDENTITY_PROVIDER, GCP_SERVICE_ACCOUNT)
+#   3. servizio Cloud Run dedicato `finedimondo-backend-certification`
+#   4. variabili frontend certification, se diverse dalla produzione
+name: Deploy certification
+
+on:
+  push:
+    branches: [certification]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-certification
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  backend-certification:
+    name: Backend -> Cloud Run (certification)
+    runs-on: ubuntu-latest
+    environment:
+      name: certification
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - run: |
+          gcloud builds submit \
+            --project=freedomrun-491323 \
+            --config=cloudbuild_community.yaml \
+            --substitutions=_STAGE=certification,_SERVICE=finedimondo-backend-certification,_REGION=europe-west1,_IMAGE_TAG=certification-${GITHUB_SHA::7},_CLOUDSQL_INSTANCE=${{ vars.CLOUDSQL_INSTANCE }},_DB_HOST=${{ vars.JACKASS_DB_HOST }},_DB_PORT=${{ vars.JACKASS_DB_PORT }},_DB_USER=${{ vars.JACKASS_DB_USER }},_DB_NAME=${{ vars.JACKASS_DB_NAME }},_DB_PASSWORD_SECRET=${{ vars.JACKASS_DB_PASSWORD_SECRET }},_GOOGLE_CLOUD_PROJECT=${{ vars.GOOGLE_CLOUD_PROJECT }}
+
+  frontend-certification:
+    name: Frontend -> Firebase Hosting (certification)
+    runs-on: ubuntu-latest
+    environment:
+      name: certification
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --include=dev
+      - run: npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EL_FONTANIN }}
+          projectId: el-fontanin
+          channelId: certification
+          expires: 30d

@@ -30,14 +30,41 @@ Al check-out:
   - spostare la riga in STORICO SESSIONI
 
 ## R3 — POLICY DI BRANCH E DEPLOY
-- Branch attivo di sviluppo: feature/algorand-wallet-mpc
+- Branch attivo di sviluppo: develop (main protetto, merge solo via PR)
 - Vietato: commit diretti su main; merge su main senza istruzione
   esplicita dell'utente in chat.
-- Vietato: deploy (Firebase Hosting, Vercel, backend Cloud Run,
+- Vietato: deploy (Firebase Hosting, backend Cloud Run,
   Cloud Build APK) senza conferma esplicita dell'utente nella
   sessione corrente. "Era nel piano" non è una conferma.
 - Ogni commit: messaggio descrittivo, scope minimo, mai mescolare
   igiene repo e feature nello stesso commit.
+
+## R7 — BRANCH DI LAVORO MULTI-LLM
+- Un LLM può creare branch lavorabili per task, work order o piani
+  approvati dall'utente.
+- La regola del singolo scrittore vale sempre per l'intero repository,
+  inclusi main, develop, feature branch, lockfile e .git.
+- Non possono esistere due agenti in stato WRITING contemporaneamente,
+  anche se lavorano su branch diversi.
+- Ogni branch deve avere un solo agente assegnato durante una sessione
+  di scrittura.
+- I branch di implementazione devono rientrare via PR; vietato push o
+  merge diretto su main senza istruzione esplicita dell'utente.
+
+## R8 — STAGE REMOTI E PROMOZIONE (develop → certification → production)
+- Gli stage remoti applicativi sono: `develop`, `certification`,
+  `production`.
+- Ogni stage remoto ha un solo agente in scrittura alla volta, perché
+  R1 vale sull'intero repository e sulle risorse condivise di deploy.
+- `develop` è l'ambiente di integrazione tecnica; `certification` è
+  l'ambiente di validazione/release candidate; `production` è l'ambiente
+  live.
+- La promozione tra stage avviene tramite PR o workflow controllati:
+  feature/work-order → develop → certification → production.
+- `production` richiede sempre autorizzazione esplicita dell'utente nella
+  sessione corrente e, se gestito via GitHub Actions, Environment
+  `production` con approvazione umana. Vietato promuovere direttamente
+  da un branch feature a production.
 
 ## R4 — MODULI PROTETTI (modifica solo su istruzione esplicita)
 - src/context/AuthContext.jsx      (logica auth: consumare, non modificare)
@@ -69,10 +96,16 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-08 12:27 | Codex | WRITING | codex/h2-2026-plan | Cloud Run, Firebase Hosting, Cloud SQL, Secret Manager, workflow/env docs, AGENTS.md | Creazione risorse develop/certification/production baseline e deploy punto 0 autorizzati da Daniel |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-08 12:13 | Codex | DONE | d944990 | H2 2026 Wave 0 WO-01: Cloud Build parametrico per develop/certification/production, workflow remoti Accenture-style, catalogo link ambienti/DB/endpoint in docs/ENVIRONMENTS.md, runbook deploy in docs/DEPLOY.md; verifiche: YAML parse OK, npm build OK, pytest 25 passed 2 skipped; gcloud builds submit --dry-run non supportato dalla CLI locale, nessun deploy eseguito |
+| 2026-07-08 12:06 | Codex | DONE | fbe783d | Recupero sessione stale Claude, aggiunta R7 branch multi-LLM, creato branch codex/h2-2026-plan; completato deploy ADD-02 autorizzato: pytest 25 passed 2 skipped, npm build OK, metadata_schema DB aggiornati e dry-run finale no-op, Cloud Run revision finedimondo-backend-00018-z8v, Firebase Hosting deploy OK, smoke test health/home/catalogo OK |
+| 2026-07-08 12:05 | Claude/Fable (Cowork) | ABORTED | 8b7010c | Sessione interrotta per esaurimento crediti; takeover amministrativo autorizzato da Daniel; working tree verificato pulito prima del recupero |
+| 2026-07-08 11:38 | Codex | DONE | — | Verificata connessione GCP/Firebase e reachability endpoint; deploy annullato su richiesta utente, nessun deploy/build eseguito |
+| 2026-07-08 09:40 | Gemini/Antigravity | DONE | 3175fe7, dfc8e16 | CI/CD fix (cache-dependency-path), riallineamento PR merged su main, verificata baseline Alembic velenosa, impostata branch protection su main, feature branch eliminato |
 | 2026-07-07 15:33 | Gemini/Antigravity | DONE | a39e447, d4490e0 | Verifica git status/diff OK; rimosso .git/index.lock stantio (12:00, 0 byte, nessun processo); pytest 40 passed 2 skipped; npm build OK; VITE_ENABLE_COMPETENZE_FEATURE assente in tutti gli env (ff_competenze=OFF); commit docs finding #6 (a39e447, scope minimo: AGENTS.md+COORDINATION.md+test_security_fix.py+verify_security_fix.py); PDF Villafranca spostato in docs/comuni/villafranca-verona/ (d4490e0); deploy backend Cloud Run OK (revision finedimondo-backend-00017-hmv); deploy frontend Firebase OK (el-fontanin.web.app); VERIFICA POST-DEPLOY SUPERATA: GET /schede?stato=bozza con socio non-autore non-validatore → [] HTTP 200. |
 |---|---|---|---|---|
 | 2026-07-07 12:20 | Claude/Cowork | ABORTED | — | Documentazione AGENTS.md/COORDINATION.md preparata (non ancora committata) ma commit interrotto: .git/index.lock occupato da altro processo (probabile Antigravity già in scrittura). Rispettato R1, nessun tentativo di sblocco forzato. File nuovi non tracciati comparsi nel frattempo: test_security_fix.py, verify_security_fix.py, Villafranca_Verona_Storia_immagini_comunita_IT_2018_x_web.pdf — origine non verificata da questa sessione. |

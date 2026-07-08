@@ -386,10 +386,10 @@ GOOGLE_DRIVE_FONTANIN_FOLDER_ID=1A2B3C...   # Root folder for all uploads
 - [ ] Firestore rules deployed
 - [ ] Firestore indexes deployed
 - [ ] Service account key in Secret Manager
-- [ ] Vercel staging deployment successful
-- [ ] No console errors in staging
-- [ ] Manual E2E test in staging
-- [ ] Vercel prod deployment successful
+- [ ] Deploy su ambiente certification successful
+- [ ] No console errors in certification
+- [ ] Manual E2E test in certification
+- [ ] Deploy Firebase Hosting production successful
 - [ ] Monitoring/logging configured (Sentry)
 - [ ] Rollback plan documented
 
