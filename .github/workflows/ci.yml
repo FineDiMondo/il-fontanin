@@ -52,6 +52,7 @@ jobs:
         with:
           python-version: '3.12'  # allineato a Dockerfile.community
           cache: pip
+          cache-dependency-path: requirements_community.txt
       - run: pip install -r requirements_community.txt pytest httpx
       # Schema DB: create_all + seed categorie.
       # NON usare `alembic upgrade head`: la baseline f308e9f0394c contiene
