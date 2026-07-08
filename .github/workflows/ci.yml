@@ -58,5 +58,5 @@ jobs:
       # NON usare `alembic upgrade head`: la baseline f308e9f0394c contiene
       # DROP di tabelle estranee (schema DAW del DB condiviso) e fallirebbe
       # su un DB vuoto. Da correggere la baseline prima di usare Alembic in CI.
-      - run: python create_catalogo_tables.py
+      - run: python create_catalogo_tables.py --env local --yes
       - run: python -m pytest tests/ -v
