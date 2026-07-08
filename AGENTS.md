@@ -82,11 +82,11 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-08 12:06 | Codex | WRITING | codex/h2-2026-plan | AGENTS.md, branch piano H2 2026, deploy ADD-02 | Recupero sessione stale Claude; regola branch multi-LLM; branch piano H2 2026; completamento deploy sospeso ADD-02 autorizzato da Daniel |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-08 12:06 | Codex | DONE | fbe783d | Recupero sessione stale Claude, aggiunta R7 branch multi-LLM, creato branch codex/h2-2026-plan; completato deploy ADD-02 autorizzato: pytest 25 passed 2 skipped, npm build OK, metadata_schema DB aggiornati e dry-run finale no-op, Cloud Run revision finedimondo-backend-00018-z8v, Firebase Hosting deploy OK, smoke test health/home/catalogo OK |
 | 2026-07-08 12:05 | Claude/Fable (Cowork) | ABORTED | 8b7010c | Sessione interrotta per esaurimento crediti; takeover amministrativo autorizzato da Daniel; working tree verificato pulito prima del recupero |
 | 2026-07-08 11:38 | Codex | DONE | — | Verificata connessione GCP/Firebase e reachability endpoint; deploy annullato su richiesta utente, nessun deploy/build eseguito |
 | 2026-07-08 09:40 | Gemini/Antigravity | DONE | 3175fe7, dfc8e16 | CI/CD fix (cache-dependency-path), riallineamento PR merged su main, verificata baseline Alembic velenosa, impostata branch protection su main, feature branch eliminato |
