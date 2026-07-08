@@ -39,15 +39,15 @@
 | C0b | Le tabelle DAW esistono ancora? | `psql: \dt` su `jackass_verona` cercando `tracks`, `clips`, `midi_notes`, `timelines`, `projects` | **Se assenti e prima esistevano**: la baseline è stata ESEGUITA (upgrade) e le ha droppate → incidente da segnalare a Daniel, valutare ripristino da backup. **Se presenti**: la baseline è stata `stamp`-ata o mai eseguita → OK, ma va ripulita prima di usarla altrove |
 | C0c | Pulizia baseline | Riscrivere `f308e9f0394c` senza i DROP estranei (solo no-op o creazione schema proprio) | `alembic upgrade head` su DB vuoto funziona; prerequisito per usare Alembic in CI |
 
-### C1 — Test rollback (SOLO su staging/copia, MAI produzione)
+### C1 — Test rollback (SOLO su certification/copia, MAI produzione)
 
 | ID | Test | Procedura | Esito atteso |
 |---|---|---|---|
 | C1a | Copia DB | `pg_dump` produzione → restore su DB di test (ROLLBACK.md §5 passi 1-2) | Restore senza errori |
 | C1b | Downgrade Competenze | Su copia: `alembic downgrade -1` → `alembic current` | Revisione = `f308e9f0394c`; tabelle `competenza_*` assenti; TUTTE le altre tabelle intatte |
 | C1c | Re-upgrade | Su copia: `alembic upgrade head` | Tabelle `competenza_*` ricreate vuote |
-| C1d | Rollback Cloud Run | Su servizio staging: deploy revisione nuova → `update-traffic` alla precedente (ROLLBACK.md §3) | Traffico 100% su revisione precedente in <1 min; `/community/health` → 200 |
-| C1e | Rollback Hosting | Su canale staging: deploy → `firebase hosting:rollback` (o rideploy canale precedente) | Versione precedente servita |
+| C1d | Rollback Cloud Run | Su servizio certification: deploy revisione nuova → `update-traffic` alla precedente (ROLLBACK.md §3) | Traffico 100% su revisione precedente in <1 min; `/community/health` → 200 |
+| C1e | Rollback Hosting | Su canale certification: deploy → `firebase hosting:rollback` (o rideploy canale precedente) | Versione precedente servita |
 | C1f | Sicurezza post-rollback | Dopo C1d: `GET /community/catalogo/schede?stato=bozza` con socio non-autore | `[]` HTTP 200 — il rollback non deve riaprire il bug delle bozze (ROLLBACK.md §8.2) |
 
 ## Fase D — ADD-02 (solo dopo conferma Daniel su AF-ADD-02 Parte 3)
@@ -63,7 +63,7 @@
 | D1e | `evidenza_livello: "X"` in create/update | 422 (vincolo Literal) |
 | D1f | `update_catalogo_schemas.py` eseguito 2 volte | Idempotente: secondo run senza errori, schemi identici |
 
-### D2 — Frontend (checklist manuale, staging)
+### D2 — Frontend (checklist manuale, certification)
 
 | ID | Test | Esito atteso |
 |---|---|---|
@@ -89,7 +89,7 @@
 ```
 A (CI) ──→ B (riallineamento) ──→ B5 (protezione main)
 C0 (baseline) — URGENTE, indipendente, prima di qualsiasi uso di Alembic
-C1 (rollback) — richiede staging (deploy-staging.yml attivo o ambiente manuale)
+C1 (rollback) — richiede certification (deploy-certification.yml attivo o ambiente manuale)
 D (ADD-02) — solo dopo conferma Daniel; i test D1 entrano in CI
 E — a ogni deploy, per sempre
 ```

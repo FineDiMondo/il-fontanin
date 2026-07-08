@@ -1,0 +1,59 @@
+# Deploy DEVELOP — su push a develop
+# BOZZA (2026-07-08). Non attiva finché non sono configurati:
+#   1. GitHub Environment "develop"
+#   2. Secrets WIF (GCP_WORKLOAD_IDENTITY_PROVIDER, GCP_SERVICE_ACCOUNT)
+#   3. servizio Cloud Run dedicato `finedimondo-backend-develop`
+#   4. variabili frontend develop, se diverse dalla produzione
+name: Deploy develop
+
+on:
+  push:
+    branches: [develop]
+
+concurrency:
+  group: deploy-develop
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  backend-develop:
+    name: Backend -> Cloud Run (develop)
+    runs-on: ubuntu-latest
+    environment:
+      name: develop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - run: |
+          gcloud builds submit \
+            --project=freedomrun-491323 \
+            --config=cloudbuild_community.yaml \
+            --substitutions=_STAGE=develop,_SERVICE=finedimondo-backend-develop,_REGION=europe-west1,_IMAGE_TAG=develop-${GITHUB_SHA::7},_CLOUDSQL_INSTANCE=${{ vars.CLOUDSQL_INSTANCE }},_DB_HOST=${{ vars.JACKASS_DB_HOST }},_DB_PORT=${{ vars.JACKASS_DB_PORT }},_DB_USER=${{ vars.JACKASS_DB_USER }},_DB_NAME=${{ vars.JACKASS_DB_NAME }},_DB_PASSWORD_SECRET=${{ vars.JACKASS_DB_PASSWORD_SECRET }},_GOOGLE_CLOUD_PROJECT=${{ vars.GOOGLE_CLOUD_PROJECT }}
+
+  frontend-develop:
+    name: Frontend -> Firebase Hosting (develop)
+    runs-on: ubuntu-latest
+    environment:
+      name: develop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --include=dev
+      - run: npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EL_FONTANIN }}
+          projectId: el-fontanin
+          channelId: develop
+          expires: 14d

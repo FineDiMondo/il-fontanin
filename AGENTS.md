@@ -52,6 +52,21 @@ Al check-out:
 - I branch di implementazione devono rientrare via PR; vietato push o
   merge diretto su main senza istruzione esplicita dell'utente.
 
+## R8 — STAGE REMOTI E PROMOZIONE (develop → certification → production)
+- Gli stage remoti applicativi sono: `develop`, `certification`,
+  `production`.
+- Ogni stage remoto ha un solo agente in scrittura alla volta, perché
+  R1 vale sull'intero repository e sulle risorse condivise di deploy.
+- `develop` è l'ambiente di integrazione tecnica; `certification` è
+  l'ambiente di validazione/release candidate; `production` è l'ambiente
+  live.
+- La promozione tra stage avviene tramite PR o workflow controllati:
+  feature/work-order → develop → certification → production.
+- `production` richiede sempre autorizzazione esplicita dell'utente nella
+  sessione corrente e, se gestito via GitHub Actions, Environment
+  `production` con approvazione umana. Vietato promuovere direttamente
+  da un branch feature a production.
+
 ## R4 — MODULI PROTETTI (modifica solo su istruzione esplicita)
 - src/context/AuthContext.jsx      (logica auth: consumare, non modificare)
 - src/context/WalletContext.jsx    (logica MPC: consumare, non modificare)
@@ -82,6 +97,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-08 12:13 | Codex | WRITING | codex/h2-2026-plan | cloudbuild_community.yaml, deploy docs/workflows, AGENTS.md | H2 2026 Wave 0 — WO-01 parametrizzazione Cloud Build |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
