@@ -70,10 +70,12 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-08 12:05 | Claude/Fable (Cowork) | WRITING | feature/add-02-evidenza-metadata → develop → main | merge PR, deploy, AGENTS.md, COORDINATION.md | Deploy ADD-02 autorizzato da Daniel (Cloud Run + Firebase + update schemi DB) — subentra a Codex |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-08 11:38 | Codex | DONE | — | Verificata connessione GCP/Firebase e reachability endpoint; deploy annullato su richiesta utente, nessun deploy/build eseguito |
 | 2026-07-08 09:40 | Gemini/Antigravity | DONE | 3175fe7, dfc8e16 | CI/CD fix (cache-dependency-path), riallineamento PR merged su main, verificata baseline Alembic velenosa, impostata branch protection su main, feature branch eliminato |
 | 2026-07-07 15:33 | Gemini/Antigravity | DONE | a39e447, d4490e0 | Verifica git status/diff OK; rimosso .git/index.lock stantio (12:00, 0 byte, nessun processo); pytest 40 passed 2 skipped; npm build OK; VITE_ENABLE_COMPETENZE_FEATURE assente in tutti gli env (ff_competenze=OFF); commit docs finding #6 (a39e447, scope minimo: AGENTS.md+COORDINATION.md+test_security_fix.py+verify_security_fix.py); PDF Villafranca spostato in docs/comuni/villafranca-verona/ (d4490e0); deploy backend Cloud Run OK (revision finedimondo-backend-00017-hmv); deploy frontend Firebase OK (el-fontanin.web.app); VERIFICA POST-DEPLOY SUPERATA: GET /schede?stato=bozza con socio non-autore non-validatore → [] HTTP 200. |
 |---|---|---|---|---|

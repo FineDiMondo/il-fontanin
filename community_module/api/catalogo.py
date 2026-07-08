@@ -327,6 +327,9 @@ def valida_scheda(
     if payload.approvata:
         if not scheda.evidenza_livello:
             raise HTTPException(status_code=422, detail="evidenza_livello obbligatorio per approvare")
+        # AT-ADD-02 §2.2: C e D sono affermazioni basate su fonti — senza fonte non sono verificabili
+        if scheda.evidenza_livello in ("C", "D") and not (scheda.evidenza_fonte or "").strip():
+            raise HTTPException(status_code=422, detail="evidenza_fonte obbligatoria per livelli C e D")
         scheda.stato = "pubblicato"
     else:
         if not payload.nota_validazione:

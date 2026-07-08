@@ -5,7 +5,7 @@ Pydantic schemas per request/response della Community API.
 from uuid import UUID
 from datetime import datetime, date
 from decimal import Decimal
-from typing import Optional, List, Any, Dict
+from typing import Optional, List, Any, Dict, Literal
 from pydantic import BaseModel, EmailStr, Field
 
 
@@ -513,7 +513,8 @@ class CatalogoSchedaBase(BaseModel):
     lng: Decimal = Field(..., ge=-180, le=180, description="Obbligatorio anche per le bozze")
     descrizione: Optional[str] = None
     cronologia_storica: Optional[str] = None
-    evidenza_livello: Optional[str] = None
+    # AT-ADD-02 §2.1: valori vincolati (C=Certo, D=Documentato, I=Indiretto, L=Leggenda)
+    evidenza_livello: Optional[Literal["C", "D", "I", "L"]] = None
     evidenza_fonte: Optional[str] = None
     evidenza_data_verifica: Optional[date] = None
     metadata_specifici: Optional[Dict[str, Any]] = None
@@ -528,7 +529,7 @@ class CatalogoSchedaUpdate(BaseModel):
     lng: Optional[Decimal] = Field(None, ge=-180, le=180)
     descrizione: Optional[str] = None
     cronologia_storica: Optional[str] = None
-    evidenza_livello: Optional[str] = None
+    evidenza_livello: Optional[Literal["C", "D", "I", "L"]] = None
     evidenza_fonte: Optional[str] = None
     evidenza_data_verifica: Optional[date] = None
     metadata_specifici: Optional[Dict[str, Any]] = None

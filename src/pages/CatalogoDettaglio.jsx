@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../api/client.js';
 import CatalogForm from '../components/catalogo/CatalogForm';
+import EvidenzaBadge from '../components/catalogo/EvidenzaBadge';
 import { useAuth } from '../context/AuthContext';
 
 export default function CatalogoDettaglio() {
@@ -100,6 +101,7 @@ export default function CatalogoDettaglio() {
             <span className="px-2 py-1 text-xs font-bold rounded-full bg-stone-100 text-stone-600">
               ID: {scheda.id.split('-')[0]}
             </span>
+            <EvidenzaBadge livello={scheda.evidenza_livello} />
           </div>
         </div>
       </div>
