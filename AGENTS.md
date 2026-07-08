@@ -70,6 +70,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-08 12:05 | Claude/Fable (Cowork) | WRITING | feature/add-02-evidenza-metadata → develop → main | merge PR, deploy, AGENTS.md, COORDINATION.md | Deploy ADD-02 autorizzato da Daniel (Cloud Run + Firebase + update schemi DB) — subentra a Codex |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
