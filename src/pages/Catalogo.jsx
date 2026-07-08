@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client.js';
 import { useAuth } from '../context/AuthContext';
+import EvidenzaBadge from '../components/catalogo/EvidenzaBadge';
 
 export default function Catalogo() {
   const { t } = useTranslation();
@@ -89,7 +90,10 @@ export default function Catalogo() {
                   <div className="text-xs font-bold text-oro uppercase tracking-wider mb-2">
                     {categorie.find(c => c.id === scheda.categoria_id)?.nome || 'Generale'}
                   </div>
-                  <h3 className="text-xl font-serif font-bold text-stone-800 mb-2">{scheda.nome}</h3>
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <h3 className="text-xl font-serif font-bold text-stone-800">{scheda.nome}</h3>
+                    <EvidenzaBadge livello={scheda.evidenza_livello} />
+                  </div>
                   <p className="text-sm text-stone-600 line-clamp-3 flex-grow mb-4">{scheda.descrizione}</p>
                   
                   {/* Eventuali indicatori di media */}
