@@ -1,9 +1,5 @@
 # Deploy CERTIFICATION — su push a certification
-# BOZZA (2026-07-08). Non attiva finché non sono configurati:
-#   1. GitHub Environment "certification"
-#   2. Secrets WIF (GCP_WORKLOAD_IDENTITY_PROVIDER, GCP_SERVICE_ACCOUNT)
-#   3. servizio Cloud Run dedicato `finedimondo-backend-certification`
-#   4. variabili frontend certification, se diverse dalla produzione
+# Prerequisiti: vedi docs/ENVIRONMENTS.md §8 (tutti marcati come Fatto)
 name: Deploy certification
 
 on:
@@ -36,6 +32,7 @@ jobs:
           gcloud builds submit \
             --project=freedomrun-491323 \
             --config=cloudbuild_community.yaml \
+            --suppress-logs \
             --substitutions=_STAGE=certification,_SERVICE=finedimondo-backend-certification,_REGION=europe-west1,_IMAGE_TAG=certification-${GITHUB_SHA::7},_CLOUDSQL_INSTANCE=${{ vars.CLOUDSQL_INSTANCE }},_DB_HOST=${{ vars.JACKASS_DB_HOST }},_DB_PORT=${{ vars.JACKASS_DB_PORT }},_DB_USER=${{ vars.JACKASS_DB_USER }},_DB_NAME=${{ vars.JACKASS_DB_NAME }},_DB_PASSWORD_SECRET=${{ vars.JACKASS_DB_PASSWORD_SECRET }},_GOOGLE_CLOUD_PROJECT=${{ vars.GOOGLE_CLOUD_PROJECT }}
 
   frontend-certification:
@@ -51,6 +48,8 @@ jobs:
           cache: npm
       - run: npm ci --include=dev
       - run: npm run build
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}

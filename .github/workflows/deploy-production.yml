@@ -1,8 +1,5 @@
 # Deploy PRODUZIONE — solo su tag v*.*.*
-# BOZZA (2026-07-08, Claude/Fable). NON attiva finché non sono configurati:
-#   1. GitHub Environment "production" con REQUIRED REVIEWER = Daniel
-#      (questo è il gate umano richiesto da AGENTS.md R3, reso esplicito in pipeline)
-#   2. Secrets WIF + FIREBASE_SERVICE_ACCOUNT_EL_FONTANIN
+# Prerequisiti: vedi docs/ENVIRONMENTS.md §8 (tutti marcati come Fatto)
 name: Deploy production
 
 on:
@@ -38,6 +35,7 @@ jobs:
           gcloud builds submit \
             --project=freedomrun-491323 \
             --config=cloudbuild_community.yaml \
+            --suppress-logs \
             --substitutions=_STAGE=production,_SERVICE=finedimondo-backend,_REGION=europe-west1,_IMAGE_TAG=${{ github.ref_name }},_CLOUDSQL_INSTANCE=${{ vars.CLOUDSQL_INSTANCE }},_DB_HOST=${{ vars.JACKASS_DB_HOST }},_DB_PORT=${{ vars.JACKASS_DB_PORT }},_DB_USER=${{ vars.JACKASS_DB_USER }},_DB_NAME=${{ vars.JACKASS_DB_NAME }},_DB_PASSWORD_SECRET=${{ vars.JACKASS_DB_PASSWORD_SECRET }},_GOOGLE_CLOUD_PROJECT=${{ vars.GOOGLE_CLOUD_PROJECT }}
 
       # ---- Smoke test backend ----
@@ -55,6 +53,8 @@ jobs:
           cache: npm
       - run: npm ci --include=dev
       - run: npm run build
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}

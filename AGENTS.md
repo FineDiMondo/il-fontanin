@@ -96,11 +96,13 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-08 12:27 | Codex | WRITING | codex/h2-2026-plan | Cloud Run, Firebase Hosting, Cloud SQL, Secret Manager, workflow/env docs, AGENTS.md | Creazione risorse develop/certification/production baseline e deploy punto 0 autorizzati da Daniel |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-12 11:20 | Gemini/Antigravity | DONE | in branch | Promozione `develop` in `certification` e PR aperta verso `production` a seguito autorizzazione utente. |
+| 2026-07-12 11:16 | Codex | DONE | in questo commit | Fix workflow Cloud Build: aggiunto `--suppress-logs` ai deploy develop/certification/production per evitare fallimento del job GitHub Actions durante lo streaming log; verifica YAML parse OK |
+| 2026-07-12 10:51 | Codex | DONE | in questo commit | Ripresa lavoro Claude/Codex per migrazione compilazione su GCloud: configurati WIF GitHub Actions, service account GCP/Firebase, secret/vars Environment, reviewer gate certification/production; creati e verificati Cloud Run develop `finedimondo-backend-develop-00003-2tx` e certification `finedimondo-backend-certification-00001-njd` via Cloud Build (`21c3c2ea-df1d-4fa3-8121-418c1fbb4ed7`, `ae3dbdb5-9a16-4213-830c-9107865065b3`); creati preview Firebase `develop` e `certification`; inizializzati/allineati DB non-prod e secret senza newline; verifiche: pytest attivi 55 passed 2 skipped, npm build OK, smoke health/catalogo/backend e bundle frontend OK; `test_security_fix.py` legacy root fallisce su endpoint `/catalogo/schede` 404, non usato come gate |
 | 2026-07-08 12:13 | Codex | DONE | d944990 | H2 2026 Wave 0 WO-01: Cloud Build parametrico per develop/certification/production, workflow remoti Accenture-style, catalogo link ambienti/DB/endpoint in docs/ENVIRONMENTS.md, runbook deploy in docs/DEPLOY.md; verifiche: YAML parse OK, npm build OK, pytest 25 passed 2 skipped; gcloud builds submit --dry-run non supportato dalla CLI locale, nessun deploy eseguito |
 | 2026-07-08 12:06 | Codex | DONE | fbe783d | Recupero sessione stale Claude, aggiunta R7 branch multi-LLM, creato branch codex/h2-2026-plan; completato deploy ADD-02 autorizzato: pytest 25 passed 2 skipped, npm build OK, metadata_schema DB aggiornati e dry-run finale no-op, Cloud Run revision finedimondo-backend-00018-z8v, Firebase Hosting deploy OK, smoke test health/home/catalogo OK |
 | 2026-07-08 12:05 | Claude/Fable (Cowork) | ABORTED | 8b7010c | Sessione interrotta per esaurimento crediti; takeover amministrativo autorizzato da Daniel; working tree verificato pulito prima del recupero |

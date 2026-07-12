@@ -1,5 +1,5 @@
 # COORDINATION — El Fontanin multi-sessione
-# Aggiornato: 8 lug 2026 — sessione Cowork/Fable
+# Aggiornato: 12 lug 2026 — sessione Codex
 
 ## Hosting legacy — DISMESSO (8 lug 2026, decisione Daniel)
 L'hosting frontend legacy (piattaforma esterna, redirect 308 verso
@@ -54,3 +54,10 @@ Modifica sessione (2026-07-08):
 - **C0a/b**: Eseguito `alembic current` che ha restituito `44370175c503 (head)`. Il check è passato contro la produzione (IP `35.241.200.140` fallback di `.env.local`). Le tabelle DAW (`tracks`, `clips`, `midi_notes`, etc.) sono vive e vegete. La catena è stata quindi `stamp`-ata (o creata bypassando Alembic). Questo significa che lo script baseline velenoso non è stato eseguito, scongiurando l'incidente. Segnalato bisogno di pulizia della baseline come issue (C0c).
 - **A/B**: Risolto issue `cache-dependency-path` di pip in CI per farla passare verde.
 - **B1-B5**: Aperto PR, unito in main, taggato `v1.2.0-competenze`. Verificato che il workflow di produzione non partisse (mancano i secrets WIF) e configurata branch protection su `main` (requires CI, reviews, no force push). Pulito `feature/algorand-wallet-mpc` e creato `develop` da `main`.
+
+Modifica sessione (2026-07-12):
+- **CI/CD GCloud**: creato Workload Identity Federation `github-fontanin`, service account `github-actions-fontanin@freedomrun-491323.iam.gserviceaccount.com`, secret GitHub per `develop`/`certification`/`production`, e variabili Environment inclusa `VITE_API_BASE_URL`.
+- **Firebase Hosting CI/CD**: creato service account `gh-fb-hosting@el-fontanin.iam.gserviceaccount.com`, configurato secret `FIREBASE_SERVICE_ACCOUNT_EL_FONTANIN`, e pubblicati i preview channel `develop` e `certification`.
+- **Baseline remota non-prod**: attivati Cloud Run `finedimondo-backend-develop` (`00003-2tx`) e `finedimondo-backend-certification` (`00001-njd`) via `gcloud builds submit`; health e catalogo categorie OK su entrambi.
+- **DB non-prod**: inizializzato/validato schema applicativo su `jackass-verona-develop` e `jackass-verona-certification`; secret DB non-prod ripubblicati senza newline finale e password Cloud SQL riallineate.
+- **Nota test**: suite attiva `python -m pytest test_backend.py test_visitatore.py tests` OK (`55 passed, 2 skipped`); `test_security_fix.py` root resta legacy e fallisce su endpoint `/catalogo/schede` non più montato.
