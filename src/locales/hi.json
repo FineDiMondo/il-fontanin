@@ -1,5 +1,5 @@
 {
-  "nav": { "home": "होम", "forum": "फ़ोरम", "chat": "चैट", "events": "आयोजन", "bar": "बार", "research": "शोध" },
+  "nav": { "home": "होम", "forum": "फ़ोरम", "chat": "चैट", "events": "आयोजन", "bar": "बार", "research": "शोध", "catalogo": "कैटलॉग", "profile": "प्रोफ़ाइल" },
   "app": { "name": "इल फोंतानिन", "org": "Fine di Mondo APS" },
   "common": {
     "loading": "लोड हो रहा है…",
@@ -23,6 +23,17 @@
   },
   "home": {
     "welcome": "स्वागत है",
+    "visitor": "आगंतुक",
+    "hero_title": "नमस्ते {{name}}!",
+    "hero_subtitle": "आप आज क्या करना चाहते हैं?",
+    "cta_declare": "बताएं कि आपने क्या किया",
+    "quick_links": "त्वरित लिंक",
+    "map_label": "नक्शा",
+    "numbers_label": "महत्वपूर्ण नंबर",
+    "canzoniere_label": "गीतसंग्रह",
+    "ricettario_label": "व्यंजन विधि",
+    "next_event": "अगला आयोजन",
+    "latest_posts": "नवीनतम पोस्ट",
     "board": "बोर्ड",
     "empty_posts": "अभी तक कोई पोस्ट नहीं",
     "empty_posts_sub": "फ़ोरम में लिखने वाले पहले व्यक्ति बनें",

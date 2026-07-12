@@ -1,5 +1,5 @@
 {
-  "nav": { "home": "ہوم", "forum": "فورم", "chat": "چیٹ", "events": "تقریبات", "bar": "بار", "research": "تحقیق" },
+  "nav": { "home": "ہوم", "forum": "فورم", "chat": "چیٹ", "events": "تقریبات", "bar": "بار", "research": "تحقیق", "catalogo": "کیٹلاگ", "profile": "پروفائل" },
   "app": { "name": "ال فونتانین", "org": "Fine di Mondo APS" },
   "common": {
     "loading": "لوڈ ہو رہا ہے…",
@@ -23,6 +23,17 @@
   },
   "home": {
     "welcome": "خوش آمدید",
+    "visitor": "مہمان",
+    "hero_title": "سلام {{name}}!",
+    "hero_subtitle": "آج آپ کیا کرنا چاہتے ہیں؟",
+    "cta_declare": "بتائیں کہ آپ نے کیا کیا",
+    "quick_links": "تیز رفتار لنکس",
+    "map_label": "نقشہ",
+    "numbers_label": "اہم نمبرز",
+    "canzoniere_label": "گانوں کا مجموعہ",
+    "ricettario_label": "ترکیبیں",
+    "next_event": "اگلا تقریب",
+    "latest_posts": "تازہ ترین پوسٹس",
     "board": "بورڈ",
     "empty_posts": "ابھی تک کوئی پوسٹ نہیں",
     "empty_posts_sub": "فورم میں لکھنے والے پہلے شخص بنیں",
