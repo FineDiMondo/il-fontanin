@@ -1,5 +1,5 @@
 {
-  "nav": { "home": "Início", "forum": "Fórum", "chat": "Chat", "events": "Eventos", "bar": "Bar", "research": "Pesquisa" },
+  "nav": { "home": "Início", "forum": "Fórum", "chat": "Chat", "events": "Eventos", "bar": "Bar", "research": "Pesquisa", "catalogo": "Catálogo", "profile": "Perfil" },
   "app": { "name": "Il Fontanin", "org": "Fine di Mondo APS" },
   "common": {
     "loading": "Carregando…",

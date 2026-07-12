@@ -1,5 +1,5 @@
 {
-  "nav": { "home": "गृह", "forum": "फोरम", "chat": "च्याट", "events": "कार्यक्रमहरू", "bar": "बार", "research": "अनुसन्धान" },
+  "nav": { "home": "गृह", "forum": "फोरम", "chat": "च्याट", "events": "कार्यक्रमहरू", "bar": "बार", "research": "अनुसन्धान", "catalogo": "क्याटलग", "profile": "प्रोफाइल" },
   "app": { "name": "इल फोन्तानिन", "org": "Fine di Mondo APS" },
   "common": {
     "loading": "लोड हुँदैछ…",
