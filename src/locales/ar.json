@@ -1,5 +1,5 @@
 {
-  "nav": { "home": "الرئيسية", "forum": "المنتدى", "chat": "الدردشة", "events": "الفعاليات", "bar": "البار", "research": "البحث" },
+  "nav": { "home": "الرئيسية", "forum": "المنتدى", "chat": "الدردشة", "events": "الفعاليات", "bar": "البار", "research": "البحث", "catalogo": "الفهرس", "profile": "الملف الشخصي" },
   "app": { "name": "إيل فونتانين", "org": "Fine di Mondo APS" },
   "common": {
     "loading": "جارٍ التحميل…",

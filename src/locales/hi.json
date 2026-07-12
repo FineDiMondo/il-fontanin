@@ -1,5 +1,5 @@
 {
-  "nav": { "home": "होम", "forum": "फ़ोरम", "chat": "चैट", "events": "आयोजन", "bar": "बार", "research": "शोध" },
+  "nav": { "home": "होम", "forum": "फ़ोरम", "chat": "चैट", "events": "आयोजन", "bar": "बार", "research": "शोध", "catalogo": "कैटलॉग", "profile": "प्रोफ़ाइल" },
   "app": { "name": "इल फोंतानिन", "org": "Fine di Mondo APS" },
   "common": {
     "loading": "लोड हो रहा है…",

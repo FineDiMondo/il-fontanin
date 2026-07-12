@@ -1,5 +1,5 @@
 {
-  "nav": { "home": "ہوم", "forum": "فورم", "chat": "چیٹ", "events": "تقریبات", "bar": "بار", "research": "تحقیق" },
+  "nav": { "home": "ہوم", "forum": "فورم", "chat": "چیٹ", "events": "تقریبات", "bar": "بار", "research": "تحقیق", "catalogo": "کیٹلاگ", "profile": "پروفائل" },
   "app": { "name": "ال فونتانین", "org": "Fine di Mondo APS" },
   "common": {
     "loading": "لوڈ ہو رہا ہے…",

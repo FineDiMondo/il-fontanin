@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext.jsx'
 import UserAvatar from './UserAvatar.jsx'
 import LanguageSelector from './LanguageSelector.jsx'
-
 import { isFeatureEnabled } from '../lib/featureFlags.js'
 
 export default function AppHeader({ title, showBack = false, rightSlot }) {
@@ -45,20 +44,12 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
   )
 
   return (
-    <header className="bg-noce flex-shrink-0 relative">
-      {/* texture pietra */}
-      <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: 'repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%)',
-          backgroundSize: '10px 10px',
-        }}
-      />
-      <div className="relative flex items-center px-4 py-3 gap-3 max-w-screen-xl mx-auto w-full">
+    <header className="bg-sp-white border-b border-sp-pietra/20 sticky top-0 z-40 flex-shrink-0">
+      <div className="flex items-center justify-between gap-4 max-w-screen-xl mx-auto w-full px-4 py-4 sm:px-6 lg:px-8">
         {showBack && (
           <button
             onClick={() => navigate(-1)}
-            className="touch-target text-oro-muted hover:text-oro transition-colors"
+            className="touch-target text-sp-pietra hover:text-sp-oro transition-colors"
             aria-label={t('common.back')}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -68,23 +59,22 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
         )}
 
         {!showBack && (
-          <div className="droplet-animate">
-            <svg width="22" height="28" viewBox="0 0 22 28" fill="none">
-              <path d="M11 1C11 1 2 13 2 18C2 22.9 6.1 27 11 27C15.9 27 20 22.9 20 18C20 13 11 1 11 1Z"
-                fill="#8fcae2" opacity="0.4"/>
-              <path d="M11 4C11 4 4 14 4 18.5C4 22 7.1 25 11 25"
-                stroke="#8fcae2" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-            </svg>
+          <div className="w-8 h-8 rounded-sp-md bg-sp-oro flex items-center justify-center flex-shrink-0">
+            <span className="text-sp-white font-sp-bold text-sp-font-size-sm">F</span>
           </div>
         )}
 
         <div className="flex-1 min-w-0">
           {showBack ? (
-            <h1 className="text-oro font-medium text-base truncate">{title}</h1>
+            <h1 className="text-sp-dark font-sp-semibold text-sp-font-size-base truncate">{title}</h1>
           ) : (
             <>
-              <h1 className="text-oro font-cinzel font-medium text-lg leading-tight">{t('app.name')}</h1>
-              <p className="text-oro-dark text-[10px] uppercase tracking-widest">{t('app.org')}</p>
+              <h1 className="hidden sm:block text-sp-dark font-sp-semibold text-sp-font-size-lg leading-tight">
+                {t('app.name', 'Il Fontanin')}
+              </h1>
+              <p className="hidden md:block text-sp-pietra text-sp-font-size-xs uppercase tracking-wider">
+                {t('app.org', 'Fine di Mondo APS')}
+              </p>
             </>
           )}
         </div>
@@ -94,7 +84,7 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
           {!showBack && (
             <Link
               to="/guida"
-              className="touch-target text-oro-muted hover:text-oro transition-colors"
+              className="touch-target text-sp-pietra hover:text-sp-oro transition-colors"
               aria-label={t('common.guide')}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
