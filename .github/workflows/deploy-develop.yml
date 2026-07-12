@@ -35,6 +35,7 @@ jobs:
           gcloud builds submit \
             --project=freedomrun-491323 \
             --config=cloudbuild_community.yaml \
+            --suppress-logs \
             --substitutions=_STAGE=develop,_SERVICE=finedimondo-backend-develop,_REGION=europe-west1,_IMAGE_TAG=develop-${GITHUB_SHA::7},_CLOUDSQL_INSTANCE=${{ vars.CLOUDSQL_INSTANCE }},_DB_HOST=${{ vars.JACKASS_DB_HOST }},_DB_PORT=${{ vars.JACKASS_DB_PORT }},_DB_USER=${{ vars.JACKASS_DB_USER }},_DB_NAME=${{ vars.JACKASS_DB_NAME }},_DB_PASSWORD_SECRET=${{ vars.JACKASS_DB_PASSWORD_SECRET }},_GOOGLE_CLOUD_PROJECT=${{ vars.GOOGLE_CLOUD_PROJECT }}
 
   frontend-develop:
