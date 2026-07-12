@@ -96,6 +96,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-12 11:31 | Gemini/Antigravity | WRITING | develop, certification, main | .github/workflows/, CI/CD | Completamento rebuild ultimo software su develop/certification/production |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
