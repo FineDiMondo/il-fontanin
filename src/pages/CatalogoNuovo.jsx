@@ -37,11 +37,11 @@ export default function CatalogoNuovo() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="mb-6">
-        <button onClick={() => navigate('/catalogo')} className="text-stone-500 hover:text-stone-800 text-sm font-bold flex items-center mb-4">
+        <button onClick={() => navigate('/catalogo')} className="text-stone-400 hover:text-white text-sm font-bold flex items-center mb-4">
           &larr; Torna al Catalogo
         </button>
         <h1 className="font-serif text-3xl font-bold text-oro">Nuova Scheda Catalogo</h1>
-        <p className="text-stone-600 mt-1">Acquisisci un nuovo bene geolocalizzato sul territorio.</p>
+        <p className="text-stone-400 mt-1">Acquisisci un nuovo bene geolocalizzato sul territorio.</p>
       </div>
 
       <CatalogForm 

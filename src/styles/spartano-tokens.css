@@ -1,20 +1,20 @@
 /* Palette Core Spartano */
 :root {
-  /* Colori B&W essenziale */
-  --sp-oro: #000000;
-  --sp-pietra: #000000;
-  --sp-verde: #000000;
-  --sp-white: #ffffff;
-  --sp-dark: #000000;
+  /* Colori B&W essenziale (Brutalismo Scuro) */
+  --sp-oro: #ffffff;
+  --sp-pietra: #78716c;
+  --sp-verde: #ffffff;
+  --sp-white: #0a0a0a;
+  --sp-dark: #ffffff;
   --sp-error: #D32F2F;
   --sp-success: #388E3C;
 
   /* RGB aliases for Tailwind opacity modifiers */
-  --sp-oro-rgb: 0 0 0;
-  --sp-pietra-rgb: 0 0 0;
-  --sp-verde-rgb: 0 0 0;
-  --sp-white-rgb: 255 255 255;
-  --sp-dark-rgb: 0 0 0;
+  --sp-oro-rgb: 255 255 255;
+  --sp-pietra-rgb: 120 113 108;
+  --sp-verde-rgb: 255 255 255;
+  --sp-white-rgb: 10 10 10;
+  --sp-dark-rgb: 255 255 255;
   --sp-error-rgb: 211 47 47;
   --sp-success-rgb: 56 142 60;
 

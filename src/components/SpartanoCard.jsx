@@ -7,9 +7,9 @@ export default function SpartanoCard({
   className = '',
 }) {
   const variantClasses = {
-    default: 'bg-sp-white border border-sp-pietra/20',
-    elevated: 'bg-sp-white shadow-sp',
-    interactive: 'bg-sp-white border border-sp-pietra/20 hover:shadow-sp cursor-pointer active:opacity-90',
+    default: 'bg-transparent border border-white',
+    elevated: 'bg-transparent border border-white',
+    interactive: 'bg-transparent border border-white hover:bg-stone-900/50 cursor-pointer active:scale-[0.99]',
   }
   const Component = onClick ? 'button' : 'div'
 
@@ -18,7 +18,7 @@ export default function SpartanoCard({
       type={onClick ? 'button' : undefined}
       onClick={onClick}
       className={`
-        w-full text-left rounded-sp-md p-sp-lg transition-all
+        w-full text-left p-sp-lg transition-all rounded-none
         ${variantClasses[variant] || variantClasses.default}
         ${className}
       `}

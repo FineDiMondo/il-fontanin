@@ -12,7 +12,7 @@ const tabs = [
 export default function BottomNav() {
   const { t } = useTranslation()
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-sp-white border-t border-sp-pietra/20 md:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#0a0a0a] border-t border-white md:hidden">
       <div className="flex items-center justify-around h-16 max-w-screen-md mx-auto">
         {tabs.map(({ to, icon, labelKey, fallback }) => (
           <NavLink

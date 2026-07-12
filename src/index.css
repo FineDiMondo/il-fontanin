@@ -25,7 +25,8 @@
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
-    background: #ffffff;
+    background: var(--sp-white);
+    color: var(--sp-dark);
     position: relative;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -36,9 +37,9 @@
       max-width: 1280px;
       height: 95dvh;
       margin: 2.5dvh auto;
-      border-radius: 20px;
-      border: 1px solid #000000;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.14);
+      border-radius: 0;
+      border: 1px solid var(--sp-dark);
+      box-shadow: none;
     }
   }
 
@@ -58,9 +59,9 @@
   }
 
   .stone-card {
-    background: white;
-    border-radius: 14px;
-    border: 0.5px solid #000000;
+    background: transparent;
+    border-radius: 0;
+    border: 1px solid var(--sp-dark);
     padding: 14px;
   }
 

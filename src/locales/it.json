@@ -1,6 +1,18 @@
 {
-  "nav": { "home": "Home", "forum": "Forum", "chat": "Chat", "events": "Eventi", "bar": "Bar", "research": "Ricerca", "catalogo": "Catalogo", "profile": "Profilo" },
-  "app": { "name": "Il Fontanin", "org": "Fine di Mondo APS" },
+  "nav": {
+    "home": "Home",
+    "forum": "Forum",
+    "chat": "Chat",
+    "events": "Eventi",
+    "bar": "Bar",
+    "research": "Ricerca",
+    "catalogo": "Catalogo",
+    "profile": "Profilo"
+  },
+  "app": {
+    "name": "Il Fontanin",
+    "org": "Fine di Mondo APS"
+  },
   "common": {
     "loading": "Caricamento…",
     "back": "Indietro",
@@ -184,99 +196,263 @@
     "eras_title": "Le epoche",
     "stemmi_note": "Gli stemmi mostrati sono riproduzioni vettoriali semplificate dei blasoni civici ufficiali (senza corona murale e fronde ornamentali), a scopo illustrativo e comunitario.",
     "comuni": [
-      { "stemma": "villafranca", "nome": "Villafranca di Verona", "ruolo": "Città dell'armistizio", "sintesi": "Borgo franco fondato dal Comune di Verona nel 1185 lungo la via Postumia: il nome viene dall'esenzione fiscale (\"villa franca\") concessa ai coloni. Castello scaligero del 1202, capo occidentale del Serraglio, sede dell'armistizio del 1859. Nel suo territorio, in località Sant'Andrea, si trova il Fontanin (1682)." },
-      { "stemma": "povegliano", "nome": "Povegliano Veronese", "ruolo": "Risorgive ed eredità longobarda", "sintesi": "Comune principale della fascia delle risorgive: qui nascono Tartaro e numerosi fontanili (Fossa Bora, Fossa Moretta) — le libellule dello stemma comunale raccontano proprio questo legame con l'acqua. Custodisce una delle più importanti necropoli longobarde del Veneto (VI-VII secolo), con corredi esposti al Museo Balladoro: un'eredità che lega il paese al ducato longobardo di Verona." },
-      { "stemma": "mozzecane", "nome": "Mozzecane", "ruolo": "Terra dei Canossa", "sintesi": "Comune al confine mantovano, attraversato dal Tione che nasce dalle risorgive di Grezzano. A Grezzano i marchesi di Canossa — la famiglia il cui emblema parlante è il cane con l'osso — costruirono nel Settecento Villa Canossa, ancora oggi cuore della frazione e confinante con l'area del Fontanin." },
-      { "stemma": "vigasio", "nome": "Vigasio", "ruolo": "Statuti antichi", "sintesi": "Borgo tra Tartaro e risorgive, con statuti comunali già nel 1226 — tra i più antichi della pianura veronese — e l'antica abbazia di San Zeno. Lo stemma comunale reca un gambero d'oro e cinque stelle d'argento." },
-      { "stemma": null, "nome": "Valeggio sul Mincio", "ruolo": "Capo orientale del Serraglio", "sintesi": "Sul Mincio, con il castello scaligero di fine Duecento e il Ponte Visconteo di Borghetto (1393): capo orientale del Serraglio e cerniera storica tra Verona e Mantova, dalla preistoria palafitticola alle battaglie risorgimentali." },
-      { "stemma": null, "nome": "Erbè", "ruolo": "Da completare", "sintesi": "Comune della bassa pianura veronese, nell'area delle risorgive: scheda in preparazione." },
-      { "stemma": null, "nome": "Trevenzuolo", "ruolo": "Da completare", "sintesi": "Comune della bassa pianura veronese, confinante con Vigasio: scheda in preparazione." },
-      { "stemma": null, "nome": "Nogara", "ruolo": "Da completare", "sintesi": "Comune della bassa pianura veronese, nella zona del Tartaro-Tione: scheda in preparazione." }
+      {
+        "stemma": "villafranca",
+        "nome": "Villafranca di Verona",
+        "ruolo": "Città dell'armistizio",
+        "sintesi": "Borgo franco fondato dal Comune di Verona nel 1185 lungo la via Postumia: il nome viene dall'esenzione fiscale (\"villa franca\") concessa ai coloni. Castello scaligero del 1202, capo occidentale del Serraglio, sede dell'armistizio del 1859. Nel suo territorio, in località Sant'Andrea, si trova il Fontanin (1682)."
+      },
+      {
+        "stemma": "povegliano",
+        "nome": "Povegliano Veronese",
+        "ruolo": "Risorgive ed eredità longobarda",
+        "sintesi": "Comune principale della fascia delle risorgive: qui nascono Tartaro e numerosi fontanili (Fossa Bora, Fossa Moretta) — le libellule dello stemma comunale raccontano proprio questo legame con l'acqua. Custodisce una delle più importanti necropoli longobarde del Veneto (VI-VII secolo), con corredi esposti al Museo Balladoro: un'eredità che lega il paese al ducato longobardo di Verona."
+      },
+      {
+        "stemma": "mozzecane",
+        "nome": "Mozzecane",
+        "ruolo": "Terra dei Canossa",
+        "sintesi": "Comune al confine mantovano, attraversato dal Tione che nasce dalle risorgive di Grezzano. A Grezzano i marchesi di Canossa — la famiglia il cui emblema parlante è il cane con l'osso — costruirono nel Settecento Villa Canossa, ancora oggi cuore della frazione e confinante con l'area del Fontanin."
+      },
+      {
+        "stemma": "vigasio",
+        "nome": "Vigasio",
+        "ruolo": "Statuti antichi",
+        "sintesi": "Borgo tra Tartaro e risorgive, con statuti comunali già nel 1226 — tra i più antichi della pianura veronese — e l'antica abbazia di San Zeno. Lo stemma comunale reca un gambero d'oro e cinque stelle d'argento."
+      },
+      {
+        "stemma": "valeggio",
+        "nome": "Valeggio sul Mincio",
+        "ruolo": "Capo orientale del Serraglio",
+        "sintesi": "Sul Mincio, con il castello scaligero di fine Duecento e il Ponte Visconteo di Borghetto (1393): capo orientale del Serraglio e cerniera storica tra Verona e Mantova, dalla preistoria palafitticola alle battaglie risorgimentali."
+      },
+      {
+        "stemma": "erbe",
+        "nome": "Erbè",
+        "ruolo": "Terra di risorgive",
+        "sintesi": "Comune della bassa pianura veronese bagnato dal Tartaro. Il toponimo richiama l'abbondanza di erbe e pascoli delle zone umide."
+      },
+      {
+        "stemma": "trevenzuolo",
+        "nome": "Trevenzuolo",
+        "ruolo": "Antica pieve rurale",
+        "sintesi": "Comune della bassa pianura attraversato dal Tione, ricco di corti rurali e storia agricola."
+      },
+      {
+        "stemma": "nogara",
+        "nome": "Nogara",
+        "ruolo": "Snodo sul Tartaro",
+        "sintesi": "Importante centro della bassa veronese, snodo viario e fluviale sul fiume Tartaro. Il nome deriva dal dialetto per noce, l'albero simbolo del paese."
+      }
     ],
     "eras": [
       {
         "title": "Preistoria ed epoca romana",
         "period": "fino al V secolo d.C.",
         "items": [
-          { "comune": "Villafranca di Verona", "title": "Via Postumia", "body": "La grande strada consolare romana (148 a.C.) che collegava Genova ad Aquileia passava per quest'area, rendendola da subito uno snodo di traffici tra Verona e Cremona." },
-          { "comune": "Povegliano Veronese", "title": "Necropoli di Gambaloni e Ortaia", "body": "Insediamenti dell'età del Bronzo e necropoli romana (I-III secolo d.C.): i reperti sono oggi conservati nel Museo Archeologico G. Balladoro." },
-          { "comune": "Sommacampagna", "title": "Vicus romano di Custoza", "body": "Un piccolo insediamento romano sorgeva lungo la via per Mantova, nell'area dell'attuale frazione di Custoza." },
-          { "comune": "Valeggio sul Mincio", "title": "Insediamento palafitticolo", "body": "Nell'area del Mincio sono stati rinvenuti resti di un abitato palafitticolo dell'età del Bronzo, parte del sito seriale UNESCO \"Siti palafitticoli preistorici dell'arco alpino\"." }
+          {
+            "comune": "Villafranca di Verona",
+            "title": "Via Postumia",
+            "body": "La grande strada consolare romana (148 a.C.) che collegava Genova ad Aquileia passava per quest'area, rendendola da subito uno snodo di traffici tra Verona e Cremona."
+          },
+          {
+            "comune": "Povegliano Veronese",
+            "title": "Necropoli di Gambaloni e Ortaia",
+            "body": "Insediamenti dell'età del Bronzo e necropoli romana (I-III secolo d.C.): i reperti sono oggi conservati nel Museo Archeologico G. Balladoro."
+          },
+          {
+            "comune": "Sommacampagna",
+            "title": "Vicus romano di Custoza",
+            "body": "Un piccolo insediamento romano sorgeva lungo la via per Mantova, nell'area dell'attuale frazione di Custoza."
+          },
+          {
+            "comune": "Valeggio sul Mincio",
+            "title": "Insediamento palafitticolo",
+            "body": "Nell'area del Mincio sono stati rinvenuti resti di un abitato palafitticolo dell'età del Bronzo, parte del sito seriale UNESCO \"Siti palafitticoli preistorici dell'arco alpino\"."
+          }
         ]
       },
       {
         "title": "I Longobardi e l'Alto Medioevo",
         "period": "VI - X secolo",
         "items": [
-          { "comune": "Povegliano Veronese", "title": "L'eredità longobarda", "body": "Nel ducato longobardo di Verona, Povegliano fu sede di un insediamento di rilievo: la sua necropoli (VI-VII secolo) è tra le più importanti del Veneto, con guerrieri sepolti con armi, scudi e persino cavalli e cani. I corredi sono esposti al Museo Balladoro: è il cuore dell'eredità longobarda del territorio." },
-          { "comune": "Mozzecane", "title": "Corti rurali tra Verona e Mantova", "body": "Nell'Alto Medioevo il territorio si organizza in corti e campagne ai margini della fascia delle risorgive, in una zona di confine che resterà a lungo contesa tra veronese e mantovano." },
-          { "comune": "Vigasio", "title": "Primi insediamenti organizzati", "body": "Le prime tracce di abitato organizzato risalgono a questo periodo, legate alle prime opere di regimazione delle acque." }
+          {
+            "comune": "Povegliano Veronese",
+            "title": "L'eredità longobarda",
+            "body": "Nel ducato longobardo di Verona, Povegliano fu sede di un insediamento di rilievo: la sua necropoli (VI-VII secolo) è tra le più importanti del Veneto, con guerrieri sepolti con armi, scudi e persino cavalli e cani. I corredi sono esposti al Museo Balladoro: è il cuore dell'eredità longobarda del territorio."
+          },
+          {
+            "comune": "Mozzecane",
+            "title": "Corti rurali tra Verona e Mantova",
+            "body": "Nell'Alto Medioevo il territorio si organizza in corti e campagne ai margini della fascia delle risorgive, in una zona di confine che resterà a lungo contesa tra veronese e mantovano."
+          },
+          {
+            "comune": "Vigasio",
+            "title": "Primi insediamenti organizzati",
+            "body": "Le prime tracce di abitato organizzato risalgono a questo periodo, legate alle prime opere di regimazione delle acque."
+          }
         ]
       },
       {
         "title": "L'età dei Comuni",
         "period": "XI - XIII secolo",
         "items": [
-          { "comune": "Villafranca di Verona", "title": "Il borgo franco del 1185", "body": "Il Comune di Verona fonda nel 1185 il borgo della \"Fossa\", concedendo ai coloni l'esenzione dai dazi: da questa franchigia nasce il nome Villa Franca. È l'atto di nascita del paese, pianificato con il tipico impianto a scacchiera dei borghi nuovi comunali." },
-          { "comune": "Vigasio", "title": "Statuti comunali del 1226", "body": "Tra i più antichi statuti comunali della zona: testimoniano un'organizzazione civica già ben strutturata nella pianura veronese." },
-          { "comune": "Povegliano Veronese", "title": "Pieve e comunità rurale", "body": "La comunità si consolida attorno alla pieve e alle acque delle risorgive, che alimentano mulini e prati irrigui." }
+          {
+            "comune": "Villafranca di Verona",
+            "title": "Il borgo franco del 1185",
+            "body": "Il Comune di Verona fonda nel 1185 il borgo della \"Fossa\", concedendo ai coloni l'esenzione dai dazi: da questa franchigia nasce il nome Villa Franca. È l'atto di nascita del paese, pianificato con il tipico impianto a scacchiera dei borghi nuovi comunali."
+          },
+          {
+            "comune": "Vigasio",
+            "title": "Statuti comunali del 1226",
+            "body": "Tra i più antichi statuti comunali della zona: testimoniano un'organizzazione civica già ben strutturata nella pianura veronese."
+          },
+          {
+            "comune": "Povegliano Veronese",
+            "title": "Pieve e comunità rurale",
+            "body": "La comunità si consolida attorno alla pieve e alle acque delle risorgive, che alimentano mulini e prati irrigui."
+          }
         ]
       },
       {
         "title": "Gli Scaligeri",
         "period": "1262 - 1387",
         "items": [
-          { "comune": "Villafranca di Verona", "title": "Il Castello Scaligero", "body": "Eretto nel 1202 e ampliato nel 1256, sotto i Della Scala il castello diventa uno dei capisaldi difensivi della signoria veronese, al vertice occidentale del sistema fortificato della pianura." },
-          { "comune": "Villafranca - Custoza - Valeggio", "title": "Il Serraglio Scaligero", "body": "Cangrande II della Scala fa costruire (1345-1354) una cinta di terrapieni, fossati e torri lunga circa 15 km che collega Villafranca a Valeggio passando per Custoza: una difesa avanzata a protezione della pianura agricola veronese." },
-          { "comune": "Valeggio sul Mincio", "title": "Il castello sul Mincio", "body": "La fortezza scaligera di fine Duecento domina la valle del Mincio e il borgo di Borghetto, capo orientale del Serraglio." },
-          { "comune": "Nogarole Rocca", "title": "La Rocca dei Nogarola", "body": "Il castello della famiglia feudale dei Nogarola, alleata degli Scaligeri, dà il nome al paese." }
+          {
+            "comune": "Villafranca di Verona",
+            "title": "Il Castello Scaligero",
+            "body": "Eretto nel 1202 e ampliato nel 1256, sotto i Della Scala il castello diventa uno dei capisaldi difensivi della signoria veronese, al vertice occidentale del sistema fortificato della pianura."
+          },
+          {
+            "comune": "Villafranca - Custoza - Valeggio",
+            "title": "Il Serraglio Scaligero",
+            "body": "Cangrande II della Scala fa costruire (1345-1354) una cinta di terrapieni, fossati e torri lunga circa 15 km che collega Villafranca a Valeggio passando per Custoza: una difesa avanzata a protezione della pianura agricola veronese."
+          },
+          {
+            "comune": "Valeggio sul Mincio",
+            "title": "Il castello sul Mincio",
+            "body": "La fortezza scaligera di fine Duecento domina la valle del Mincio e il borgo di Borghetto, capo orientale del Serraglio."
+          },
+          {
+            "comune": "Nogarole Rocca",
+            "title": "La Rocca dei Nogarola",
+            "body": "Il castello della famiglia feudale dei Nogarola, alleata degli Scaligeri, dà il nome al paese."
+          }
         ]
       },
       {
         "title": "Le Signorie: Visconti e Carraresi",
         "period": "1387 - 1405",
         "items": [
-          { "comune": "Verona e il suo territorio", "title": "La conquista viscontea", "body": "Nel 1387 Gian Galeazzo Visconti, signore di Milano, pone fine alla signoria scaligera: anche la pianura di Villafranca e Valeggio entra nei domini viscontei." },
-          { "comune": "Valeggio sul Mincio", "title": "Il Ponte Visconteo", "body": "Nel 1393 i Visconti completano a Borghetto il ponte-diga fortificato lungo circa 600 metri, integrato nel sistema del Serraglio: una delle opere militari più imponenti della pianura padana." },
-          { "comune": "Verona e il suo territorio", "title": "La parentesi carrarese", "body": "Alla morte di Gian Galeazzo (1402) il territorio passa brevemente ai Carraresi di Padova (1404), ultimo episodio delle guerre tra signorie prima dell'arrivo di Venezia." }
+          {
+            "comune": "Verona e il suo territorio",
+            "title": "La conquista viscontea",
+            "body": "Nel 1387 Gian Galeazzo Visconti, signore di Milano, pone fine alla signoria scaligera: anche la pianura di Villafranca e Valeggio entra nei domini viscontei."
+          },
+          {
+            "comune": "Valeggio sul Mincio",
+            "title": "Il Ponte Visconteo",
+            "body": "Nel 1393 i Visconti completano a Borghetto il ponte-diga fortificato lungo circa 600 metri, integrato nel sistema del Serraglio: una delle opere militari più imponenti della pianura padana."
+          },
+          {
+            "comune": "Verona e il suo territorio",
+            "title": "La parentesi carrarese",
+            "body": "Alla morte di Gian Galeazzo (1402) il territorio passa brevemente ai Carraresi di Padova (1404), ultimo episodio delle guerre tra signorie prima dell'arrivo di Venezia."
+          }
         ]
       },
       {
         "title": "La Serenissima",
         "period": "1405 - 1797",
         "items": [
-          { "comune": "Verona e il suo territorio", "title": "La dedizione a Venezia", "body": "Nel 1405 Verona e il suo territorio si danno alla Repubblica di Venezia: iniziano quasi quattro secoli di pace veneta, in cui la pianura delle risorgive diventa un mosaico di prati irrigui, risaie e corti agricole." },
-          { "comune": "Mozzecane (Grezzano)", "title": "I Canossa e Villa Canossa", "body": "Dal 1414 la famiglia Canossa — il cui emblema parlante è il cane con l'osso — acquisisce possedimenti nella zona; nel Settecento il marchese Carlo di Canossa fa costruire a Grezzano la villa che ancora oggi segna il paesaggio accanto al Fontanin." },
-          { "comune": "Villafranca di Verona", "title": "Lo scavo del Fontanin", "body": "Nel 1682 viene scavata la sorgiva storica del Fontanin, in località Sant'Andrea: acqua perenne per prati e risaie, punto di partenza della storia di questa community." }
+          {
+            "comune": "Verona e il suo territorio",
+            "title": "La dedizione a Venezia",
+            "body": "Nel 1405 Verona e il suo territorio si danno alla Repubblica di Venezia: iniziano quasi quattro secoli di pace veneta, in cui la pianura delle risorgive diventa un mosaico di prati irrigui, risaie e corti agricole."
+          },
+          {
+            "comune": "Mozzecane (Grezzano)",
+            "title": "I Canossa e Villa Canossa",
+            "body": "Dal 1414 la famiglia Canossa — il cui emblema parlante è il cane con l'osso — acquisisce possedimenti nella zona; nel Settecento il marchese Carlo di Canossa fa costruire a Grezzano la villa che ancora oggi segna il paesaggio accanto al Fontanin."
+          },
+          {
+            "comune": "Villafranca di Verona",
+            "title": "Lo scavo del Fontanin",
+            "body": "Nel 1682 viene scavata la sorgiva storica del Fontanin, in località Sant'Andrea: acqua perenne per prati e risaie, punto di partenza della storia di questa community."
+          }
         ]
       },
       {
         "title": "Da Napoleone al Regno d'Italia: il Quadrilatero",
         "period": "1797 - 1866",
         "items": [
-          { "comune": "Verona e il suo territorio", "title": "La caduta della Serenissima", "body": "Nel 1797 Napoleone pone fine alla Repubblica di Venezia; dopo il 1815 il territorio entra nel Regno Lombardo-Veneto sotto l'Austria." },
-          { "comune": "Pianura veronese e mantovana", "title": "Il Quadrilatero", "body": "L'Austria organizza la difesa attorno alle quattro fortezze di Verona, Peschiera, Mantova e Legnago: il \"Quadrilatero\". La pianura di Villafranca, Povegliano e Valeggio, al centro del sistema, diventa il terreno di manovra degli eserciti nelle guerre d'indipendenza." },
-          { "comune": "Sommacampagna (Custoza)", "title": "Le due Battaglie di Custoza", "body": "Le colline di Custoza sono teatro di due scontri decisivi del Risorgimento (1848 e 1866); l'Ossario conserva la memoria dei caduti di entrambe le battaglie." },
-          { "comune": "Villafranca di Verona", "title": "L'armistizio del 1859", "body": "L'11-12 luglio 1859 Napoleone III e Francesco Giuseppe firmano a Villafranca l'armistizio che chiude la Seconda guerra d'indipendenza: da allora è \"la città dell'armistizio\"." },
-          { "comune": "Verona e il suo territorio", "title": "L'annessione al Regno d'Italia", "body": "Nel 1866, con la Terza guerra d'indipendenza e il plebiscito, il Veneto lascia l'Austria ed entra nel Regno d'Italia: anche i comuni del Fontanin diventano italiani." }
+          {
+            "comune": "Verona e il suo territorio",
+            "title": "La caduta della Serenissima",
+            "body": "Nel 1797 Napoleone pone fine alla Repubblica di Venezia; dopo il 1815 il territorio entra nel Regno Lombardo-Veneto sotto l'Austria."
+          },
+          {
+            "comune": "Pianura veronese e mantovana",
+            "title": "Il Quadrilatero",
+            "body": "L'Austria organizza la difesa attorno alle quattro fortezze di Verona, Peschiera, Mantova e Legnago: il \"Quadrilatero\". La pianura di Villafranca, Povegliano e Valeggio, al centro del sistema, diventa il terreno di manovra degli eserciti nelle guerre d'indipendenza."
+          },
+          {
+            "comune": "Sommacampagna (Custoza)",
+            "title": "Le due Battaglie di Custoza",
+            "body": "Le colline di Custoza sono teatro di due scontri decisivi del Risorgimento (1848 e 1866); l'Ossario conserva la memoria dei caduti di entrambe le battaglie."
+          },
+          {
+            "comune": "Villafranca di Verona",
+            "title": "L'armistizio del 1859",
+            "body": "L'11-12 luglio 1859 Napoleone III e Francesco Giuseppe firmano a Villafranca l'armistizio che chiude la Seconda guerra d'indipendenza: da allora è \"la città dell'armistizio\"."
+          },
+          {
+            "comune": "Verona e il suo territorio",
+            "title": "L'annessione al Regno d'Italia",
+            "body": "Nel 1866, con la Terza guerra d'indipendenza e il plebiscito, il Veneto lascia l'Austria ed entra nel Regno d'Italia: anche i comuni del Fontanin diventano italiani."
+          }
         ]
       },
       {
         "title": "Il Novecento: guerre e fascismo",
         "period": "1900 - 1945",
         "items": [
-          { "comune": "Villafranca di Verona", "title": "L'aeroporto militare", "body": "Nei primi del Novecento nasce a Villafranca uno dei primi campi di aviazione militare italiani, attivo in entrambe le guerre mondiali: è l'origine dell'attuale aeroporto di Verona-Villafranca." },
-          { "comune": "Pianura veronese e mantovana", "title": "Il ventennio: bonifica e inquadramento", "body": "Durante il fascismo la \"bonifica integrale\" (legge del 1933) riorganizza canali, fossi e consorzi idraulici: il reticolo delle risorgive viene inquadrato negli enti che diventeranno l'attuale Consorzio di Bonifica Veronese, mentre la vita dei paesi è irreggimentata nelle strutture del regime." },
-          { "comune": "Villafranca e dintorni", "title": "La Seconda guerra mondiale", "body": "Tra il 1944 e il 1945 aeroporto, ferrovie e strade della zona sono ripetutamente bombardati dagli Alleati; la Liberazione arriva alla fine di aprile 1945 con il passaggio del fronte sulla linea del Mincio e dell'Adige." }
+          {
+            "comune": "Villafranca di Verona",
+            "title": "L'aeroporto militare",
+            "body": "Nei primi del Novecento nasce a Villafranca uno dei primi campi di aviazione militare italiani, attivo in entrambe le guerre mondiali: è l'origine dell'attuale aeroporto di Verona-Villafranca."
+          },
+          {
+            "comune": "Pianura veronese e mantovana",
+            "title": "Il ventennio: bonifica e inquadramento",
+            "body": "Durante il fascismo la \"bonifica integrale\" (legge del 1933) riorganizza canali, fossi e consorzi idraulici: il reticolo delle risorgive viene inquadrato negli enti che diventeranno l'attuale Consorzio di Bonifica Veronese, mentre la vita dei paesi è irreggimentata nelle strutture del regime."
+          },
+          {
+            "comune": "Villafranca e dintorni",
+            "title": "La Seconda guerra mondiale",
+            "body": "Tra il 1944 e il 1945 aeroporto, ferrovie e strade della zona sono ripetutamente bombardati dagli Alleati; la Liberazione arriva alla fine di aprile 1945 con il passaggio del fronte sulla linea del Mincio e dell'Adige."
+          }
         ]
       },
       {
         "title": "Dal dopoguerra a oggi",
         "period": "1945 - oggi",
         "items": [
-          { "comune": "Pianura veronese e mantovana", "title": "Ricostruzione e sviluppo", "body": "Dal dopoguerra la campagna delle risorgive affianca all'agricoltura irrigua un fitto tessuto di piccole industrie e artigianato; i paesi crescono lungo le direttrici per Verona e Mantova." },
-          { "comune": "Povegliano Veronese", "title": "La Guerra Fredda: base Hawk", "body": "Dagli anni Sessanta una base missilistica NATO (sistema Hawk) occupa 14 ettari di campagna a Povegliano: dismessa, è oggi al centro del progetto di riconversione a \"Parco Diffuso delle Risorgive\"." },
-          { "comune": "Villafranca e Povegliano", "title": "Il ritorno alle risorgive", "body": "Con i progetti \"Fontanili di Povegliano: Biodiversità Bene Comune\" e il movimento civico per il Parco del Fontanin, la comunità riscopre le proprie acque: tutela della biodiversità, percorsi e cura condivisa del territorio." }
+          {
+            "comune": "Pianura veronese e mantovana",
+            "title": "Ricostruzione e sviluppo",
+            "body": "Dal dopoguerra la campagna delle risorgive affianca all'agricoltura irrigua un fitto tessuto di piccole industrie e artigianato; i paesi crescono lungo le direttrici per Verona e Mantova."
+          },
+          {
+            "comune": "Povegliano Veronese",
+            "title": "La Guerra Fredda: base Hawk",
+            "body": "Dagli anni Sessanta una base missilistica NATO (sistema Hawk) occupa 14 ettari di campagna a Povegliano: dismessa, è oggi al centro del progetto di riconversione a \"Parco Diffuso delle Risorgive\"."
+          },
+          {
+            "comune": "Villafranca e Povegliano",
+            "title": "Il ritorno alle risorgive",
+            "body": "Con i progetti \"Fontanili di Povegliano: Biodiversità Bene Comune\" e il movimento civico per il Parco del Fontanin, la comunità riscopre le proprie acque: tutela della biodiversità, percorsi e cura condivisa del territorio."
+          }
         ]
       }
     ],
@@ -321,14 +497,38 @@
     "title": "Guida rapida",
     "intro": "Come funziona Il Fontanin, sezione per sezione.",
     "sections": [
-      { "title": "Home", "body": "La tua bacheca: gli ultimi post del forum e il prossimo evento in programma, tutto in un colpo d'occhio." },
-      { "title": "Forum", "body": "Discussioni della community divise per categoria. Chi è socio può aprire nuovi thread e rispondere." },
-      { "title": "Chat", "body": "Stanze di messaggistica in tempo reale: pubbliche, private o legate a un evento." },
-      { "title": "Eventi", "body": "Calendario delle giornate di pulizia, incontri e attività. Iscriviti e mostra il tuo QR all'ingresso." },
-      { "title": "Bar e punti F", "body": "Ogni consumazione al bar è un contributo in punti F alla community, tracciato sul tuo profilo." },
-      { "title": "Le monete del Fontanin", "body": "F è la moneta base (1 F = 1 €), G vale 10 F (taglio grande) e J vale 2 F. Al bar trovi anche i \"biglietti\" a prezzo fisso: B birra 3F, C cocktail 4F, P panino/pasta 3F, R risotto 4F." },
-      { "title": "Sostieni la community", "body": "Vuoi contribuire con un bonifico? Inquadra il QR con l'app della tua banca: nessuna commissione." },
-      { "title": "Cambiare lingua", "body": "Tocca l'icona della lingua in alto per scegliere tra le lingue disponibili in qualsiasi momento." }
+      {
+        "title": "Home",
+        "body": "La tua bacheca: gli ultimi post del forum e il prossimo evento in programma, tutto in un colpo d'occhio."
+      },
+      {
+        "title": "Forum",
+        "body": "Discussioni della community divise per categoria. Chi è socio può aprire nuovi thread e rispondere."
+      },
+      {
+        "title": "Chat",
+        "body": "Stanze di messaggistica in tempo reale: pubbliche, private o legate a un evento."
+      },
+      {
+        "title": "Eventi",
+        "body": "Calendario delle giornate di pulizia, incontri e attività. Iscriviti e mostra il tuo QR all'ingresso."
+      },
+      {
+        "title": "Bar e punti F",
+        "body": "Ogni consumazione al bar è un contributo in punti F alla community, tracciato sul tuo profilo."
+      },
+      {
+        "title": "Le monete del Fontanin",
+        "body": "F è la moneta base (1 F = 1 €), G vale 10 F (taglio grande) e J vale 2 F. Al bar trovi anche i \"biglietti\" a prezzo fisso: B birra 3F, C cocktail 4F, P panino/pasta 3F, R risotto 4F."
+      },
+      {
+        "title": "Sostieni la community",
+        "body": "Vuoi contribuire con un bonifico? Inquadra il QR con l'app della tua banca: nessuna commissione."
+      },
+      {
+        "title": "Cambiare lingua",
+        "body": "Tocca l'icona della lingua in alto per scegliere tra le lingue disponibili in qualsiasi momento."
+      }
     ]
   },
   "time": {
