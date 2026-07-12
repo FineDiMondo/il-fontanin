@@ -277,7 +277,7 @@ export default function Mappa() {
 
         {/* Legenda */}
         <div className="mx-4 mt-3 stone-card space-y-2">
-          <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium mb-1">{t('mappa.legend')}</p>
+          <p className="text-[10px] text-sp-dark uppercase tracking-widest font-medium mb-1">{t('mappa.legend')}</p>
           <div className="flex items-center gap-2 text-xs text-stone-600">
             <span className="w-3 h-3 rounded-full bg-noce flex-shrink-0" />
             {t('mappa.fontanin')} / {t('mappa.villa_canossa')}

@@ -23,7 +23,7 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
             <UserAvatar name={`${user.nome} ${user.cognome || ''}`} size="sm" />
           )}
           <button
-            className="touch-target text-oro-muted hover:text-oro transition-colors"
+            className="touch-target text-sp-pietra hover:text-sp-dark transition-colors"
             onClick={logout}
             aria-label={t('common.logout')}
           >
@@ -35,7 +35,7 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
       ) : (
         <Link
           to="/login"
-          className="text-oro border border-oro/30 bg-gradient-to-r from-oro/10 to-oro/20 hover:from-oro/20 hover:to-oro/30 hover:border-oro/50 transition-all text-xs font-semibold px-3 py-1.5 rounded-lg active:scale-[0.96] shadow-sm"
+          className="text-sp-dark border border-sp-pietra/30 hover:border-sp-dark transition-all text-xs font-semibold px-3 py-1.5 rounded-lg active:scale-[0.96] shadow-sm"
         >
           {t('common.login', 'Accedi')}
         </Link>
@@ -59,7 +59,7 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
         )}
 
         {!showBack && (
-          <div className="w-8 h-8 rounded-sp-md bg-sp-oro flex items-center justify-center flex-shrink-0">
+          <div className="w-8 h-8 rounded-sp-md bg-sp-dark flex items-center justify-center flex-shrink-0">
             <span className="text-sp-white font-sp-bold text-sp-font-size-sm">F</span>
           </div>
         )}
@@ -84,7 +84,7 @@ export default function AppHeader({ title, showBack = false, rightSlot }) {
           {!showBack && (
             <Link
               to="/guida"
-              className="touch-target text-sp-pietra hover:text-sp-oro transition-colors"
+              className="touch-target text-sp-pietra hover:text-sp-dark transition-colors"
               aria-label={t('common.guide')}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">

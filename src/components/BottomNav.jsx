@@ -22,15 +22,15 @@ export default function BottomNav() {
             title={t(labelKey, fallback)}
             aria-label={t(labelKey, fallback)}
             className={({ isActive }) =>
-              `flex-1 h-full flex items-center justify-center transition-colors ${
-                isActive ? 'text-sp-oro' : 'text-sp-pietra hover:text-sp-oro'
+              `flex-1 h-full flex flex-col items-center justify-center transition-colors border-t-2 ${
+                isActive ? 'border-sp-dark text-sp-dark font-sp-bold' : 'border-transparent text-sp-pietra hover:text-sp-dark'
               }`
             }
           >
             {({ isActive }) => (
               <svg
-                className={`w-6 h-6 ${isActive ? 'text-sp-oro' : 'text-sp-pietra'}`}
-                fill="none" stroke="currentColor" strokeWidth={1.8}
+                className={`w-6 h-6 ${isActive ? 'text-sp-dark' : 'text-sp-pietra'}`}
+                fill="none" stroke="currentColor" strokeWidth={isActive ? 2.5 : 1.8}
                 viewBox="0 0 24 24"
                 aria-hidden="true"
               >

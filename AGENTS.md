@@ -96,6 +96,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-12 14:01 | Gemini/Antigravity | WRITING | feature/spartano-phase1b-bw | Tokens, CSS, Componenti, Pagine | Phase 1B (Refactor Globale B&W) |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
