@@ -100,6 +100,7 @@ Al check-out:
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-12 12:02 | Gemini/Antigravity | DONE | in branch | Hotfix: variabili Firebase mancanti nel bundle frontend (aggiunto .env.production) |
 | 2026-07-12 11:31 | Gemini/Antigravity | DONE | in questo commit | Completamento rebuild ultimo software su develop/certification/production. Rebuild verificati. Tag produzione v1.3.1-rebuild deployato. |
 | 2026-07-12 11:20 | Gemini/Antigravity | DONE | in branch | Promozione `develop` in `certification` e PR aperta verso `production` a seguito autorizzazione utente. |
 | 2026-07-12 11:16 | Codex | DONE | in questo commit | Fix workflow Cloud Build: aggiunto `--suppress-logs` ai deploy develop/certification/production per evitare fallimento del job GitHub Actions durante lo streaming log; verifica YAML parse OK |
