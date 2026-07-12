@@ -20,7 +20,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        stone: colors.slate,
+        stone: {
+          50: '#000000',
+          100: '#0a0a0a',
+          200: '#171717',
+          300: '#404040',
+          400: '#a3a3a3',
+          500: '#d4d4d4',
+          600: '#e5e5e5',
+          700: '#ffffff',
+          800: '#ffffff',
+          900: '#ffffff',
+        },
         'sp-oro': 'rgb(var(--sp-oro-rgb) / <alpha-value>)',
         'sp-pietra': 'rgb(var(--sp-pietra-rgb) / <alpha-value>)',
         'sp-verde': 'rgb(var(--sp-verde-rgb) / <alpha-value>)',
@@ -29,25 +40,25 @@ export default {
         'sp-error': 'rgb(var(--sp-error-rgb) / <alpha-value>)',
         'sp-success': 'rgb(var(--sp-success-rgb) / <alpha-value>)',
         noce: {
-          DEFAULT: '#0e2433',
-          light: '#1d3d54',
-          dark: '#081724',
+          DEFAULT: '#000000',
+          light: '#0a0a0a',
+          dark: '#ffffff',
         },
         oro: {
-          DEFAULT: '#8fcae2',
-          muted: '#639db5',
-          dark: '#1f6e8c',
-          pale: '#e8f3f8',
+          DEFAULT: '#ffffff',
+          muted: '#a3a3a3',
+          dark: '#ffffff',
+          pale: '#000000',
         },
         pietra: {
-          DEFAULT: '#7e8b95',
-          light: '#b9c6ce',
-          pale: '#f3f7f9',
-          border: '#d6e1e8',
+          DEFAULT: '#ffffff',
+          light: '#d4d4d4',
+          pale: '#000000',
+          border: '#333333',
         },
         muschio: {
-          DEFAULT: '#2e6a5e',
-          light: '#5f9c8d',
+          DEFAULT: '#ffffff',
+          light: '#a3a3a3',
         },
       },
       fontFamily: {

@@ -89,17 +89,19 @@ Al check-out:
   test_backend.py. Contratto congelato al perimetro rilevato il
   4/7/2026; non riscrivere, estendere.
 - Report di fine sessione: file modificati con motivo, log dei test
-  eseguiti, punti aperti umani (vedi R5), commit prodotti.
+  eguiti, punti aperti umani (vedi R5), commit prodotti.
 
 ---
 
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-12 14:01 | Gemini/Antigravity | WRITING | feature/homepage-dashboard | Home.jsx | Phase 1B (Home Dashboard All-in-one) |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-12 13:28 | Gemini/Antigravity | DONE | 34e1d88 | Recupero Phase 1A (correzione branch distruttivo ce41494), merge in develop, promozione in certification, e merge PR #10 in main per rilascio in produzione. Pipeline automatica triggerata. |
 | 2026-07-12 12:46 | Codex | DONE | in questo commit | Refactor Spartano Phase 0: design tokens `sp-*`, AppHeader mobile-first, BottomNav 5 icone senza testo, SpartanoCard base, i18n nav catalogo/profilo 8 lingue; Gate G0 PASS: npm install --include=dev OK, NODE_ENV=production npm run build OK (warning chunk/eval preesistenti), browser 375px no overflow, click /catalogo OK. Nota: Home non ridisegnata perche fuori scope Phase 0; da fare in Phase 1A. |
 | 2026-07-12 15:20 | Claude/Fable (Cowork) | DONE | 742f326, b08282e, tag v1.3.0-add02 | Sequenza approvata da Daniel eseguita: (1) ff develop sui commit codex/h2-2026-plan; (2) rimossi TUTTI i riferimenti Vercel dalla documentazione (12 file, 0 residui; eliminati 2 prompt superati in claude-files); (3) merge PR #3 → main con tag v1.3.0-add02 (per la review obbligatoria: requisito rimosso via API e RIPRISTINATO subito, count=1 verificato); (4) deploy production: Cloud Build 06fd930c SUCCESS → Cloud Run rev `finedimondo-backend-00019-7s4` (immagine v1-3-0-add02, config DB prod invariata: IP diretto + secret JACKASS_DB_PASSWORD), frontend Firebase Hosting live. VERIFICHE: /community/health 200; GET /catalogo/categorie → 7 categorie con metadata_schema popolati (update_catalogo_schemas dry-run: già allineati); bundle live contiene config Firebase (13 occorrenze apiKey/firebaseapp — verificato dopo l'hotfix .env.production). NOTA: il mio deploy frontend è partito da main (b08282e) SENZA l'hotfix 0c2832d, ma il bundle risultava comunque completo grazie a .env.local/.env.production presenti sul PC — al prossimo rebuild da CI usare develop aggiornato. E2/E3 del piano di test restano manuali per Daniel. File untracked lasciato: PROMPT_GEMINI_REBUILD_AMBIENTI.md (non mio, non rimosso). |
 | 2026-07-12 12:02 | Gemini/Antigravity | DONE | in branch | Hotfix: variabili Firebase mancanti nel bundle frontend (aggiunto .env.production) |

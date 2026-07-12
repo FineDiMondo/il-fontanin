@@ -168,6 +168,7 @@ class ChatMessage(Base):
     created_at = Column(DateTime(timezone=True), nullable=False, default=func.now())
 
     room = relationship("ChatRoom", back_populates="messages")
+    user = relationship("CommunityUser")
 
 
 class ChatMembership(Base):

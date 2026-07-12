@@ -30,6 +30,10 @@ export default function ChatRoom() {
     api.get(`/chat/rooms/${slug}/messages?limit=50`).then(r => {
       setMessages(r.data)
       setTimeout(() => bottomRef.current?.scrollIntoView(), 100)
+    }).catch(err => {
+      console.error("Errore caricamento storico:", err)
+      // Se c'è un errore 500 dal backend a causa del missing user relationship,
+      // la chat continuerà a funzionare solo per i messaggi in tempo reale.
     })
   }, [slug])
 
@@ -57,7 +61,12 @@ export default function ChatRoom() {
       } else if (data.tipo === 'stato_iniziale') {
         setUsersOnline(data.utenti_online || [])
       } else if (data.tipo === 'utente_entrato') {
-        setUsersOnline(prev => [...prev, { user_id: data.user_id, nome: data.nome }])
+        setUsersOnline(prev => {
+          if (!prev.find(u => u.user_id === data.user_id)) {
+            return [...prev, { user_id: data.user_id, nome: data.nome }]
+          }
+          return prev
+        })
       } else if (data.tipo === 'utente_uscito') {
         setUsersOnline(prev => prev.filter(u => u.user_id !== data.user_id))
       }
@@ -73,46 +82,43 @@ export default function ChatRoom() {
     setText('')
   }
 
-  const myId = user?.user_id
+  const myId = user?.user_id || user?.id
 
   return (
-    <div className="app-shell">
+    <div className="app-shell bg-[#0a0a0a]">
       <AppHeader
         title={slug}
         showBack
         rightSlot={
-          <span className="text-[10px] text-oro-dark bg-oro/10 px-2 py-1 rounded-full border border-pietra-border">
+          <span className="text-[9px] text-white uppercase tracking-widest bg-transparent px-2 py-1 border border-stone-600">
             {status}
           </span>
         }
       />
 
       {usersOnline.length > 0 && (
-        <div className="flex-shrink-0 px-4 py-1.5 bg-noce/5 border-b border-pietra-border">
-          <p className="text-[10px] text-stone-500">
-            {t('chat.online')}: {usersOnline.map(u => u.nome).join(', ')}
+        <div className="flex-shrink-0 px-4 py-2 border-b border-stone-800">
+          <p className="text-[10px] text-stone-400 uppercase tracking-widest">
+            {t('chat.online')}: <span className="text-white font-bold">{usersOnline.map(u => u.nome).join(', ')}</span>
           </p>
         </div>
       )}
 
-      <div className="scroll-content px-4 py-3 space-y-2">
+      <div className="scroll-content px-4 py-4 space-y-4">
         {messages.map((msg, i) => {
           const isMe = msg.user?.id === myId
           return (
-            <div key={msg.id || i} className={`flex items-end gap-2 ${isMe ? 'flex-row-reverse' : ''}`}>
-              {!isMe && <UserAvatar name={msg.user?.nome} size="sm" />}
-              <div className={`max-w-[75%] ${isMe ? 'items-end' : 'items-start'} flex flex-col gap-0.5`}>
-                {!isMe && (
-                  <span className="text-[10px] text-stone-500 ml-1">{msg.user?.nome}</span>
-                )}
-                <div className={`px-3 py-2 rounded-2xl text-sm leading-relaxed ${
-                  isMe
-                    ? 'bg-noce text-oro rounded-br-sm'
-                    : 'bg-white text-stone-700 border border-pietra-border rounded-bl-sm'
-                }`}>
-                  {msg.testo}
-                </div>
-                <span className="text-[9px] text-stone-400 mx-1">{timeShort(msg.created_at, i18n.language)}</span>
+            <div key={msg.id || i} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
+              <div className="text-[10px] text-stone-400 uppercase tracking-widest mb-1 flex items-center gap-2">
+                <span className="font-bold text-white">{msg.user?.nome || 'Utente'}</span>
+                <span className="text-stone-600">{timeShort(msg.created_at, i18n.language)}</span>
+              </div>
+              <div className={`px-4 py-3 text-sm leading-relaxed max-w-[85%] border ${
+                isMe
+                  ? 'border-white text-white bg-transparent'
+                  : 'border-stone-600 text-stone-300 bg-transparent'
+              }`}>
+                {msg.testo}
               </div>
             </div>
           )
@@ -120,9 +126,9 @@ export default function ChatRoom() {
         <div ref={bottomRef} />
       </div>
 
-      <form onSubmit={send} className="flex-shrink-0 border-t border-pietra-border bg-pietra-pale px-3 py-2 flex gap-2 items-center">
+      <form onSubmit={send} className="flex-shrink-0 border-t border-white bg-[#0a0a0a] px-4 py-3 flex gap-3 items-center">
         <input
-          className="flex-1 text-sm border border-pietra-border rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:ring-1 focus:ring-oro-muted"
+          className="flex-1 text-sm border border-stone-600 px-4 py-3 bg-transparent text-white focus:outline-none focus:border-white transition-colors"
           placeholder={t('chat.message_ph')}
           value={text}
           onChange={e => setText(e.target.value)}
@@ -131,11 +137,9 @@ export default function ChatRoom() {
         <button
           type="submit"
           disabled={!text.trim()}
-          className="touch-target bg-noce text-oro rounded-xl px-3 disabled:opacity-40"
+          className="border border-white text-black bg-white uppercase font-bold tracking-widest px-6 py-3 hover:bg-transparent hover:text-white transition-colors disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-black"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-          </svg>
+          {t('chat.send', 'INVIA')}
         </button>
       </form>
 

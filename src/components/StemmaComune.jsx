@@ -187,11 +187,71 @@ function Povegliano() {
   )
 }
 
+function Valeggio() {
+  return (
+    <>
+      <rect x="6" y="6" width="52" height="66" fill={ARGENTO} />
+      <path d="M6 56 H58 V66 C58 69 50 72 32 72 C14 72 6 69 6 66 Z" fill={AZZURRO} />
+      <g fill={ROSSO} stroke="#8f1512" strokeWidth="0.8">
+        <path d="M12 56 L12 40 H16 V30 H14 V26 H18 V30 H16 V40 H26 V20 H24 V16 H28 V20 H26 V40 H36 V30 H34 V26 H38 V30 H36 V40 H40 V56 Z" />
+        <path d="M22 56 V48 A4 4 0 0 1 30 48 V56 Z" fill={ARGENTO} />
+      </g>
+    </>
+  )
+}
+
+function Erbe() {
+  return (
+    <>
+      <rect x="6" y="6" width="52" height="66" fill={AZZURRO} />
+      <path d="M6 50 H58 V66 C58 69 50 72 32 72 C14 72 6 69 6 66 Z" fill={VERDE} />
+      <g stroke="#2a4515" strokeWidth="1" strokeLinecap="round">
+        <path d="M30 48 L22 30 M31 48 L26 28 M32 48 L32 26 M33 48 L38 28 M34 48 L42 30" fill="none" stroke={VERDE} strokeWidth="1.5" />
+      </g>
+      <path d="M58 40 L40 40 L40 46 L58 46 Z" fill="#8b5a2b" stroke="#5a3a1b" strokeWidth="0.6" />
+      <path d="M40 38 Q35 38 32 42 Q35 46 40 46 Z" fill={CARNAGIONE} stroke="#b98a5e" strokeWidth="0.6" />
+    </>
+  )
+}
+
+function Trevenzuolo() {
+  return (
+    <>
+      <rect x="6" y="6" width="52" height="66" fill={AZZURRO} />
+      <path d="M6 46 H58 V66 C58 69 50 72 32 72 C14 72 6 69 6 66 Z" fill={VERDE} />
+      <path d="M30 72 L45 46 L50 46 L38 72 Z" fill="#d2b48c" />
+      <rect x="15" y="36" width="16" height="14" fill="#e0d4c8" stroke="#a99a86" strokeWidth="0.8" />
+      <polygon points="13,36 23,28 33,36" fill={ROSSO} stroke="#8f1512" strokeWidth="0.8" />
+      <rect x="31" y="26" width="8" height="24" fill="#e0d4c8" stroke="#a99a86" strokeWidth="0.8" />
+      <polygon points="29,26 35,20 41,26" fill={ROSSO} stroke="#8f1512" strokeWidth="0.8" />
+      <circle cx="48" cy="36" r="6" fill={VERDE} stroke="#2a4515" strokeWidth="0.6" />
+      <rect x="47" y="42" width="2" height="6" fill="#8b5a2b" />
+    </>
+  )
+}
+
+function Nogara() {
+  return (
+    <>
+      <rect x="6" y="6" width="52" height="66" fill={AZZURRO} />
+      <path d="M6 50 H58 V66 C58 69 50 72 32 72 C14 72 6 69 6 66 Z" fill={VERDE} />
+      <path d="M30 52 L30 36 L34 36 L34 52 Z" fill="#8b5a2b" stroke="#5a3a1b" strokeWidth="0.8" />
+      <circle cx="24" cy="30" r="10" fill={VERDE} stroke="#2a4515" strokeWidth="0.8" />
+      <circle cx="32" cy="24" r="12" fill={VERDE} stroke="#2a4515" strokeWidth="0.8" />
+      <circle cx="40" cy="30" r="10" fill={VERDE} stroke="#2a4515" strokeWidth="0.8" />
+    </>
+  )
+}
+
 const FIGURE = {
   villafranca: { Comp: Villafranca, nome: 'Villafranca di Verona' },
   povegliano:  { Comp: Povegliano,  nome: 'Povegliano Veronese' },
   mozzecane:   { Comp: Mozzecane,   nome: 'Mozzecane' },
   vigasio:     { Comp: Vigasio,     nome: 'Vigasio' },
+  valeggio:    { Comp: Valeggio,    nome: 'Valeggio sul Mincio' },
+  erbe:        { Comp: Erbe,        nome: 'Erbè' },
+  trevenzuolo: { Comp: Trevenzuolo, nome: 'Trevenzuolo' },
+  nogara:      { Comp: Nogara,      nome: 'Nogara' },
 }
 
 export default function StemmaComune({ comune, variant = 'pieno', size = 40, className = '' }) {

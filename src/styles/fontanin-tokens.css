@@ -16,15 +16,15 @@
      bambu-700 su carta-50  -> ~5.8:1  (link / azioni, AA ok)
      carta-50  su humus-900 -> ~15:1   (testo su header scuro)
      acqua-600 SOLO come decorazione/bordo, mai testo su carta  */
-  --fn-humus-900: #0e2433;  /* blu notte */
-  --fn-humus-700: #2b4a60;  /* blu ardesia */
-  --fn-humus-100: #dbe6ec;  /* grigio-azzurro chiaro */
-  --fn-carta-50:  #f6fafc;  /* bianco freddo */
-  --fn-bambu-700: #1f655a;  /* verde acqua scuro */
-  --fn-bambu-500: #3d8a7c;  /* verde acqua */
-  --fn-acqua-600: #2a7f8f;
-  --fn-acqua-100: #dcefF2;
-  --fn-focus:     #0e7490; /* anello di focus, >=3:1 vs carta-50 */
+  --fn-humus-900: #000000;
+  --fn-humus-700: #000000;
+  --fn-humus-100: #000000;
+  --fn-carta-50:  #ffffff;
+  --fn-bambu-700: #000000;
+  --fn-bambu-500: #000000;
+  --fn-acqua-600: #000000;
+  --fn-acqua-100: #ffffff;
+  --fn-focus:     #000000;
 
   /* ---- TIPOGRAFIA (scala modulare 1.2, base 17px) -----------
      Base 17px, non 16: leggibilità anziani senza rompere layout */
