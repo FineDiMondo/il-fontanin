@@ -1,8 +1,5 @@
 # Deploy PRODUZIONE — solo su tag v*.*.*
-# BOZZA (2026-07-08, Claude/Fable). NON attiva finché non sono configurati:
-#   1. GitHub Environment "production" con REQUIRED REVIEWER = Daniel
-#      (questo è il gate umano richiesto da AGENTS.md R3, reso esplicito in pipeline)
-#   2. Secrets WIF + FIREBASE_SERVICE_ACCOUNT_EL_FONTANIN
+# Prerequisiti: vedi docs/ENVIRONMENTS.md §8 (tutti marcati come Fatto)
 name: Deploy production
 
 on:

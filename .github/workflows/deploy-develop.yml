@@ -1,9 +1,5 @@
 # Deploy DEVELOP — su push a develop
-# BOZZA (2026-07-08). Non attiva finché non sono configurati:
-#   1. GitHub Environment "develop"
-#   2. Secrets WIF (GCP_WORKLOAD_IDENTITY_PROVIDER, GCP_SERVICE_ACCOUNT)
-#   3. servizio Cloud Run dedicato `finedimondo-backend-develop`
-#   4. variabili frontend develop, se diverse dalla produzione
+# Prerequisiti: vedi docs/ENVIRONMENTS.md §8 (tutti marcati come Fatto)
 name: Deploy develop
 
 on:

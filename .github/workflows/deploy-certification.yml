@@ -1,9 +1,5 @@
 # Deploy CERTIFICATION — su push a certification
-# BOZZA (2026-07-08). Non attiva finché non sono configurati:
-#   1. GitHub Environment "certification"
-#   2. Secrets WIF (GCP_WORKLOAD_IDENTITY_PROVIDER, GCP_SERVICE_ACCOUNT)
-#   3. servizio Cloud Run dedicato `finedimondo-backend-certification`
-#   4. variabili frontend certification, se diverse dalla produzione
+# Prerequisiti: vedi docs/ENVIRONMENTS.md §8 (tutti marcati come Fatto)
 name: Deploy certification
 
 on:
