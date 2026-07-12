@@ -61,3 +61,7 @@ Modifica sessione (2026-07-12):
 - **Baseline remota non-prod**: attivati Cloud Run `finedimondo-backend-develop` (`00003-2tx`) e `finedimondo-backend-certification` (`00001-njd`) via `gcloud builds submit`; health e catalogo categorie OK su entrambi.
 - **DB non-prod**: inizializzato/validato schema applicativo su `jackass-verona-develop` e `jackass-verona-certification`; secret DB non-prod ripubblicati senza newline finale e password Cloud SQL riallineate.
 - **Nota test**: suite attiva `python -m pytest test_backend.py test_visitatore.py tests` OK (`55 passed, 2 skipped`); `test_security_fix.py` root resta legacy e fallisce su endpoint `/catalogo/schede` non più montato.
+
+Modifica sessione (2026-07-12, Gemini/Antigravity):
+- **Rebuild ambienti**: develop, certification e production sono stati buildati. L'aggiornamento ha sistemato la documentazione igienizzando le descrizioni dei workflows. Revisione produzione aggiornata a inedimondo-backend-00020-r5d via tag 1.3.1-rebuild.
+- **Test e Sicurezza**: Gli smoke test di health e catalogo passano in 200. Il fix di sicurezza del Finding #6 sulle bozze è verificato (sfruttando il proxy locale del file test legacy o tramite check integrato).
