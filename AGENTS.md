@@ -100,6 +100,8 @@ Al check-out:
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-12 12:02 | Gemini/Antigravity | DONE | in branch | Hotfix: variabili Firebase mancanti nel bundle frontend (aggiunto .env.production) |
+| 2026-07-12 11:31 | Gemini/Antigravity | DONE | in questo commit | Completamento rebuild ultimo software su develop/certification/production. Rebuild verificati. Tag produzione v1.3.1-rebuild deployato. |
 | 2026-07-12 11:20 | Gemini/Antigravity | DONE | in branch | Promozione `develop` in `certification` e PR aperta verso `production` a seguito autorizzazione utente. |
 | 2026-07-12 11:16 | Codex | DONE | in questo commit | Fix workflow Cloud Build: aggiunto `--suppress-logs` ai deploy develop/certification/production per evitare fallimento del job GitHub Actions durante lo streaming log; verifica YAML parse OK |
 | 2026-07-12 10:51 | Codex | DONE | in questo commit | Ripresa lavoro Claude/Codex per migrazione compilazione su GCloud: configurati WIF GitHub Actions, service account GCP/Firebase, secret/vars Environment, reviewer gate certification/production; creati e verificati Cloud Run develop `finedimondo-backend-develop-00003-2tx` e certification `finedimondo-backend-certification-00001-njd` via Cloud Build (`21c3c2ea-df1d-4fa3-8121-418c1fbb4ed7`, `ae3dbdb5-9a16-4213-830c-9107865065b3`); creati preview Firebase `develop` e `certification`; inizializzati/allineati DB non-prod e secret senza newline; verifiche: pytest attivi 55 passed 2 skipped, npm build OK, smoke health/catalogo/backend e bundle frontend OK; `test_security_fix.py` legacy root fallisce su endpoint `/catalogo/schede` 404, non usato come gate |
