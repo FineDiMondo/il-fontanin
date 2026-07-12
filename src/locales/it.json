@@ -1,5 +1,5 @@
 {
-  "nav": { "home": "Home", "forum": "Forum", "chat": "Chat", "events": "Eventi", "bar": "Bar", "research": "Ricerca" },
+  "nav": { "home": "Home", "forum": "Forum", "chat": "Chat", "events": "Eventi", "bar": "Bar", "research": "Ricerca", "catalogo": "Catalogo", "profile": "Profilo" },
   "app": { "name": "Il Fontanin", "org": "Fine di Mondo APS" },
   "common": {
     "loading": "Caricamento…",
@@ -23,6 +23,17 @@
   },
   "home": {
     "welcome": "Benvenuto",
+    "visitor": "Visitatore",
+    "hero_title": "Ciao {{name}}!",
+    "hero_subtitle": "Cosa vuoi fare oggi?",
+    "cta_declare": "Racconta cosa hai fatto",
+    "quick_links": "Link Rapidi",
+    "map_label": "Mappa",
+    "numbers_label": "Numeri Utili",
+    "canzoniere_label": "Canzoniere",
+    "ricettario_label": "Ricettario",
+    "next_event": "Prossimo Evento",
+    "latest_posts": "Ultimi Post",
     "board": "Bacheca",
     "empty_posts": "Nessun post ancora",
     "empty_posts_sub": "Sii il primo a scrivere nel forum",

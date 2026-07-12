@@ -1,0 +1,96 @@
+/* Palette Core Spartano */
+:root {
+  /* Colori */
+  --sp-oro: #D4A574;
+  --sp-pietra: #7A8B8F;
+  --sp-verde: #2D5016;
+  --sp-white: #F5F1ED;
+  --sp-dark: #2C2C2C;
+  --sp-error: #D32F2F;
+  --sp-success: #388E3C;
+
+  /* RGB aliases for Tailwind opacity modifiers */
+  --sp-oro-rgb: 212 165 116;
+  --sp-pietra-rgb: 122 139 143;
+  --sp-verde-rgb: 45 80 22;
+  --sp-white-rgb: 245 241 237;
+  --sp-dark-rgb: 44 44 44;
+  --sp-error-rgb: 211 47 47;
+  --sp-success-rgb: 56 142 60;
+
+  /* Spacing (scale 4px) */
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 12px;
+  --sp-lg: 16px;
+  --sp-xl: 20px;
+  --sp-2xl: 24px;
+  --sp-3xl: 32px;
+  --sp-4xl: 48px;
+
+  /* Typography */
+  --sp-font-size-xs: 12px;
+  --sp-font-size-sm: 14px;
+  --sp-font-size-base: 16px;
+  --sp-font-size-lg: 18px;
+  --sp-font-size-xl: 20px;
+  --sp-font-weight-normal: 400;
+  --sp-font-weight-medium: 500;
+  --sp-font-weight-semibold: 600;
+  --sp-font-weight-bold: 700;
+
+  /* Shadows */
+  --sp-shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --sp-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  --sp-shadow-lg: 0 4px 6px rgba(0,0,0,0.1);
+
+  /* Radius */
+  --sp-radius-sm: 8px;
+  --sp-radius-md: 12px;
+  --sp-radius-lg: 16px;
+}
+
+/* Mobile-first baseline */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: var(--sp-font-size-base);
+  line-height: 1.5;
+  color: var(--sp-dark);
+  background-color: var(--sp-white);
+}
+
+/* Link base */
+a {
+  color: var(--sp-oro);
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 0.9;
+}
+
+/* Button base */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--sp-radius-md);
+  padding: var(--sp-md) var(--sp-lg);
+  font-weight: var(--sp-font-weight-medium);
+  transition: opacity 200ms ease;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:active {
+  opacity: 0.8;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
