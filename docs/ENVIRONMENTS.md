@@ -1,6 +1,6 @@
 # Environment Catalogue — develop, certification, production
 
-**Versione:** 1.0 · **Data:** 2026-07-08 · **Owner:** Daniel Giardina
+**Versione:** 1.1 · **Data:** 2026-07-12 · **Owner:** Daniel Giardina
 
 Questo catalogo segue una struttura stage-gate in stile Accenture:
 `develop → certification → production`, con separazione degli ambienti,
@@ -47,70 +47,79 @@ workflow passa solo il nome del secret.
 | Variabile | Esempio develop | Esempio certification | Production attuale |
 |---|---|---|---|
 | `CLOUDSQL_INSTANCE` | `freedomrun-491323:europe-west1:jackass-verona-develop` | `freedomrun-491323:europe-west1:jackass-verona-certification` | `freedomrun-491323:europe-west1:jackass-verona` |
-| `JACKASS_DB_HOST` | host DB develop | host DB certification | `35.241.200.140` |
+| `JACKASS_DB_HOST` | `34.77.188.122` | `35.205.224.40` | `35.241.200.140` |
 | `JACKASS_DB_PORT` | `5432` | `5432` | `5432` |
-| `JACKASS_DB_USER` | `fontanin_develop` | `fontanin_certification` | `jackass_admin` |
-| `JACKASS_DB_NAME` | `jackass_verona_develop` | `jackass_verona_certification` | `jackass_verona` |
+| `JACKASS_DB_USER` | `jackass_admin` | `jackass_admin` | `jackass_admin` |
+| `JACKASS_DB_NAME` | `jackass_verona` | `jackass_verona` | `jackass_verona` |
 | `JACKASS_DB_PASSWORD_SECRET` | `JACKASS_DB_PASSWORD_DEVELOP` | `JACKASS_DB_PASSWORD_CERTIFICATION` | `JACKASS_DB_PASSWORD` |
 | `GOOGLE_CLOUD_PROJECT` | `el-fontanin` | `el-fontanin` | `el-fontanin` |
+| `VITE_API_BASE_URL` | `https://finedimondo-backend-develop-558649366501.europe-west1.run.app` | `https://finedimondo-backend-certification-558649366501.europe-west1.run.app` | `https://finedimondo-backend-vqytacm7la-ew.a.run.app` |
 
 ## 4. Develop
 
-**Stato attuale:** target da creare. Alla data 2026-07-08 non risulta un servizio
-Cloud Run `finedimondo-backend-develop` né un canale Firebase `develop`
-pubblicato.
+**Stato attuale:** attivo. Baseline remota creata il 2026-07-12 via Cloud
+Build/GCloud e Firebase preview channel.
 
 | Area | Link / identificatore |
 |---|---|
 | Branch | https://github.com/FineDiMondo/il-fontanin/tree/develop |
 | Workflow | https://github.com/FineDiMondo/il-fontanin/actions/workflows/deploy-develop.yml |
-| Cloud Run service target | `finedimondo-backend-develop` |
-| Cloud Run console target | https://console.cloud.google.com/run/detail/europe-west1/finedimondo-backend-develop?project=freedomrun-491323 |
-| Backend URL target | `https://finedimondo-backend-develop-vqytacm7la-ew.a.run.app` |
-| Backend health target | `https://finedimondo-backend-develop-vqytacm7la-ew.a.run.app/community/health` |
-| Firebase preview target | `https://el-fontanin--develop-<hash>.web.app` |
+| Cloud Run service | `finedimondo-backend-develop` |
+| Cloud Run console | https://console.cloud.google.com/run/detail/europe-west1/finedimondo-backend-develop?project=freedomrun-491323 |
+| Backend URL | https://finedimondo-backend-develop-vqytacm7la-ew.a.run.app |
+| Backend alternate URL | https://finedimondo-backend-develop-558649366501.europe-west1.run.app |
+| Backend health | https://finedimondo-backend-develop-vqytacm7la-ew.a.run.app/community/health |
+| Catalogo categorie | https://finedimondo-backend-develop-vqytacm7la-ew.a.run.app/community/catalogo/categorie |
+| Firebase preview | https://el-fontanin--develop-5nnaa48o.web.app |
 | Firebase channel deploy | `firebase hosting:channel:deploy develop --project el-fontanin --expires 14d` |
+| Ultima revisione verificata | `finedimondo-backend-develop-00003-2tx` |
+| Ultimo Cloud Build OK | `21c3c2ea-df1d-4fa3-8121-418c1fbb4ed7` |
 
 ### Develop DB
 
 | Campo | Valore |
 |---|---|
-| Stato | target da creare |
-| Cloud SQL instance consigliata | `jackass-verona-develop` |
-| Cloud SQL console target | https://console.cloud.google.com/sql/instances/jackass-verona-develop/overview?project=freedomrun-491323 |
-| Database consigliato | `jackass_verona_develop` |
-| User consigliato | `jackass_admin` o utente dedicato `fontanin_develop` |
-| Secret consigliato | `JACKASS_DB_PASSWORD_DEVELOP` |
-| DSN template | `postgresql://<user>:<secret>@<host>:5432/jackass_verona_develop` |
+| Stato | attivo, schema applicativo creato e seed categorie allineato |
+| Cloud SQL instance | `jackass-verona-develop` |
+| Cloud SQL console | https://console.cloud.google.com/sql/instances/jackass-verona-develop/overview?project=freedomrun-491323 |
+| Host pubblico configurato | `34.77.188.122` |
+| Database applicativo configurato | `jackass_verona` |
+| User applicativo configurato | `jackass_admin` |
+| Secret password | https://console.cloud.google.com/security/secret-manager/secret/JACKASS_DB_PASSWORD_DEVELOP/versions?project=freedomrun-491323 |
+| DSN template | `postgresql://jackass_admin:<JACKASS_DB_PASSWORD_DEVELOP>@34.77.188.122:5432/jackass_verona` |
 
 ## 5. Certification
 
-**Stato attuale:** target da creare. Alla data 2026-07-08 non risulta un servizio
-Cloud Run `finedimondo-backend-certification` né un canale Firebase
-`certification` pubblicato.
+**Stato attuale:** attivo. Baseline remota creata il 2026-07-12 via Cloud
+Build/GCloud e Firebase preview channel.
 
 | Area | Link / identificatore |
 |---|---|
 | Branch | https://github.com/FineDiMondo/il-fontanin/tree/certification |
 | Workflow | https://github.com/FineDiMondo/il-fontanin/actions/workflows/deploy-certification.yml |
-| Cloud Run service target | `finedimondo-backend-certification` |
-| Cloud Run console target | https://console.cloud.google.com/run/detail/europe-west1/finedimondo-backend-certification?project=freedomrun-491323 |
-| Backend URL target | `https://finedimondo-backend-certification-vqytacm7la-ew.a.run.app` |
-| Backend health target | `https://finedimondo-backend-certification-vqytacm7la-ew.a.run.app/community/health` |
-| Firebase preview target | `https://el-fontanin--certification-<hash>.web.app` |
+| Cloud Run service | `finedimondo-backend-certification` |
+| Cloud Run console | https://console.cloud.google.com/run/detail/europe-west1/finedimondo-backend-certification?project=freedomrun-491323 |
+| Backend URL | https://finedimondo-backend-certification-vqytacm7la-ew.a.run.app |
+| Backend alternate URL | https://finedimondo-backend-certification-558649366501.europe-west1.run.app |
+| Backend health | https://finedimondo-backend-certification-vqytacm7la-ew.a.run.app/community/health |
+| Catalogo categorie | https://finedimondo-backend-certification-vqytacm7la-ew.a.run.app/community/catalogo/categorie |
+| Firebase preview | https://el-fontanin--certification-6iwspubv.web.app |
 | Firebase channel deploy | `firebase hosting:channel:deploy certification --project el-fontanin --expires 30d` |
+| Ultima revisione verificata | `finedimondo-backend-certification-00001-njd` |
+| Ultimo Cloud Build OK | `ae3dbdb5-9a16-4213-830c-9107865065b3` |
 
 ### Certification DB
 
 | Campo | Valore |
 |---|---|
-| Stato | target da creare |
-| Cloud SQL instance consigliata | `jackass-verona-certification` |
-| Cloud SQL console target | https://console.cloud.google.com/sql/instances/jackass-verona-certification/overview?project=freedomrun-491323 |
-| Database consigliato | `jackass_verona_certification` |
-| User consigliato | `jackass_admin` o utente dedicato `fontanin_certification` |
-| Secret consigliato | `JACKASS_DB_PASSWORD_CERTIFICATION` |
-| DSN template | `postgresql://<user>:<secret>@<host>:5432/jackass_verona_certification` |
+| Stato | attivo, schema applicativo creato e seed categorie allineato |
+| Cloud SQL instance | `jackass-verona-certification` |
+| Cloud SQL console | https://console.cloud.google.com/sql/instances/jackass-verona-certification/overview?project=freedomrun-491323 |
+| Host pubblico configurato | `35.205.224.40` |
+| Database applicativo configurato | `jackass_verona` |
+| User applicativo configurato | `jackass_admin` |
+| Secret password | https://console.cloud.google.com/security/secret-manager/secret/JACKASS_DB_PASSWORD_CERTIFICATION/versions?project=freedomrun-491323 |
+| DSN template | `postgresql://jackass_admin:<JACKASS_DB_PASSWORD_CERTIFICATION>@35.205.224.40:5432/jackass_verona` |
 
 ## 6. Production
 
@@ -129,7 +138,7 @@ Cloud Run `finedimondo-backend-certification` né un canale Firebase
 | Catalogo schede pubblicate | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/catalogo/schede?stato=pubblicato |
 | Firebase Hosting live | https://el-fontanin.web.app |
 | Firebase Hosting console | https://console.firebase.google.com/project/el-fontanin/hosting/sites/el-fontanin |
-| Ultima revisione verificata | `finedimondo-backend-00018-z8v` |
+| Ultima revisione verificata | `finedimondo-backend-00019-7s4` |
 
 ### Production DB
 
@@ -156,19 +165,19 @@ dedicato prima di creare ambienti separati.
 
 | Endpoint | Develop target | Certification target | Production attivo |
 |---|---|---|---|
-| Health | `/community/health` | `/community/health` | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/health |
-| Forum categorie | `/community/forum/categories` | `/community/forum/categories` | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/forum/categories |
-| Eventi | `/community/events` | `/community/events` | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/events |
-| Catalogo categorie | `/community/catalogo/categorie` | `/community/catalogo/categorie` | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/catalogo/categorie |
-| Catalogo pubblico | `/community/catalogo/schede?stato=pubblicato` | `/community/catalogo/schede?stato=pubblicato` | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/catalogo/schede?stato=pubblicato |
-| Canzoniere | `/community/canzoniere/brani` | `/community/canzoniere/brani` | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/canzoniere/brani |
-| Ricettario | `/community/ricettario/ricette` | `/community/ricettario/ricette` | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/ricettario/ricette |
+| Health | https://finedimondo-backend-develop-vqytacm7la-ew.a.run.app/community/health | https://finedimondo-backend-certification-vqytacm7la-ew.a.run.app/community/health | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/health |
+| Forum categorie | https://finedimondo-backend-develop-vqytacm7la-ew.a.run.app/community/forum/categories | https://finedimondo-backend-certification-vqytacm7la-ew.a.run.app/community/forum/categories | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/forum/categories |
+| Eventi | https://finedimondo-backend-develop-vqytacm7la-ew.a.run.app/community/events | https://finedimondo-backend-certification-vqytacm7la-ew.a.run.app/community/events | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/events |
+| Catalogo categorie | https://finedimondo-backend-develop-vqytacm7la-ew.a.run.app/community/catalogo/categorie | https://finedimondo-backend-certification-vqytacm7la-ew.a.run.app/community/catalogo/categorie | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/catalogo/categorie |
+| Catalogo pubblico | https://finedimondo-backend-develop-vqytacm7la-ew.a.run.app/community/catalogo/schede?stato=pubblicato | https://finedimondo-backend-certification-vqytacm7la-ew.a.run.app/community/catalogo/schede?stato=pubblicato | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/catalogo/schede?stato=pubblicato |
+| Canzoniere | https://finedimondo-backend-develop-vqytacm7la-ew.a.run.app/community/canzoniere/brani | https://finedimondo-backend-certification-vqytacm7la-ew.a.run.app/community/canzoniere/brani | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/canzoniere/brani |
+| Ricettario | https://finedimondo-backend-develop-vqytacm7la-ew.a.run.app/community/ricettario/ricette | https://finedimondo-backend-certification-vqytacm7la-ew.a.run.app/community/ricettario/ricette | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/ricettario/ricette |
 
 ## 8. Prerequisiti umani
 
-- Creare GitHub Environment: `develop`, `certification`, `production`.
-- Configurare required reviewers almeno su `certification` e `production`.
-- Creare servizi Cloud Run dedicati per `develop` e `certification`.
-- Creare DB separati o istanze separate per `develop` e `certification`.
-- Creare Secret Manager separati per password DB non-prod.
-- Configurare variabili frontend per puntare ogni stage al proprio backend.
+- Fatto: GitHub Environment `develop`, `certification`, `production`.
+- Fatto: required reviewers su `certification` e `production`.
+- Fatto: servizi Cloud Run dedicati per `develop` e `certification`.
+- Fatto: istanze Cloud SQL separate per `develop` e `certification`.
+- Fatto: secret DB separati per non-prod, ripubblicati senza newline finale.
+- Fatto: variabile frontend `VITE_API_BASE_URL` per ogni stage.
