@@ -138,7 +138,7 @@ Build/GCloud e Firebase preview channel.
 | Catalogo schede pubblicate | https://finedimondo-backend-vqytacm7la-ew.a.run.app/community/catalogo/schede?stato=pubblicato |
 | Firebase Hosting live | https://el-fontanin.web.app |
 | Firebase Hosting console | https://console.firebase.google.com/project/el-fontanin/hosting/sites/el-fontanin |
-| Ultima revisione verificata | `finedimondo-backend-00019-7s4` |
+| Ultima revisione verificata | `finedimondo-backend-00020-r5d` (tag `v1.3.1-rebuild`) |
 
 ### Production DB
 
