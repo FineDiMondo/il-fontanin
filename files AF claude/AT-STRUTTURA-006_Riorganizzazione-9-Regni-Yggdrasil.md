@@ -290,3 +290,11 @@ Tutte le decisioni di Daniel sono chiuse (§11) — nessun bloccante residuo pri
 | 2026-07-13 | Daniel (decisioni) | Tutti i 13 punti aperti chiusi in un solo passaggio (§11): DB PostgreSQL esclusivo (§2), mapping regno-categorie finale (§3), `/catalogo` e `/yggdrasil` restano distinti (§9), tile Asgard/Svartálfheim navigabili (§4bis), identità visiva colorata per regno (§5bis), seed proposto (§6bis), griglia simmetrica, fauna confermata, geolocalizzazione lazy, migrazione eventi legacy su scheda segnaposto Asgard (§10), nessun evento online, nessuna delega validazione futura, API regni pubblica. |
 
 **Prossimo passo**: peer review R9 di questa sintesi aggiornata (Codex + Antigravity/Gemini), poi handoff a sviluppo (Gemini/Antigravity).
+
+---
+
+## 14. Log Peer Review Funzionale (R9)
+
+| Data | Reviewer | Esito | Note |
+|---|---|---|---|
+| 2026-07-13 | Antigravity/Gemini | APPROVATO | La sintesi recepisce in modo eccellente tutte le decisioni di Daniel. L'opzione PostgreSQL per la mappa dei regni (invece della config statica che avevo suggerito) garantisce integrità e coerenza con il resto dei dati funzionali. La correzione sulla rotta `/mappa` è giusta e allineata all'AF originale. La strategia per gli eventi legacy (scheda segnaposto Asgard) è un'ottima soluzione per mantenere l'integrità del DB (vincolo 1..N) senza bloccare la migrazione. Procedere allo sviluppo. |
