@@ -29,6 +29,7 @@ import CatalogoDettaglio from './pages/CatalogoDettaglio';
 import CatalogoValidazione from './pages/CatalogoValidazione';
 import Profilo from './pages/Profilo.jsx';
 import RegnoDashboard from './pages/RegnoDashboard.jsx';
+import Yggdrasil from './pages/Yggdrasil.jsx';
 import { MediaProvider } from './context/MediaContext.jsx'
 import LoadingSpinner from './components/LoadingSpinner.jsx'
 
@@ -83,7 +84,7 @@ function AppRoutes() {
 
       {/* Regni & Yggdrasil */}
       <Route path="/regno/:codice" element={<RegnoDashboard />} />
-      <Route path="/yggdrasil" element={<div className="text-white p-6">Yggdrasil - In arrivo</div>} />
+      <Route path="/yggdrasil" element={<Yggdrasil />} />
 
       {import.meta.env.VITE_ENABLE_COMPETENZE_FEATURE === 'true' && (
         <Route path="/profilo" element={<SocioRoute><Profilo /></SocioRoute>} />

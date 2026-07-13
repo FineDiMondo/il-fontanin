@@ -40,6 +40,9 @@ community_router.include_router(ricettario_router)
 from community_module.api.competenze import router as competenze_router
 community_router.include_router(competenze_router)
 
+from community_module.api.struttura import router as struttura_router
+community_router.include_router(struttura_router)
+
 
 # =============================================================================
 # ADMIN DASHBOARD

@@ -485,6 +485,18 @@ class CatalogoCategoriaOut(BaseModel):
     class Config:
         from_attributes = True
 
+class StrutturaRegnoOut(BaseModel):
+    codice: str
+    nome: str
+    descrizione: Optional[str] = None
+    ordine: int
+    navigabile: bool
+    tema_json: Optional[Dict[str, Any]] = None
+    categorie: List[CatalogoCategoriaOut] = []
+
+    class Config:
+        from_attributes = True
+
 class CatalogoMediaBase(BaseModel):
     tipo: str
     modalita_acquisizione: str = "upload_server"

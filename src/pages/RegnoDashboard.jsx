@@ -1,5 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useState, useEffect } from 'react'
+import api from '../api/client.js'
+import CatalogoVista from '../components/catalogo/CatalogoVista.jsx'
 
 const REGNI_INFO = {
   asgard: { nome: 'Asgard', desc: 'Il regno degli Dèi', bg: 'bg-[#1e3a8a]' },
@@ -18,7 +21,33 @@ export default function RegnoDashboard() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   
+  const [schede, setSchede] = useState([])
+  const [categorie, setCategorie] = useState([])
+  const [loading, setLoading] = useState(true)
+
   const regno = REGNI_INFO[codice]
+
+  useEffect(() => {
+    if (regno) {
+      fetchData()
+    }
+  }, [codice])
+
+  const fetchData = async () => {
+    setLoading(true)
+    try {
+      const [schedeRes, catRes] = await Promise.all([
+        api.get(`/catalogo/schede?stato=pubblicato&regno_codice=${codice}`),
+        api.get('/catalogo/categorie')
+      ])
+      setSchede(schedeRes.data)
+      setCategorie(catRes.data)
+    } catch (err) {
+      console.error("Errore fetch dati regno:", err)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   if (!regno) {
     return (
@@ -48,9 +77,14 @@ export default function RegnoDashboard() {
       </header>
 
       <main className="max-w-[1600px] mx-auto p-6">
-        <div className="text-stone-500 mb-8">
-          Contenuto del regno in arrivo...
-        </div>
+        <h2 className="text-xl font-bold text-white mb-6 uppercase tracking-widest border-b border-stone-800 pb-2">
+          Catalogo Territoriale
+        </h2>
+        {loading ? (
+          <div className="flex justify-center py-12"><div className="animate-spin h-6 w-6 border-b-2 border-white rounded-full"></div></div>
+        ) : (
+          <CatalogoVista schede={schede} categorie={categorie} />
+        )}
       </main>
     </div>
   )
