@@ -34,40 +34,29 @@ Confermato da tutti e tre i draft, indipendentemente:
 
 ---
 
-## 2. Decisione Aperta — Dove vive la mappa Regno → Categorie
+## 2. DECISO da Daniel (2026-07-13) — Tabella PostgreSQL, niente JSON
 
-I tre draft **divergono** su questo punto architetturale:
-
-| Proposta | Draft | Argomento a favore |
-|---|---|---|
-| **A. Config statica versionata** (JSON/constants, in repo, non in DB) | Haiku (opzione consigliata), Antigravity | Cambia raramente, è una regola di presentazione/identità più che dato transazionale; zero query aggiuntive; frontend e backend leggono la stessa fonte statica |
-| **B. Tabella PostgreSQL dedicata** (`struttura_regni` + `struttura_regno_categorie`, con `UniqueConstraint` su categoria) | Codex | Garanzia strutturale (vincolo DB) che una categoria appartenga a un solo regno; evita drift tra API e UI; gestibile da admin panel senza deploy in futuro |
-
-Entrambe le opzioni rispettano il vincolo funzionale dell'AF (nessun nuovo campo su `catalogo_schede`, il regno resta una mappa sopra le categorie esistenti). La differenza è dove vive quella mappa e chi la fa rispettare.
-
-**Raccomandazione di questa sintesi**: opzione B (tabella DB) per il vincolo di integrità che offre gratuitamente (constraint invece di disciplina applicativa), ma è un incremento di scope minimo rispetto a un JSON — **decisione da confermare da Daniel** prima di procedere, perché cambia dove risiede la fonte di verità.
+Confermata **Opzione B**: `struttura_regni` + `struttura_regno_categorie` (schema Codex, §3.1/3.2 sotto), con `UniqueConstraint` su categoria. Motivazione di Daniel: tutti i dati di business/funzionali dell'app vivono su PostgreSQL (già in uso, nessun costo aggiuntivo), inclusi i campi georeferenziati già presenti sulle schede — nessuna configurazione statica JSON per dati che sono comunque di dominio applicativo. Questa regola vale non solo per la mappa regno→categorie ma come principio generale per qualunque nuovo dato funzionale di questa AT: **PostgreSQL, non file di config statici**, salvo puro tema grafico (colori/icone, vedi §5bis).
 
 ---
 
-## 3. Decisione Aperta — Assegnazione Categorie ai Regni (seed)
+## 3. DECISO da Daniel (2026-07-13) — Assegnazione Categorie ai Regni
 
-Tutti e tre i draft segnalano esplicitamente questo punto come non risolvibile in autonomia. Le tre proposte divergono, specialmente su `militare`, `culturale`, `economico`, `monumenti-cristiani`:
+Daniel ha chiesto la proposta più logica tra le tre, non una scelta secca — questa è la sintesi che risolve le sovrapposizioni rispettando il vincolo "una categoria = un solo regno" (dal DB constraint di §2):
 
-| Regno | Haiku | Antigravity | Codex |
-|---|---|---|---|
-| Vanaheim | `naturale` | `naturale` | `naturale` |
-| Jötunheim | `economico` | — | nessuna iniziale |
-| Helheim | `storico` | `storico` | `storico` + `militare` |
-| Niflheim | `idrico` | `idrico` | `idrico` |
-| Muspelheim | nessuna (Ricettario/Bar standalone) | `economico` (ipotesi) | `culturale` |
-| Svartálfheim | nessuna | — | `economico` |
-| Álfheim | `culturale` + Mappa | — | nessuna iniziale (+ Mappa, Canzoniere) |
-| Asgard | nessuna | — | `monumenti-cristiani` |
-| Midgard | tutte (fallback) | — | nessuna |
+| Regno | Categoria/e catalogo | Logica |
+|---|---|---|
+| Vanaheim | `naturale` | Convergenza piena dei 3 draft |
+| Niflheim | `idrico` | Convergenza piena dei 3 draft |
+| Helheim | `storico` + `militare` | Memoria/antenati include sia storia civile sia tracce militari/fortificazioni/ossari (proposta Codex, la più coerente con "antenati e memoria") |
+| Asgard | `monumenti-cristiani` | Sacro/devozione = esattamente il dominio del pilot già esistente (Sant'Andrea, AF-CATALOGAZIONE-001) — nessun altro regno si adatta meglio |
+| Álfheim | `culturale` | Bellezza/leggende/folklore si adatta a "culturale" meglio delle tradizioni conviviali (vedi Muspelheim sotto); include anche Canzoniere e la pagina Mappa come contenuto |
+| Svartálfheim | `economico` | Mestieri/artigianato/botteghe = attività economica storica, coerente con "fatica manuale produttiva" |
+| Jötunheim | nessuna | Contenuto già coperto da pagine dedicate (LavoriProgetto, CompetenzeSection), non da schede di catalogo georeferenziate |
+| Muspelheim | nessuna | Ricettario/Bar restano contenuti narrativi standalone, non catalogati (evita la sovrapposizione con `culturale` di Álfheim) |
+| Midgard | nessuna | Hub di comunità (Forum/Chat/Events/Dona/NumeriUtili); l'aggregazione di tutte le categorie è già il ruolo di Yggdrasil, Midgard non deve duplicarlo |
 
-Le tre proposte concordano solo su Vanaheim→`naturale` e Niflheim→`idrico`. Tutto il resto è a discrezione editoriale.
-
-**Decisione richiesta a Daniel**: quale assegnazione finale usare (una delle tre, o un mix). Fino a questa conferma, il seed non può essere scritto in modo definitivo — l'handoff a sviluppo (§9) userà un seed segnaposto marcato esplicitamente come "da confermare".
+Tutte e 7 le categorie tecniche esistenti sono assegnate esattamente una volta (nessun conflitto con il vincolo DB di §2). 3 regni restano senza categoria di catalogo: il loro contenuto vive nelle pagine applicative esistenti, non nel motore di catalogazione.
 
 ---
 
@@ -211,64 +200,85 @@ Tabella redirect consolidata (unione delle proposte, con la correzione di §8 su
 | `/events`, `/events/:id` | `/regno/midgard/events...` | alias vecchio necessario per QR/notifiche già inviate |
 | `/dona` | `/regno/midgard/dona` | |
 | `/numeri-utili` | `/regno/midgard/numeri-utili` | |
-| `/guida`, `/profilo` | `/regno/asgard/...` | — **decisione aperta**: tile Asgard navigabile o solo concettuale? (§10) |
-| `/catalogo` | `/yggdrasil` (raccomandato) | **decisione aperta**, vedi sotto |
-| `/catalogo/nuovo`, `/catalogo/validazione`, `/catalogo/scheda/:id` | invariate | route operative trasversali: spostarle aumenterebbe il rischio di regressione senza benefico funzionale (adottata la posizione più conservativa, Codex) |
+| `/guida`, `/profilo` | `/regno/asgard/...` | **DECISO**: sì, tile Asgard navigabile come hub concettuale (vedi §4bis) |
+| `/catalogo` | **invariata, nessun redirect** | **DECISO da Daniel**: "catalogo è catalogo, Yggdrasil è l'insieme di tutto" — sono due cose concettualmente distinte, non alias. `/catalogo` resta il motore/strumento di catalogazione (creazione, validazione, dettaglio scheda); `/yggdrasil` è la nuova vista di navigazione/scoperta aggregata. Nessun redirect tra i due |
+| `/catalogo/nuovo`, `/catalogo/validazione`, `/catalogo/scheda/:id` | invariate | route operative dello strumento di catalogazione, non contenuto di un regno |
 | `/login`, `/media` | invariate | utility trasversali, nessun impatto routing da questa AT |
 
-**Decisione aperta**: `/catalogo` diventa alias/redirect di `/yggdrasil`, o resta il nome pubblico primario? Tutti e tre i draft segnalano il punto, nessuno lo risolve — spetta a Daniel.
+## 4bis. DECISO da Daniel — Tile Asgard e Svartálfheim navigabili
+
+Confermato: entrambi i regni hanno una route/hub propria (`/regno/asgard`, `/regno/svartalfheim`) anche se non ospitano (Asgard ha comunque `monumenti-cristiani`) o non ospitano affatto (Svartálfheim ha `economico`, ma i componenti tecnici trasversali restano non navigabili) contenuto catalogo esclusivo. Il tile Asgard funge da hub verso Login/Profilo/Guida oltre al catalogo monumenti-cristiani; il tile Svartálfheim funge da hub verso il catalogo economico oltre a mostrare — solo come classificazione concettuale, non come route proprie — i componenti tecnici (Media, AppHeader, BottomNav, ecc., invariato da AF §5).
 
 ---
 
-## 10. Deciso — Migrazione Eventi Legacy (approccio conservativo)
+## 10. DECISO da Daniel — Migrazione Eventi Legacy: tutti in Asgard
 
-Adottato l'approccio di Codex (più cauto di quello di Haiku, che proponeva creazione automatica di schede minime via fuzzy-match): **nessuna creazione automatica di schede senza conferma umana**, perché una scheda richiede categoria, livello di evidenza e responsabilità editoriale — dati che un fuzzy-match testuale non può garantire.
+Procedura aggiornata secondo la decisione di Daniel: per ogni evento storico pubblicato senza scheda collegata, **prima** si tenta il match automatico (nome simile a `luogo`, sopra soglia); se non trovato, l'evento **non resta orfano né va in coda manuale caso per caso**: si collega a una **scheda segnaposto unica**, categoria `monumenti-cristiani`, regno Asgard, creata una tantum per la migrazione (es. nome "Eventi storici — luogo non ancora catalogato", `stato = pubblicato`, `note_migrazione = "scheda segnaposto per migrazione eventi legacy, sostituire con scheda reale se identificata"`). Questo soddisfa la regola 1..N senza richiedere revisione manuale per ogni evento non mappabile; gli eventi collegati alla segnaposto restano identificabili per una pulizia futura (query su `scheda_id = <id_segnaposto>`).
 
 Procedura:
 1. Script dry-run (`scripts/migrate_events_catalogo_links.py --dry-run`)
-2. Per ogni evento pubblicato: cerca schede pubblicate con nome simile a `luogo`; se match univoco sopra soglia, propone il collegamento; altrimenti produce riga CSV "richiede decisione"
-3. Nessuna scheda minima creata automaticamente senza conferma esplicita di Daniel
-4. Esecuzione solo dopo revisione del CSV da parte di Daniel
-5. Blocco pubblicazione per nuovi eventi senza `scheda_ids` (già in vigore da §5)
+2. Match automatico per nome simile a `luogo`, sopra soglia → collega alla scheda reale se trovata
+3. Nessun match → collega alla scheda segnaposto Asgard/monumenti-cristiani (creata in seed, vedi §6bis)
+4. Blocco pubblicazione per nuovi eventi senza `scheda_ids` resta invariato (§5) — la segnaposto vale solo per la migrazione storica, non per nuovi eventi
 
-**Decisione aperta**: eventi legacy non mappabili — lasciarli in `bozza`/`richiesta_modifiche`, collegarli manualmente uno a uno, o creare schede minime con supervisione? Spetta a Daniel dopo aver visto il CSV.
+**Chiuso**: nessuna eccezione per eventi "solo online" — confermato da Daniel che tutti gli eventi della community sono fisici, la regola 1..N resta assoluta senza deroghe.
 
-**Punto aggiuntivo (Codex)**: se Daniel vuole ammettere eventi "solo online" senza luogo fisico, questo modello richiede un'eccezione esplicita alla regola "1..N schede obbligatorie" — da decidere separatamente, non assunto qui.
+**Chiuso**: nessuna delega futura della validazione eventi a ruoli non-admin — resta solo Admin, il punto §11 (vecchio #12) è definitivamente chiuso, non solo rimandato.
 
 ---
 
-## 11. Punti Aperti Consolidati per Daniel
+## 11. Decisioni Finali di Daniel (2026-07-13) — Tutti i Punti Chiusi
 
-| # | Punto | Origine | Impatto |
-|---|---|---|---|
-| 1 | Dove vive la mappa regno→categorie: config statica o tabella DB (§2) | Haiku/Antigravity vs Codex | Architettura |
-| 2 | Assegnazione finale categorie ai regni, specialmente `militare`/`culturale`/`economico`/`monumenti-cristiani` (§3) | Tutti e 3, proposte diverse | Dati/contenuto |
-| 3 | `/catalogo` diventa alias di `/yggdrasil` o resta nome pubblico primario (§9) | Tutti e 3 | Architettura/SEO |
-| 4 | Tile Asgard (Login/Profilo/Guida) e Svartálfheim: navigabili come hub concettuale o solo classificazione, nessuna route propria? | Tutti e 3 | UX |
-| 5 | Identità visiva dei 9 regni (colori, icone) | Haiku | UI/UX, fuori scope AT |
-| 6 | Seed dati iniziale per regni oggi vuoti (Vanaheim, Svartálfheim, Asgard) | Haiku | Contenuto |
-| 7 | Ordine/priorità griglia 9 regni (simmetrico vs gerarchico) | Haiku | UX |
-| 8 | Fauna come sottocategoria di `naturale` in Vanaheim | Haiku/Codex | Dati |
-| 9 | Triggering geolocalizzazione Evento↔Scheda: timing e UX al momento del collegamento | Haiku | UX |
-| 10 | Eventi legacy non mappabili: manuale, schede minime supervisionate, o de-pubblicazione (§10) | Tutti e 3 | Dati |
-| 11 | Eventi "solo online" senza luogo fisico: eccezione alla regola 1..N? | Codex | Regola di business |
-| 12 | Validazione eventi delegabile a non-admin in futuro? | Codex | RBAC futuro |
-| 13 | Esposizione pubblica di `GET /community/regni` (o equivalente) — confermare che non è sensibile | Haiku | Security, basso rischio |
+| # | Punto | Decisione |
+|---|---|---|
+| 1 | Dove vive la mappa regno→categorie | **RISOLTO** — Tabella PostgreSQL (§2). Principio generale: nessun dato funzionale in config statica, solo PostgreSQL |
+| 2 | Assegnazione categorie ai regni | **RISOLTO** — proposta consolidata in §3 |
+| 3 | `/catalogo` vs `/yggdrasil` | **RISOLTO** — restano due cose distinte, nessun redirect (§9) |
+| 4 | Tile Asgard/Svartálfheim navigabili | **RISOLTO** — sì, entrambi navigabili come hub (§4bis) |
+| 5 | Identità visiva dei 9 regni | **RISOLTO** — vedi §5bis: mantenere i colori già usati nel mockup Home condiviso in sessione, stile essenziale invariato, unica modifica: le caselle 3x3 e l'header di ogni pagina-regno passano dal nero a testo bianco al colore proprio del regno |
+| 6 | Seed dati iniziale | **RISOLTO** — proposta in §6bis |
+| 7 | Ordine griglia 9 regni | **RISOLTO** — simmetrico (nessuna gerarchia visiva, griglia 3x3 paritaria, coerente col mockup) |
+| 8 | Fauna come sottocategoria di `naturale` | **RISOLTO** — confermato, sì |
+| 9 | Triggering geolocalizzazione Evento↔Scheda | **RISOLTO** — caricamento differito lato app (lazy, non bloccante al momento del collegamento; le coordinate si risolvono quando l'evento viene visualizzato, non richiedono uno step sincrono dedicato in UI) |
+| 10 | Eventi legacy non mappabili | **RISOLTO** — scheda segnaposto in Asgard (§10) |
+| 11 | Eventi "solo online" | **RISOLTO** — chiuso, non esistono eventi online nella community, nessuna eccezione alla regola 1..N |
+| 12 | Validazione eventi delegabile a non-admin | **RISOLTO** — no, resta solo Admin |
+| 13 | Esposizione pubblica `GET /community/regni` | **RISOLTO** — confermato pubblico, nessun dato sensibile |
+
+Nessun punto aperto residuo. Il documento può procedere alla peer review R9 di sintesi (Codex + Antigravity) prima dell'handoff a sviluppo.
+
+## 5bis. Identità Visiva — Nota per Sviluppo
+
+Mantenere i colori/stile già usati nel mockup Home a 9 regni condiviso in sessione (palette fredda "blu risorgiva" dell'app, un colore distinto per regno). Unica modifica richiesta da Daniel: le caselle della griglia 3x3 e l'header di ogni pagina-regno, oggi previste con sfondo nero e testo bianco nel mockup, diventano invece colorate con il colore proprio di ciascun regno (testo in tinta scura/chiara coerente per contrasto WCAG AA, come da token esistenti `--fn-*`). Resta essenziale, nessun elemento decorativo aggiuntivo.
+
+## 6bis. Seed Dati Iniziale — Proposta
+
+Con la mappatura di §3, la situazione "regni vuoti" è diversa da quella originariamente segnalata da Haiku (Vanaheim/Svartálfheim/Asgard non sono più vuoti):
+
+- **Asgard** (`monumenti-cristiani`): già popolato dal pilot AF-CATALOGAZIONE-001 (nodo zero Sant'Andrea) — nessun seed aggiuntivo necessario, il regno nasce con contenuto reale. Aggiungere qui anche la scheda segnaposto per la migrazione eventi legacy (§10).
+- **Vanaheim** (`naturale`): seed minimo di 2-3 schede esempio sfruttando `tipo_elemento` già supportato (`albero_monumentale`, `siepe_storica`) più le nuove sottocategorie flora/fauna confermate al punto 8.
+- **Helheim** (`storico`+`militare`): seed a partire dai siti già noti in documentazione esistente (obelisco di Villafranca, ossario, fortificazioni austriache — citati in AF-CATALOGAZIONE-001 §1).
+- **Álfheim** (`culturale`): seed iniziale facoltativo; il regno ha comunque contenuto immediato da Canzoniere e dalla pagina Mappa, non dipende dal catalogo per essere popolato al lancio.
+- **Svartálfheim** (`economico`): nessun dato noto ancora raccolto — proposta: lanciare con il regno navigabile ma catalogo vuoto e un messaggio esplicito ("nessuna scheda ancora catalogata in questo regno"), popolamento progressivo da parte della community.
+- **Jötunheim, Muspelheim, Midgard** (nessuna categoria catalogo): nessun seed di catalogo necessario, il contenuto esiste già nelle rispettive pagine applicative.
 
 ---
 
 ## 12. Handoff a Sviluppo (Gemini/Antigravity) — Checklist Consolidata
 
-1. **Decisioni preliminari da Daniel** (§11, punti 1-4 bloccanti prima di scrivere schema/seed definitivo)
-2. **Schema Dati**: `community_event_catalogo_schede` (§4); mappa regno-categorie secondo la decisione presa in §2 (config JSON oppure `struttura_regni`/`struttura_regno_categorie`); estensione `CommunityEvent` (stato/validato_da/validato_at/nota_validazione)
-3. **Backend API**: filtro catalogo esteso (§6, con regola anti-ambiguità); endpoint regni (`GET /community/regni` o equivalente); eventi RBAC completo (§5); allineamento `CatalogoValidazione.jsx` a validatori di dominio, non solo admin (rilievo Codex, §1)
-4. **Frontend React**: `Home.jsx` trasformata, `RegnoDashboard.jsx`, `RegnoSectionRouter.jsx`, `Yggdrasil.jsx`/`YggdrasilCatalogo.jsx`, `CatalogoVista.jsx`, `CatalogoMap.jsx`, `EventForm.jsx` (§8)
+Tutte le decisioni di Daniel sono chiuse (§11) — nessun bloccante residuo prima di scrivere schema/seed definitivo.
+
+1. **Schema Dati**: `community_event_catalogo_schede` (§4); `struttura_regni`/`struttura_regno_categorie` in PostgreSQL, mai config JSON (§2); mapping definitivo di §3; estensione `CommunityEvent` (stato/validato_da/validato_at/nota_validazione); scheda segnaposto Asgard per migrazione eventi legacy (§10)
+2. **Backend API**: filtro catalogo esteso (§6, con regola anti-ambiguità); endpoint `GET /community/regni` pubblico (§13 punto 13); eventi RBAC completo (§5, nessuna delega futura a non-admin); allineamento `CatalogoValidazione.jsx` a validatori di dominio, non solo admin (rilievo Codex, §1)
+3. **Frontend React**: `Home.jsx` trasformata (griglia 3x3 simmetrica, colori per regno secondo §5bis), `RegnoDashboard.jsx` (incluso Asgard/Svartálfheim navigabili, §4bis), `RegnoSectionRouter.jsx`, `Yggdrasil.jsx`/`YggdrasilCatalogo.jsx`, `CatalogoVista.jsx`, `CatalogoMap.jsx`, `EventForm.jsx` (§8)
+4. **Geolocalizzazione Evento↔Scheda**: caricamento differito/lazy lato app, nessuno step sincrono dedicato in UI al momento del collegamento (§11 punto 9)
 5. **Mappa multi-scheda**: marker multipli, popup per scheda (§7)
-6. **Redirect Step 5**: solo client-side per questa iterazione, tabella §9, con correzione `/mappa → /regno/alfheim/mappa`
-7. **Migrazione eventi legacy**: script dry-run, nessuna creazione automatica senza conferma (§10)
-8. **Test** (backend + frontend + manuale): elenco completo già dettagliato nel draft Codex, da riusare integralmente in fase di test plan
-9. **Deploy**: nessuno step di questa migrazione implica deploy automatico; ogni promozione resta soggetta ad autorizzazione esplicita di Daniel in sessione (AGENTS.md R3/R8)
-10. **Peer review R9 su questa sintesi**: Codex e Antigravity/Gemini rileggono AT-STRUTTURA-006 (questo documento, non i singoli draft) e confermano o sollevano nuove riserve prima dell'inizio sviluppo
+6. **Redirect Step 5**: solo client-side per questa iterazione, tabella §9, con correzione `/mappa → /regno/alfheim/mappa`; `/catalogo` NON viene redirezionato (§9)
+7. **Migrazione eventi legacy**: script dry-run + match automatico + fallback su scheda segnaposto Asgard, nessun evento orfano residuo, nessuna coda manuale caso-per-caso (§10)
+8. **Seed iniziale**: secondo proposta §6bis (Asgard già popolato dal pilot, Vanaheim/Helheim con seed minimo, Svartálfheim vuoto con messaggio esplicito)
+9. **Test** (backend + frontend + manuale): elenco completo già dettagliato nel draft Codex, da riusare integralmente in fase di test plan
+10. **Deploy**: nessuno step di questa migrazione implica deploy automatico; ogni promozione resta soggetta ad autorizzazione esplicita di Daniel in sessione (AGENTS.md R3/R8)
+11. **Peer review R9 su questa sintesi aggiornata**: Codex e Antigravity/Gemini rileggono AT-STRUTTURA-006 (questo documento, con le decisioni di Daniel incorporate) e confermano prima dell'inizio sviluppo
 
 ---
 
@@ -276,6 +286,7 @@ Procedura:
 
 | Data | Autore | Attività |
 |---|---|---|
-| 2026-07-13 | Claude/Cowork | Sintesi dei 3 draft indipendenti (Haiku, Codex, Antigravity) in questo documento. 8 punti tecnici risolti per convergenza/adozione della versione più rigorosa; 13 punti aperti consolidati e deduplicati per decisione di Daniel; 1 correzione applicata (redirect `/mappa`, draft Antigravity non coerente con AF §5). |
+| 2026-07-13 | Claude/Cowork | Sintesi dei 3 draft indipendenti (Haiku, Codex, Antigravity) in questo documento. 8 punti tecnici risolti per convergenza/adozione della versione più rigorosa; 1 correzione applicata (redirect `/mappa`, draft Antigravity non coerente con AF §5). |
+| 2026-07-13 | Daniel (decisioni) | Tutti i 13 punti aperti chiusi in un solo passaggio (§11): DB PostgreSQL esclusivo (§2), mapping regno-categorie finale (§3), `/catalogo` e `/yggdrasil` restano distinti (§9), tile Asgard/Svartálfheim navigabili (§4bis), identità visiva colorata per regno (§5bis), seed proposto (§6bis), griglia simmetrica, fauna confermata, geolocalizzazione lazy, migrazione eventi legacy su scheda segnaposto Asgard (§10), nessun evento online, nessuna delega validazione futura, API regni pubblica. |
 
-**Prossimo passo**: Daniel decide i punti bloccanti (§11 #1-4), poi questo documento torna in peer review R9 (Codex + Antigravity) prima dell'handoff a sviluppo.
+**Prossimo passo**: peer review R9 di questa sintesi aggiornata (Codex + Antigravity/Gemini), poi handoff a sviluppo (Gemini/Antigravity).

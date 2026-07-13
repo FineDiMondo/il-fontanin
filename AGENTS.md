@@ -114,6 +114,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-13 | Claude/Cowork | WRITING | develop | files AF claude/AT-STRUTTURA-006* | Incorporazione delle 13 decisioni di Daniel nella sintesi AT-STRUTTURA-006: tutti i punti aperti chiusi |
 
 
 ## STORICO SESSIONI
