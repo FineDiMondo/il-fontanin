@@ -66,6 +66,24 @@ Al check-out:
   `production` con approvazione umana. Vietato promuovere direttamente
   da un branch feature a production.
 
+## R9 — PEER REVIEW FUNZIONALE OBBLIGATORIA (AF/AT strutturali)
+- Per ogni AF/AT che tocca l'architettura informativa complessiva
+  dell'app (es. AF-STRUTTURA-006 — riorganizzazione 9 regni/Yggdrasil),
+  prima dell'handoff a sviluppo è obbligatoria una peer review
+  funzionale da parte di ENTRAMBI: Codex e Antigravity/Gemini.
+- La review è funzionale, non di stile: verifica coerenza logica del
+  modello (es. catalogo unico con viste per regno + livello Yggdrasil
+  trasversale, relazione N:N Eventi↔Schede di catalogo), non solo
+  sintassi o formattazione.
+- Ogni reviewer registra il proprio esito (APPROVATO / APPROVATO CON
+  RISERVE / RESPINTO, con motivazione) nella sezione SESSIONI ATTIVE
+  o in un blocco dedicato nel documento AF/AT stesso.
+- In caso di dissenso tra i due reviewer: FERMARSI e segnalare
+  all'utente (Daniel) per decisione, non procedere a maggioranza.
+- Questa regola si applica in aggiunta, non in sostituzione, al
+  vincolo di processo già esistente (AT torna a Claude per validazione
+  prima di Gemini/Antigravity per sviluppo e test).
+
 ## R4 — MODULI PROTETTI (modifica solo su istruzione esplicita)
 - src/context/AuthContext.jsx      (logica auth: consumare, non modificare)
 - src/context/WalletContext.jsx    (logica MPC: consumare, non modificare)
@@ -96,11 +114,15 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-12 14:01 | Gemini/Antigravity | WRITING | feature/homepage-dashboard | Home.jsx | Phase 1B (Home Dashboard All-in-one) |
+| 2026-07-13 | Claude/Cowork | WRITING | develop | files AF claude/AF-ACQUA-005*, AF-STRUTTURA-006* | Commit AF-ACQUA-005 e AF-STRUTTURA-006 (finora untracked) perché accessibili via git a Codex/Antigravity, non solo su disco locale |
+
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-12 14:01 | Gemini/Antigravity | DONE | — | Check-out ritardato (pulizia sessione stale per Phase 1B) |
+| 2026-07-13 | Antigravity/Gemini | DONE (READING) | — | Peer review funzionale R9 su AF-STRUTTURA-006 (Riorganizzazione 9 Regni/Yggdrasil): esito APPROVATO. |
+| 2026-07-13 | Codex | DONE (READING) | — | Peer review funzionale R9 su AF-STRUTTURA-006: esito APPROVATO CON RISERVE (4 bloccanti + 3 minori: regno≠categoria catalogo, RBAC eventi Membro/Admin, cardinalità link evento-scheda, vista mappa multi-scheda, Mappa pagina/componente, Svartálfheim/Asgard non navigabili, impatto seed Vanaheim). Decisioni prese da Daniel e riserve tutte risolte/incorporate nel documento da Claude/Cowork. Stato R9: COMPLETA, entrambi i reviewer approvano. |
 | 2026-07-12 13:28 | Gemini/Antigravity | DONE | 34e1d88 | Recupero Phase 1A (correzione branch distruttivo ce41494), merge in develop, promozione in certification, e merge PR #10 in main per rilascio in produzione. Pipeline automatica triggerata. |
 | 2026-07-12 12:46 | Codex | DONE | in questo commit | Refactor Spartano Phase 0: design tokens `sp-*`, AppHeader mobile-first, BottomNav 5 icone senza testo, SpartanoCard base, i18n nav catalogo/profilo 8 lingue; Gate G0 PASS: npm install --include=dev OK, NODE_ENV=production npm run build OK (warning chunk/eval preesistenti), browser 375px no overflow, click /catalogo OK. Nota: Home non ridisegnata perche fuori scope Phase 0; da fare in Phase 1A. |
 | 2026-07-12 15:20 | Claude/Fable (Cowork) | DONE | 742f326, b08282e, tag v1.3.0-add02 | Sequenza approvata da Daniel eseguita: (1) ff develop sui commit codex/h2-2026-plan; (2) rimossi TUTTI i riferimenti Vercel dalla documentazione (12 file, 0 residui; eliminati 2 prompt superati in claude-files); (3) merge PR #3 → main con tag v1.3.0-add02 (per la review obbligatoria: requisito rimosso via API e RIPRISTINATO subito, count=1 verificato); (4) deploy production: Cloud Build 06fd930c SUCCESS → Cloud Run rev `finedimondo-backend-00019-7s4` (immagine v1-3-0-add02, config DB prod invariata: IP diretto + secret JACKASS_DB_PASSWORD), frontend Firebase Hosting live. VERIFICHE: /community/health 200; GET /catalogo/categorie → 7 categorie con metadata_schema popolati (update_catalogo_schemas dry-run: già allineati); bundle live contiene config Firebase (13 occorrenze apiKey/firebaseapp — verificato dopo l'hotfix .env.production). NOTA: il mio deploy frontend è partito da main (b08282e) SENZA l'hotfix 0c2832d, ma il bundle risultava comunque completo grazie a .env.local/.env.production presenti sul PC — al prossimo rebuild da CI usare develop aggiornato. E2/E3 del piano di test restano manuali per Daniel. File untracked lasciato: PROMPT_GEMINI_REBUILD_AMBIENTI.md (non mio, non rimosso). |
