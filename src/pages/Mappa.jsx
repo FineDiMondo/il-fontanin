@@ -1,7 +1,8 @@
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, Polygon, Polyline, LayersControl, CircleMarker } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import api from '../api/client.js'
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
 import markerIcon from 'leaflet/dist/images/marker-icon.png'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
@@ -113,6 +114,33 @@ const monumentIcon = L.divIcon({
 export default function Mappa() {
   const { t } = useTranslation()
   const center = useMemo(() => [45.328, 10.8655], [])
+  const [events, setEvents] = useState([])
+  const [schede, setSchede] = useState([])
+
+  useEffect(() => {
+    Promise.all([
+      api.get('/events?upcoming=true&per_page=100').then(r => r.data),
+      api.get('/catalogo/schede?stato=pubblicato').then(r => r.data)
+    ]).then(([evData, schedeData]) => {
+      setEvents(evData)
+      setSchede(schedeData)
+    }).catch(console.error)
+  }, [])
+
+  const eventMarkers = useMemo(() => {
+    return events.flatMap((event) => {
+      if (!event.schede_ids) return []
+      const eventSchede = schede.filter(s => event.schede_ids.includes(s.id) && s.lat && s.lng && !s.is_segnaposto)
+      return eventSchede.map((scheda) => ({
+        key: `${event.id}:${scheda.id}`,
+        eventId: event.id,
+        schedaId: scheda.id,
+        title: event.titolo,
+        schedaNome: scheda.nome,
+        position: [Number(scheda.lat), Number(scheda.lng)],
+      }))
+    })
+  }, [events, schede])
 
   return (
     <div className="app-shell">
@@ -201,6 +229,18 @@ export default function Mappa() {
                 <strong>{t('mappa.parco_tione_title')}</strong><br />{t('mappa.parco_tione_body')}
               </Popup>
             </Polygon>
+
+            {/* Marker degli eventi */}
+            {eventMarkers.map(m => (
+              <Marker key={m.key} position={m.position}>
+                <Popup>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                    <strong className="text-muschio">{m.title}</strong>
+                    <span className="text-xs text-stone-600">📍 {m.schedaNome}</span>
+                  </div>
+                </Popup>
+              </Marker>
+            ))}
 
             {/* Altri punti d'acqua */}
             <CircleMarker center={FOSSA_MORETTA} radius={7} pathOptions={{ color: '#0e7490', fillColor: '#22d3ee', fillOpacity: 0.9, weight: 2 }}>
