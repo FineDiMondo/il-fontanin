@@ -114,12 +114,12 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-13 | Claude/Cowork | WRITING | develop | files AF claude/AT-STRUTTURA-006* | Sintesi dei 3 draft AT (Haiku/Codex/Antigravity) in AT-STRUTTURA-006.md finale; commit dei draft (erano untracked/fuori repo) |
 
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-13 | Claude/Cowork | DONE | 1d1f86d | Sintesi dei 3 draft AT-STRUTTURA-006 (Haiku/Codex/Antigravity) in documento finale: 8 punti tecnici risolti per convergenza, 13 punti aperti consolidati per Daniel, 1 correzione (redirect /mappa, draft Antigravity incoerente con AF SS5). Committati anche i draft Haiku e Antigravity (erano untracked). Working tree pulito. |
 | 2026-07-13 13:19 | Codex | DONE | in questo commit | Draft parallelo AT-STRUTTURA-006 creato in `files AF claude/AT-STRUTTURA-006-DRAFT-CODEX.md`; nessuna modifica al codice, nessun test eseguito perche' documento-only. Durante la sessione e' comparso un draft Antigravity untracked/non mio: non aperto e non toccato. |
 | 2026-07-13 13:20 | Antigravity/Gemini | DONE | - | Draft parallelo AT-STRUTTURA-006 (creato `files AF claude/AT-STRUTTURA-006-DRAFT-ANTIGRAVITY.md`). Nessuna modifica al codice come richiesto. |
 | 2026-07-13 | Claude/Cowork | DONE | 6f2f7ee | Commit di AF-ACQUA-005 e AF-STRUTTURA-006 (erano untracked su disco, non accessibili via git ad altri agenti); incorporate nel testo AF-STRUTTURA-006 le riserve di Codex risolte da Daniel; aggiunta R9 log completo (Gemini APPROVATO, Codex APPROVATO CON RISERVE→RISOLTE). Branch develop, working tree pulito. |
