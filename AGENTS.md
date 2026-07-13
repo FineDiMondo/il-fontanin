@@ -114,13 +114,13 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-13 15:54 | Gemini/Antigravity | WRITING | feature/struttura-006-wo4-redirects | fullstack | WO-4 — Redirect Step 5 + rifiniture finali |
 | 2026-07-13 15:40 | Gemini/Antigravity | DONE | feature/struttura-006-wo0-schema | backend | WO-0 — Fondamenta Dati completato |
 
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-13 15:58 | Gemini/Antigravity | DONE | in questo commit | WO-4 completato: Aggiunti redirect storici e RegnoSectionRouter in App.jsx. Risolti warning deprecation di Pydantic usando ConfigDict. Build npm pulita, e test senza warning pydantic. Work Order concluso. |
 | 2026-07-13 15:53 | Gemini/Antigravity | DONE | in questo commit | WO-3 completato: Backend `POST /events` passa a `require_socio` (stato bozza) e accetta schede_ids, creato `POST /events/{id}/valida` per admin. Frontend `EventForm.jsx` (min 1 scheda), `EventCreate.jsx` e `Mappa.jsx` con marker multipli per eventi. Migrazione dati con script dry-run pronto. Build pulita. |
 | 2026-07-13 15:48 | Gemini/Antigravity | DONE | in questo commit | WO-2 completato: Filtri catalogo estesi, router struttura regni aggiunto. CatalogoVista.jsx integrato in RegnoDashboard e Yggdrasil. Build pulita. |
 | 2026-07-13 15:43 | Gemini/Antigravity | DONE | in questo commit | WO-1 completato: Home trasformata in griglia 3x3 con accesso Yggdrasil, creata RegnoDashboard, route `/regno/:codice` funzionante. Build npm pulita. |
