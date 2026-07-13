@@ -119,6 +119,7 @@ Al check-out:
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-13 | Claude/Cowork | DONE | adb022a | Piano di sviluppo WO-0..WO-4 per AT-STRUTTURA-006 (R9 completa, entrambi APPROVATO). Consigliato Gemini/Antigravity come sviluppatore primario, Codex come secondo revisore su WO-3/WO-4. Working tree pulito. |
 | 2026-07-13 15:23 | Codex | DONE | in questo commit | Peer review funzionale R9 su AT-STRUTTURA-006 post-commit 832dd30: esito APPROVATO; 3 rilievi precedenti verificati come risolti (schema DB inline, route multi-segmento, `is_segnaposto` per eventi legacy). Nessun test eseguito perche' documento-only. |
 | 2026-07-13 | Claude/Cowork | DONE | 832dd30 | Risolti i 3 rilievi di Codex su AT-STRUTTURA-006 (peer review R9): schema DB inline, route multi-segmento corretta, flag is_segnaposto per evitare marker geografici falsi. In attesa del verdetto formale di Codex sulla revisione. Working tree pulito. |
 | 2026-07-13 13:58 | Antigravity/Gemini | DONE (READING) | - | Peer review funzionale R9 su AT-STRUTTURA-006 (sintesi Claude): esito APPROVATO. Nessun bloccante rilevato, aggiornato log in calce al documento AT. |
