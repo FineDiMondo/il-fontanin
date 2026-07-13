@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext.jsx'
 import { WalletProvider } from './context/WalletContext.jsx'
 import Login from './pages/Login.jsx'
@@ -50,41 +50,75 @@ function SocioRoute({ children }) {
   return children
 }
 
+export function RegnoSectionRouter() {
+  const { codice } = useParams()
+  
+  return (
+    <Routes>
+      {/* Route di contenuto migrate */}
+      <Route path="storia" element={<Storia />} />
+      <Route path="research" element={<Research />} />
+      <Route path="forum" element={<Forum />} />
+      <Route path="forum/:slug" element={<ForumCategory />} />
+      <Route path="forum/thread/:id" element={<ForumThread />} />
+      <Route path="chat" element={<SocioRoute><Chat /></SocioRoute>} />
+      <Route path="chat/:slug" element={<SocioRoute><ChatRoom /></SocioRoute>} />
+      <Route path="events" element={<Events />} />
+      <Route path="events/nuovo" element={<SocioRoute><EventCreate /></SocioRoute>} />
+      <Route path="events/:id" element={<EventDetail />} />
+      <Route path="mappa" element={<Mappa />} />
+      <Route path="geologia" element={<Geologia />} />
+      <Route path="analisi-acqua" element={<AnalisiAcqua />} />
+      <Route path="lavori" element={<LavoriProgetto />} />
+      <Route path="media" element={<Media />} />
+      <Route path="canzoniere" element={<Canzoniere />} />
+      <Route path="ricettario" element={<Ricettario />} />
+      
+      {/* Fallback per sezioni inesistenti */}
+      <Route path="*" element={<Navigate to={`/regno/${codice}`} replace />} />
+    </Routes>
+  )
+}
+
 function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<Home />} />
-      <Route path="/forum" element={<Forum />} />
-      <Route path="/forum/:slug" element={<ForumCategory />} />
-      <Route path="/forum/thread/:id" element={<ForumThread />} />
-      <Route path="/chat" element={<SocioRoute><Chat /></SocioRoute>} />
-      <Route path="/chat/:slug" element={<SocioRoute><ChatRoom /></SocioRoute>} />
-      <Route path="/events" element={<Events />} />
-      <Route path="/events/nuovo" element={<SocioRoute><EventCreate /></SocioRoute>} />
-      <Route path="/events/:id" element={<EventDetail />} />
-      <Route path="/research" element={<Research />} />
+      {/* Redirect storici (Step 5) */}
+      <Route path="/storia" element={<Navigate to="/regno/helheim/storia" replace />} />
+      <Route path="/research" element={<Navigate to="/regno/midgard/research" replace />} />
+      <Route path="/forum" element={<Navigate to="/regno/midgard/forum" replace />} />
+      <Route path="/forum/:slug" element={<Navigate to="/regno/midgard/forum" replace />} /> {/* Redirect semplificato per categorie e thread per ora o preservare path intero */}
+      <Route path="/forum/thread/:id" element={<Navigate to="/regno/midgard/forum" replace />} /> {/* Da fixare in futuro con wildcard */}
+      <Route path="/chat" element={<Navigate to="/regno/midgard/chat" replace />} />
+      <Route path="/chat/:slug" element={<Navigate to="/regno/midgard/chat" replace />} />
+      <Route path="/events" element={<Navigate to="/regno/asgard/events" replace />} />
+      <Route path="/events/nuovo" element={<Navigate to="/regno/asgard/events/nuovo" replace />} />
+      <Route path="/events/:id" element={<Navigate to="/regno/asgard/events" replace />} /> {/* Redirige al parent, per evitare /:id mancante in questo momento se non implementato regex */}
+      <Route path="/mappa" element={<Navigate to="/regno/alfheim/mappa" replace />} />
+      <Route path="/geologia" element={<Navigate to="/regno/svartalfheim/geologia" replace />} />
+      <Route path="/analisi-acqua" element={<Navigate to="/regno/niflheim/analisi-acqua" replace />} />
+      <Route path="/lavori" element={<Navigate to="/regno/svartalfheim/lavori" replace />} />
+      <Route path="/media" element={<Navigate to="/regno/vanaheim/media" replace />} />
+      <Route path="/canzoniere" element={<Navigate to="/regno/jotunheim/canzoniere" replace />} />
+      <Route path="/ricettario" element={<Navigate to="/regno/vanaheim/ricettario" replace />} />
+
+      {/* Pagine root che restano (Home, Login, Bar, etc) */}
       <Route path="/bar" element={<Bar />} />
       <Route path="/dona" element={<Dona />} />
       <Route path="/guida" element={<Guida />} />
-      <Route path="/mappa" element={<Mappa />} />
       <Route path="/numeri-utili" element={<NumeriUtili />} />
-      <Route path="/storia" element={<Storia />} />
-      <Route path="/geologia" element={<Geologia />} />
-      <Route path="/analisi-acqua" element={<AnalisiAcqua />} />
-      <Route path="/lavori" element={<LavoriProgetto />} />
-      <Route path="/media" element={<Media />} />
-      <Route path="/canzoniere" element={<Canzoniere />} />
-      <Route path="/ricettario" element={<Ricettario />} />
       
       {/* Rotte Catalogo Territoriale */}
-      <Route path="/catalogo" element={<Catalogo />} />
+      <Route path="/catalogo" element={<Navigate to="/yggdrasil" replace />} />
       <Route path="/catalogo/nuovo" element={<SocioRoute><CatalogoNuovo /></SocioRoute>} />
       <Route path="/catalogo/validazione" element={<SocioRoute><CatalogoValidazione /></SocioRoute>} />
       <Route path="/catalogo/scheda/:id" element={<CatalogoDettaglio />} />
 
       {/* Regni & Yggdrasil */}
       <Route path="/regno/:codice" element={<RegnoDashboard />} />
+      <Route path="/regno/:codice/*" element={<RegnoSectionRouter />} />
       <Route path="/yggdrasil" element={<Yggdrasil />} />
 
       {import.meta.env.VITE_ENABLE_COMPETENZE_FEATURE === 'true' && (

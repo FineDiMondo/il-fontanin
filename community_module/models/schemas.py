@@ -6,7 +6,7 @@ from uuid import UUID
 from datetime import datetime, date
 from decimal import Decimal
 from typing import Optional, List, Any, Dict, Literal
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, ConfigDict
 
 
 # =============================================================================
@@ -40,8 +40,7 @@ class UserPublic(BaseModel):
     bio: Optional[str] = None
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class UserProfile(UserPublic):
     email: str
@@ -62,8 +61,7 @@ class CategoryOut(BaseModel):
     ordine: int
     icona: Optional[str] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # =============================================================================
@@ -88,8 +86,7 @@ class ThreadOut(BaseModel):
     created_at: datetime
     user: UserPublic
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ThreadList(BaseModel):
     id: UUID
@@ -103,8 +100,7 @@ class ThreadList(BaseModel):
     created_at: datetime
     user: UserPublic
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # =============================================================================
@@ -124,8 +120,7 @@ class PostOut(BaseModel):
     edited_at: Optional[datetime] = None
     user: UserPublic
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # =============================================================================
@@ -141,8 +136,7 @@ class RoomOut(BaseModel):
     icona: Optional[str] = None
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class MessageOut(BaseModel):
     id: UUID
@@ -153,8 +147,7 @@ class MessageOut(BaseModel):
     created_at: datetime
     user: UserPublic
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class MessageCreate(BaseModel):
     testo: str = Field(min_length=1, max_length=4000)
@@ -192,8 +185,7 @@ class ExperimentOut(BaseModel):
     ends_at: Optional[datetime] = None
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class SurveyCreate(BaseModel):
     titolo: str
@@ -206,8 +198,7 @@ class SurveyOut(BaseModel):
     domande_json: List[Dict[str, Any]]
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class SurveyResponseSubmit(BaseModel):
     risposte: Dict[str, Any]  # {question_id: risposta}
@@ -245,8 +236,7 @@ class EventOut(BaseModel):
     iscritti: int = 0
     schede_ids: List[UUID] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class RegistrationOut(BaseModel):
     id: UUID
@@ -255,8 +245,7 @@ class RegistrationOut(BaseModel):
     registered_at: datetime
     user: UserPublic
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CheckinOut(BaseModel):
     event_id: UUID
@@ -264,8 +253,7 @@ class CheckinOut(BaseModel):
     checked_in_at: datetime
     metodo: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class LavoriCreate(BaseModel):
     titolo: str
@@ -305,8 +293,7 @@ class LavoriOut(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # =============================================================================
@@ -322,8 +309,7 @@ class NotificationOut(BaseModel):
     link: Optional[str] = None
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # =============================================================================
@@ -376,8 +362,7 @@ class CanzoniereBranoOut(BaseModel):
     versione: int
     creato_da: UUID
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CanzoniereRaccoltaCreate(BaseModel):
     nome: str = Field(min_length=2)
@@ -392,8 +377,7 @@ class CanzoniereRaccoltaOut(BaseModel):
     created_at: datetime
     creato_da: UUID
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # =============================================================================
@@ -444,8 +428,7 @@ class RicettarioRicettaOut(BaseModel):
     creato_da: UUID
     ingredienti: Optional[List[Dict[str, Any]]] = None # per output arricchito
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class RicettarioRaccoltaCreate(BaseModel):
     nome: str = Field(min_length=2)
@@ -460,8 +443,7 @@ class RicettarioRaccoltaOut(BaseModel):
     created_at: datetime
     creato_da: UUID
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # =============================================================================
 # CATALOGAZIONE TERRITORIALE
@@ -473,8 +455,7 @@ class CatalogoSottocategoriaOut(BaseModel):
     nome: str
     ordine: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CatalogoCategoriaOut(BaseModel):
     id: UUID
@@ -484,8 +465,7 @@ class CatalogoCategoriaOut(BaseModel):
     attivo: bool
     sottocategorie: List[CatalogoSottocategoriaOut] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class StrutturaRegnoOut(BaseModel):
     codice: str
@@ -496,8 +476,7 @@ class StrutturaRegnoOut(BaseModel):
     tema_json: Optional[Dict[str, Any]] = None
     categorie: List[CatalogoCategoriaOut] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CatalogoMediaBase(BaseModel):
     tipo: str
@@ -516,8 +495,7 @@ class CatalogoMediaOut(CatalogoMediaBase):
     uploaded_by: Optional[UUID] = None
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CatalogoSchedaBase(BaseModel):
     categoria_id: UUID
@@ -566,8 +544,7 @@ class CatalogoSchedaOut(CatalogoSchedaBase):
     categoria: Optional[CatalogoCategoriaOut] = None
     media: List[CatalogoMediaOut] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # =============================================================================
 # COMPETENZE
@@ -596,8 +573,7 @@ class DominioOut(BaseModel):
     attivo: bool
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CompetenzaDichiarazione(BaseModel):
     livello_dichiarato: str  # nessuna|base|intermedia|esperta
@@ -616,5 +592,4 @@ class CompetenzaOut(BaseModel):
     fonte: Optional[str] = None
     data_ultima_revisione: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

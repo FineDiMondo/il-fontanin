@@ -114,6 +114,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-13 15:54 | Gemini/Antigravity | WRITING | feature/struttura-006-wo4-redirects | fullstack | WO-4 — Redirect Step 5 + rifiniture finali |
 | 2026-07-13 15:40 | Gemini/Antigravity | DONE | feature/struttura-006-wo0-schema | backend | WO-0 — Fondamenta Dati completato |
 
 
