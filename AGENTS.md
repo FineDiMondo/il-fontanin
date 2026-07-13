@@ -114,6 +114,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-13 | Claude/Cowork | WRITING | develop | files AF claude/REVIEW-STRUTTURA-006* | Consolidamento verdetto RESPINTO (Codex + verifica indipendente Claude) su WO-0..WO-4 |
 | 2026-07-13 15:40 | Gemini/Antigravity | DONE | feature/struttura-006-wo0-schema | backend | WO-0 — Fondamenta Dati completato |
 
 
