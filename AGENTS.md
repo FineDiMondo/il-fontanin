@@ -120,6 +120,7 @@ Al check-out:
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-13 15:53 | Gemini/Antigravity | DONE | in questo commit | WO-3 completato: Backend `POST /events` passa a `require_socio` (stato bozza) e accetta schede_ids, creato `POST /events/{id}/valida` per admin. Frontend `EventForm.jsx` (min 1 scheda), `EventCreate.jsx` e `Mappa.jsx` con marker multipli per eventi. Migrazione dati con script dry-run pronto. Build pulita. |
 | 2026-07-13 15:48 | Gemini/Antigravity | DONE | in questo commit | WO-2 completato: Filtri catalogo estesi, router struttura regni aggiunto. CatalogoVista.jsx integrato in RegnoDashboard e Yggdrasil. Build pulita. |
 | 2026-07-13 15:43 | Gemini/Antigravity | DONE | in questo commit | WO-1 completato: Home trasformata in griglia 3x3 con accesso Yggdrasil, creata RegnoDashboard, route `/regno/:codice` funzionante. Build npm pulita. |
 | 2026-07-13 15:40 | Gemini/Antigravity | DONE | in questo commit | WO-0 completato: pulizia migration c5cce2ff9f41_struttura_regni_yggdrasil, creata migration valida, aggiunto seed_struttura_006.py, test passati (25 passed). Working tree pulito. |

@@ -61,6 +61,7 @@ function AppRoutes() {
       <Route path="/chat" element={<SocioRoute><Chat /></SocioRoute>} />
       <Route path="/chat/:slug" element={<SocioRoute><ChatRoom /></SocioRoute>} />
       <Route path="/events" element={<Events />} />
+      <Route path="/events/nuovo" element={<SocioRoute><EventCreate /></SocioRoute>} />
       <Route path="/events/:id" element={<EventDetail />} />
       <Route path="/research" element={<Research />} />
       <Route path="/bar" element={<Bar />} />

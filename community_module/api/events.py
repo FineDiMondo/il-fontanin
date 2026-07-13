@@ -77,6 +77,7 @@ def list_events(
                 "stato": ev.stato, "created_at": ev.created_at,
                 "iscritti": iscritti,
                 "posti_disponibili": (ev.max_partecipanti - iscritti) if ev.max_partecipanti else None,
+                "schede_ids": [s.scheda_id for s in ev.schede_catalogo] if hasattr(ev, 'schede_catalogo') else []
             }
             result.append(EventOut(**ev_dict))
         return result
@@ -110,6 +111,7 @@ def get_event(
             stato=ev.stato, created_at=ev.created_at,
             iscritti=iscritti,
             posti_disponibili=(ev.max_partecipanti - iscritti) if ev.max_partecipanti else None,
+            schede_ids=[s.scheda_id for s in ev.schede_catalogo] if hasattr(ev, 'schede_catalogo') else []
         )
     finally:
         session.close()
@@ -118,8 +120,12 @@ def get_event(
 @router.post("", response_model=EventOut)
 def create_event(
     data: EventCreate,
-    current_user: CommunityUser = Depends(require_admin),
+    current_user: CommunityUser = Depends(require_socio),
 ):
+    from community_module.models.community_models import CommunityEventCatalogoScheda
+    if not data.schede_ids:
+        raise HTTPException(status_code=400, detail="E' richiesta almeno una scheda di catalogo collegata")
+
     session = get_session()
     try:
         ev = CommunityEvent(
@@ -131,10 +137,17 @@ def create_event(
             ends_at=data.ends_at,
             max_partecipanti=data.max_partecipanti,
             pubblico=data.pubblico,
+            stato="bozza" if current_user.ruolo != "admin" else "pubblicato", # L'admin può pubblicare direttamente? Il piano dice "crea bozza". Facciamo sempre bozza tranne se admin? Facciamo bozza per i soci.
             creato_da=current_user.id,
             qr_secret=secrets.token_hex(32),
         )
         session.add(ev)
+        session.flush() # Per avere ev.id
+
+        for s_id in data.schede_ids:
+            rel = CommunityEventCatalogoScheda(event_id=ev.id, scheda_id=s_id)
+            session.add(rel)
+
         session.commit()
         session.refresh(ev)
 
@@ -144,6 +157,44 @@ def create_event(
             starts_at=ev.starts_at, ends_at=ev.ends_at,
             max_partecipanti=ev.max_partecipanti, pubblico=ev.pubblico,
             stato=ev.stato, created_at=ev.created_at, iscritti=0,
+            schede_ids=data.schede_ids
+        )
+    finally:
+        session.close()
+
+@router.post("/{event_id}/valida", response_model=EventOut)
+def valida_event(
+    event_id: UUID,
+    current_user: CommunityUser = Depends(require_admin),
+):
+    from community_module.models.community_models import CommunityEventCatalogoScheda
+    session = get_session()
+    try:
+        ev = session.query(CommunityEvent).filter(CommunityEvent.id == event_id).first()
+        if not ev:
+            raise HTTPException(status_code=404, detail="Evento non trovato")
+        
+        # Validazione >=1 scheda
+        schede_count = session.query(CommunityEventCatalogoScheda).filter(CommunityEventCatalogoScheda.event_id == ev.id).count()
+        if schede_count < 1:
+            raise HTTPException(status_code=400, detail="Impossibile pubblicare: nessuna scheda di catalogo collegata")
+
+        ev.stato = "pubblicato"
+        ev.validato_da = current_user.id
+        ev.validato_at = datetime.now(timezone.utc)
+        
+        session.commit()
+        session.refresh(ev)
+
+        schede_ids = [rel.scheda_id for rel in session.query(CommunityEventCatalogoScheda).filter(CommunityEventCatalogoScheda.event_id == ev.id).all()]
+
+        return EventOut(
+            id=ev.id, titolo=ev.titolo, descrizione=ev.descrizione,
+            luogo=ev.luogo, luogo_online=ev.luogo_online,
+            starts_at=ev.starts_at, ends_at=ev.ends_at,
+            max_partecipanti=ev.max_partecipanti, pubblico=ev.pubblico,
+            stato=ev.stato, created_at=ev.created_at, iscritti=0,
+            schede_ids=schede_ids
         )
     finally:
         session.close()

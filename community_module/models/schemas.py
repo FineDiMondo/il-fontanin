@@ -227,6 +227,7 @@ class EventCreate(BaseModel):
     ends_at: Optional[datetime] = None
     max_partecipanti: Optional[int] = None
     pubblico: bool = True
+    schede_ids: List[UUID] = []
 
 class EventOut(BaseModel):
     id: UUID
@@ -242,6 +243,7 @@ class EventOut(BaseModel):
     created_at: datetime
     posti_disponibili: Optional[int] = None
     iscritti: int = 0
+    schede_ids: List[UUID] = []
 
     class Config:
         from_attributes = True
