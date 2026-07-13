@@ -114,12 +114,12 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-13 | Claude/Cowork | WRITING | develop | files AF claude/AF-ACQUA-005*, AF-STRUTTURA-006* | Commit AF-ACQUA-005 e AF-STRUTTURA-006 (finora untracked) perché accessibili via git a Codex/Antigravity, non solo su disco locale |
 
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-13 | Claude/Cowork | DONE | 6f2f7ee | Commit di AF-ACQUA-005 e AF-STRUTTURA-006 (erano untracked su disco, non accessibili via git ad altri agenti); incorporate nel testo AF-STRUTTURA-006 le riserve di Codex risolte da Daniel; aggiunta R9 log completo (Gemini APPROVATO, Codex APPROVATO CON RISERVE→RISOLTE). Branch develop, working tree pulito. |
 | 2026-07-12 14:01 | Gemini/Antigravity | DONE | — | Check-out ritardato (pulizia sessione stale per Phase 1B) |
 | 2026-07-13 | Antigravity/Gemini | DONE (READING) | — | Peer review funzionale R9 su AF-STRUTTURA-006 (Riorganizzazione 9 Regni/Yggdrasil): esito APPROVATO. |
 | 2026-07-13 | Codex | DONE (READING) | — | Peer review funzionale R9 su AF-STRUTTURA-006: esito APPROVATO CON RISERVE (4 bloccanti + 3 minori: regno≠categoria catalogo, RBAC eventi Membro/Admin, cardinalità link evento-scheda, vista mappa multi-scheda, Mappa pagina/componente, Svartálfheim/Asgard non navigabili, impatto seed Vanaheim). Decisioni prese da Daniel e riserve tutte risolte/incorporate nel documento da Claude/Cowork. Stato R9: COMPLETA, entrambi i reviewer approvano. |
