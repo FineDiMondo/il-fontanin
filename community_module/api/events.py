@@ -122,12 +122,20 @@ def create_event(
     data: EventCreate,
     current_user: CommunityUser = Depends(require_socio),
 ):
-    from community_module.models.community_models import CommunityEventCatalogoScheda
+    from community_module.models.community_models import CommunityEventCatalogoScheda, CatalogoScheda
     if not data.schede_ids:
         raise HTTPException(status_code=400, detail="E' richiesta almeno una scheda di catalogo collegata")
 
     session = get_session()
     try:
+        # P1.4: Verificare che le schede esistano e siano pubblicate
+        schede_db = session.query(CatalogoScheda).filter(
+            CatalogoScheda.id.in_(data.schede_ids),
+            CatalogoScheda.stato == 'pubblicato'
+        ).all()
+        if len(schede_db) != len(data.schede_ids):
+            raise HTTPException(status_code=400, detail="Una o più schede non esistono o non sono pubblicate")
+
         ev = CommunityEvent(
             titolo=data.titolo,
             descrizione=data.descrizione,
@@ -137,7 +145,7 @@ def create_event(
             ends_at=data.ends_at,
             max_partecipanti=data.max_partecipanti,
             pubblico=data.pubblico,
-            stato="bozza" if current_user.ruolo != "admin" else "pubblicato", # L'admin può pubblicare direttamente? Il piano dice "crea bozza". Facciamo sempre bozza tranne se admin? Facciamo bozza per i soci.
+            stato="bozza", # P1.4: Anche gli admin creano in bozza, poi validano
             creato_da=current_user.id,
             qr_secret=secrets.token_hex(32),
         )

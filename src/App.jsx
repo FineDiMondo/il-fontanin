@@ -9,6 +9,7 @@ import ForumThread from './pages/ForumThread.jsx'
 import Chat from './pages/Chat.jsx'
 import ChatRoom from './pages/ChatRoom.jsx'
 import Events from './pages/Events.jsx'
+import EventCreate from './pages/EventCreate.jsx'
 import EventDetail from './pages/EventDetail.jsx'
 import Research from './pages/Research.jsx'
 import Bar from './pages/Bar.jsx'
@@ -50,6 +51,15 @@ function SocioRoute({ children }) {
   return children
 }
 
+import { useLocation } from 'react-router-dom'
+
+function RedirectLegacy({ toBase, fromBase }) {
+  const location = useLocation()
+  // Sostituisce l'inizio del pathname con la nuova base
+  const newPath = location.pathname.replace(new RegExp(`^${fromBase}`), toBase)
+  return <Navigate to={newPath + location.search + location.hash} replace />
+}
+
 export function RegnoSectionRouter() {
   const { codice } = useParams()
   
@@ -85,24 +95,19 @@ function AppRoutes() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<Home />} />
-      {/* Redirect storici (Step 5) */}
-      <Route path="/storia" element={<Navigate to="/regno/helheim/storia" replace />} />
-      <Route path="/research" element={<Navigate to="/regno/midgard/research" replace />} />
-      <Route path="/forum" element={<Navigate to="/regno/midgard/forum" replace />} />
-      <Route path="/forum/:slug" element={<Navigate to="/regno/midgard/forum" replace />} /> {/* Redirect semplificato per categorie e thread per ora o preservare path intero */}
-      <Route path="/forum/thread/:id" element={<Navigate to="/regno/midgard/forum" replace />} /> {/* Da fixare in futuro con wildcard */}
-      <Route path="/chat" element={<Navigate to="/regno/midgard/chat" replace />} />
-      <Route path="/chat/:slug" element={<Navigate to="/regno/midgard/chat" replace />} />
-      <Route path="/events" element={<Navigate to="/regno/asgard/events" replace />} />
-      <Route path="/events/nuovo" element={<Navigate to="/regno/asgard/events/nuovo" replace />} />
-      <Route path="/events/:id" element={<Navigate to="/regno/asgard/events" replace />} /> {/* Redirige al parent, per evitare /:id mancante in questo momento se non implementato regex */}
-      <Route path="/mappa" element={<Navigate to="/regno/alfheim/mappa" replace />} />
-      <Route path="/geologia" element={<Navigate to="/regno/svartalfheim/geologia" replace />} />
-      <Route path="/analisi-acqua" element={<Navigate to="/regno/niflheim/analisi-acqua" replace />} />
-      <Route path="/lavori" element={<Navigate to="/regno/svartalfheim/lavori" replace />} />
-      <Route path="/media" element={<Navigate to="/regno/vanaheim/media" replace />} />
-      <Route path="/canzoniere" element={<Navigate to="/regno/jotunheim/canzoniere" replace />} />
-      <Route path="/ricettario" element={<Navigate to="/regno/vanaheim/ricettario" replace />} />
+      {/* Redirect storici (Step 5) con preservazione path (P1.2) e regni corretti (P1.1) */}
+      <Route path="/storia/*" element={<RedirectLegacy fromBase="/storia" toBase="/regno/helheim/storia" />} />
+      <Route path="/research/*" element={<RedirectLegacy fromBase="/research" toBase="/regno/helheim/research" />} />
+      <Route path="/forum/*" element={<RedirectLegacy fromBase="/forum" toBase="/regno/midgard/forum" />} />
+      <Route path="/chat/*" element={<RedirectLegacy fromBase="/chat" toBase="/regno/midgard/chat" />} />
+      <Route path="/events/*" element={<RedirectLegacy fromBase="/events" toBase="/regno/midgard/events" />} />
+      <Route path="/mappa/*" element={<RedirectLegacy fromBase="/mappa" toBase="/regno/alfheim/mappa" />} />
+      <Route path="/geologia/*" element={<RedirectLegacy fromBase="/geologia" toBase="/regno/vanaheim/geologia" />} />
+      <Route path="/analisi-acqua/*" element={<RedirectLegacy fromBase="/analisi-acqua" toBase="/regno/niflheim/analisi-acqua" />} />
+      <Route path="/lavori/*" element={<RedirectLegacy fromBase="/lavori" toBase="/regno/jotunheim/lavori" />} />
+      <Route path="/media/*" element={<RedirectLegacy fromBase="/media" toBase="/regno/svartalfheim/media" />} />
+      <Route path="/canzoniere/*" element={<RedirectLegacy fromBase="/canzoniere" toBase="/regno/alfheim/canzoniere" />} />
+      <Route path="/ricettario/*" element={<RedirectLegacy fromBase="/ricettario" toBase="/regno/muspelheim/ricettario" />} />
 
       {/* Pagine root che restano (Home, Login, Bar, etc) */}
       <Route path="/bar" element={<Bar />} />
@@ -110,8 +115,8 @@ function AppRoutes() {
       <Route path="/guida" element={<Guida />} />
       <Route path="/numeri-utili" element={<NumeriUtili />} />
       
-      {/* Rotte Catalogo Territoriale */}
-      <Route path="/catalogo" element={<Navigate to="/yggdrasil" replace />} />
+      {/* Rotte Catalogo Territoriale (P1.1: invariata) */}
+      <Route path="/catalogo" element={<Catalogo />} />
       <Route path="/catalogo/nuovo" element={<SocioRoute><CatalogoNuovo /></SocioRoute>} />
       <Route path="/catalogo/validazione" element={<SocioRoute><CatalogoValidazione /></SocioRoute>} />
       <Route path="/catalogo/scheda/:id" element={<CatalogoDettaglio />} />

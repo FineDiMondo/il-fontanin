@@ -233,7 +233,7 @@ Componenti nuovi (nomi consolidati):
 | `src/components/catalogo/CatalogoVista.jsx` | Estrae lista/filtri/mappa da `Catalogo.jsx`, riusabile da RegnoDashboard e Yggdrasil (props: `regnoCodice`, `categorieCodici`, `scope`) |
 | `src/components/catalogo/CatalogoMap.jsx` | Mappa Leaflet riusabile (schede + marker eventi multi-scheda), stesso fix icone di `Mappa.jsx` |
 | `src/components/events/EventForm.jsx` | Form evento con selettore schede obbligatorio (min 1), submit sempre in bozza per soci |
-| `src/hooks/useRegni.js` | Hook per caricare i 9 regni (da config statica o da `GET /community/regni`, a seconda della §2) |
+| `src/hooks/useRegni.js` | Hook per caricare i 9 regni (da config statica o da `GET /community/struttura/regni`, a seconda della §2) |
 
 **Correzione rispetto al draft Antigravity**: quel draft propone il redirect `/mappa → /yggdrasil`, ma questo contraddice la classificazione già fissata in AF-STRUTTURA-006 §5 (Mappa.jsx è contenuto di Álfheim, non di Yggdrasil). Redirect corretto: `/mappa → /regno/alfheim/mappa`. `Mappa.jsx` **resta** pagina di contenuto; il componente mappa riusabile (`CatalogoMap.jsx`) è cosa distinta e tecnica (Svartálfheim concettuale, nessun impatto routing).
 
@@ -310,7 +310,7 @@ Procedura:
 | 10 | Eventi legacy non mappabili | **RISOLTO** — scheda segnaposto in Asgard (§10) |
 | 11 | Eventi "solo online" | **RISOLTO** — chiuso, non esistono eventi online nella community, nessuna eccezione alla regola 1..N |
 | 12 | Validazione eventi delegabile a non-admin | **RISOLTO** — no, resta solo Admin |
-| 13 | Esposizione pubblica `GET /community/regni` | **RISOLTO** — confermato pubblico, nessun dato sensibile |
+| 13 | Esposizione pubblica `GET /community/struttura/regni` | **RISOLTO** — confermato pubblico, nessun dato sensibile |
 
 Nessun punto aperto residuo. Il documento può procedere alla peer review R9 di sintesi (Codex + Antigravity) prima dell'handoff a sviluppo.
 
@@ -336,7 +336,7 @@ Con la mappatura di §3, la situazione "regni vuoti" è diversa da quella origin
 Tutte le decisioni di Daniel sono chiuse (§11) — nessun bloccante residuo prima di scrivere schema/seed definitivo.
 
 1. **Schema Dati**: `community_event_catalogo_schede` (§4); `struttura_regni`/`struttura_regno_categorie` in PostgreSQL, mai config JSON (§2); mapping definitivo di §3; estensione `CommunityEvent` (stato/validato_da/validato_at/nota_validazione); scheda segnaposto Asgard per migrazione eventi legacy (§10)
-2. **Backend API**: filtro catalogo esteso (§6, con regola anti-ambiguità); endpoint `GET /community/regni` pubblico (§13 punto 13); eventi RBAC completo (§5, nessuna delega futura a non-admin); allineamento `CatalogoValidazione.jsx` a validatori di dominio, non solo admin (rilievo Codex, §1)
+2. **Backend API**: filtro catalogo esteso (§6, con regola anti-ambiguità); endpoint `GET /community/struttura/regni` pubblico (§13 punto 13); eventi RBAC completo (§5, nessuna delega futura a non-admin); allineamento `CatalogoValidazione.jsx` a validatori di dominio, non solo admin (rilievo Codex, §1)
 3. **Frontend React**: `Home.jsx` trasformata (griglia 3x3 simmetrica, colori per regno secondo §5bis), `RegnoDashboard.jsx` (incluso Asgard/Svartálfheim navigabili, §4bis), `RegnoSectionRouter.jsx`, `Yggdrasil.jsx`/`YggdrasilCatalogo.jsx`, `CatalogoVista.jsx`, `CatalogoMap.jsx`, `EventForm.jsx` (§8)
 4. **Geolocalizzazione Evento↔Scheda**: caricamento differito/lazy lato app, nessuno step sincrono dedicato in UI al momento del collegamento (§11 punto 9)
 5. **Mappa multi-scheda**: marker multipli, popup per scheda (§7)
