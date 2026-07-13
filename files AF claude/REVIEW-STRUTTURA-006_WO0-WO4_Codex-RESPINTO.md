@@ -81,3 +81,21 @@ Gemini/Antigravity ha corretto tutti i 5 P1 del Round 1 (redirect regno corretti
 **Verifiche eseguite da Claude/Cowork**: lettura diretta di `events.py` (bozza visibility), `App.jsx` (routing completo righe 93-131), `community_models.py` (default stato) — tutti i 4 punti di Codex confermati esatti, nessun finding aggiuntivo trovato questa volta.
 
 **Prossimo passo (Round 2)**: stesso schema del Round 1 — fix a carico di Gemini/Antigravity sui 2 P1 residui (bozza visibility, routing Step 5 completo incl. correzione `/media`), poi terza passata di verifica prima di sbloccare handoff/promozione.
+
+---
+
+## Round 3 — Esito: RESPINTO, 1 P1 residuo (commit `5886c61`/`962d38d`)
+
+Confermato risolto: RBAC `GET /events/{id}` ora controlla anche `stato` (bozze visibili solo ad admin/autore, verificato in `events.py`); default `CommunityEvent.stato="bozza"` nel modello; `/media` correttamente invariata (riga 130 di `App.jsx`, nessun redirect); nuovi test dedicati al flusso eventi (`test_events_flow.py`, 4 passed).
+
+### P1 residuo (confermato da Claude/Cowork sul codice reale)
+
+**Redirect Step 5 verso sezioni mai dichiarate in `RegnoSectionRouter`**. Verificato: `App.jsx` righe 110-114 aggiungono i redirect `/bar/*`→`/regno/muspelheim/bar`, `/dona/*`→`/regno/midgard/dona`, `/numeri-utili/*`→`/regno/midgard/numeri-utili`, `/guida/*`→`/regno/asgard/guida`, `/profilo/*`→`/regno/asgard/profilo`. Ma `RegnoSectionRouter` (righe 63-91) dichiara solo: storia, research, forum, chat, events, mappa, geologia, analisi-acqua, lavori, media, canzoniere, ricettario — **non** bar/dona/numeri-utili/guida/profilo. Chi visita `/bar` viene rediretto a `/regno/muspelheim/bar`, che non trova match tra le route dichiarate e cade nel fallback `<Route path="*" element={<Navigate to={`/regno/${codice}`} />} />` (riga 88): il contenuto reale della pagina (Bar, Dona, Guida, NumeriUtili, Profilo) sparisce, l'utente vede solo la dashboard vuota del regno. Stesso identico difetto per tutte e 5 le route.
+
+**Osservazione aggiuntiva (Claude/Cowork, non nel finding di Codex)**: `/profilo` ha ora due dichiarazioni potenzialmente in conflitto — il redirect incondizionato a riga 114 e una seconda route condizionata a `VITE_ENABLE_COMPETENZE_FEATURE` a righe 132-134 che punta anch'essa a `/regno/asgard/profilo`. Innocuo nella pratica (stessa destinazione), ma codice morto/ridondante da ripulire quando si sistema il P1 sopra.
+
+**P3 (cosmetico, confermato non bloccante)**: trailing whitespace in `events.py`/`test_events_flow.py` — irrilevante ai fini funzionali.
+
+**Verifiche Claude/Cowork**: `python -m pytest tests -q` → 31 passed, 2 skipped (identico a Codex); lettura diretta di `RegnoSectionRouter` vs redirect table in `App.jsx` — mismatch confermato per tutte e 5 le route.
+
+**Prossimo passo (Round 3)**: aggiungere le 5 route mancanti (`bar`, `dona`, `numeri-utili`, `guida`, `profilo`) a `RegnoSectionRouter`, rimuovere la doppia dichiarazione ridondante di `/profilo`, poi quarta passata di verifica.

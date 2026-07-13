@@ -114,6 +114,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-13 | Claude/Cowork | WRITING | fix/struttura-006-peer-review | files AF claude/REVIEW-STRUTTURA-006* | Verifica indipendente Round 3 Codex (RESPINTO): redirect verso sezioni non dichiarate in RegnoSectionRouter |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
