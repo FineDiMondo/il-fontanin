@@ -114,6 +114,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-13 | Claude/Cowork | WRITING | develop | files AF claude/AT-STRUTTURA-006* | Correzione dei 3 rilievi Codex (schema DB inline, route multi-segmento, is_segnaposto per marker eventi legacy) in attesa del suo verdetto formale |
 
 
 ## STORICO SESSIONI

@@ -36,7 +36,45 @@ Confermato da tutti e tre i draft, indipendentemente:
 
 ## 2. DECISO da Daniel (2026-07-13) — Tabella PostgreSQL, niente JSON
 
-Confermata **Opzione B**: `struttura_regni` + `struttura_regno_categorie` (schema Codex, §3.1/3.2 sotto), con `UniqueConstraint` su categoria. Motivazione di Daniel: tutti i dati di business/funzionali dell'app vivono su PostgreSQL (già in uso, nessun costo aggiuntivo), inclusi i campi georeferenziati già presenti sulle schede — nessuna configurazione statica JSON per dati che sono comunque di dominio applicativo. Questa regola vale non solo per la mappa regno→categorie ma come principio generale per qualunque nuovo dato funzionale di questa AT: **PostgreSQL, non file di config statici**, salvo puro tema grafico (colori/icone, vedi §5bis).
+Confermata **Opzione B**: `struttura_regni` + `struttura_regno_categorie`, con `UniqueConstraint` su categoria. Motivazione di Daniel: tutti i dati di business/funzionali dell'app vivono su PostgreSQL (già in uso, nessun costo aggiuntivo), inclusi i campi georeferenziati già presenti sulle schede — nessuna configurazione statica JSON per dati che sono comunque di dominio applicativo. Questa regola vale non solo per la mappa regno→categorie ma come principio generale per qualunque nuovo dato funzionale di questa AT: **PostgreSQL, non file di config statici**, salvo puro tema grafico (colori/icone, vedi §5bis).
+
+**Schema concreto (autosufficiente, non solo riferimento al draft Codex)**:
+
+```python
+class StrutturaRegno(Base):
+    __tablename__ = "struttura_regni"
+
+    codice      = Column(String(40), primary_key=True)  # vanaheim, jotunheim, ...
+    nome        = Column(String(100), nullable=False)
+    descrizione = Column(Text)
+    ordine      = Column(Integer, nullable=False, unique=True)
+    navigabile  = Column(Boolean, nullable=False, default=True)
+    tema_json   = Column(JSONB)  # SOLO tema grafico: colore, icona — non regole di business
+    attivo      = Column(Boolean, nullable=False, default=True)
+    created_at  = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at  = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+
+    categorie   = relationship("StrutturaRegnoCategoria", back_populates="regno")
+
+
+class StrutturaRegnoCategoria(Base):
+    __tablename__ = "struttura_regno_categorie"
+    __table_args__ = (
+        UniqueConstraint("categoria_id", name="uq_regno_categoria_categoria_unica"),
+        Index("ix_regno_categorie_regno", "regno_codice"),
+    )
+
+    id            = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    regno_codice  = Column(String(40), ForeignKey("struttura_regni.codice", ondelete="CASCADE"), nullable=False)
+    categoria_id  = Column(UUID(as_uuid=True), ForeignKey("catalogo_categorie.id", ondelete="CASCADE"), nullable=False)
+    ordine        = Column(Integer, nullable=False, default=0)
+    created_at    = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+    regno         = relationship("StrutturaRegno", back_populates="categorie")
+    categoria     = relationship("CatalogoCategoria")
+```
+
+`UniqueConstraint` su `categoria_id` (non su `regno_codice`+`categoria_id`) è deliberato: impedisce a livello di database che la stessa categoria venga assegnata a due regni, che è esattamente il vincolo funzionale deciso in §3. Un regno può invece aggregare più categorie (es. Helheim: `storico`+`militare`, due righe con lo stesso `regno_codice`).
 
 ---
 
@@ -156,10 +194,33 @@ I tre draft usano nomi leggermente diversi (`/regno/:codice` vs `/regni/:regnoCo
 ```jsx
 <Route path="/" element={<Home />} />                          {/* griglia 9 regni + accesso Yggdrasil */}
 <Route path="/regno/:codice" element={<RegnoDashboard />} />   {/* hub del regno */}
-<Route path="/regno/:codice/:section" element={<RegnoSectionRouter />} />  {/* pagine migrate, Step 5 */}
+<Route path="/regno/:codice/*" element={<RegnoSectionRouter />} />  {/* pagine migrate, Step 5 — vedi correzione sotto */}
 <Route path="/yggdrasil" element={<Yggdrasil />} />
 <Route path="/yggdrasil/catalogo" element={<YggdrasilCatalogo />} />
 ```
+
+**Correzione (rilievo Codex in peer review R9)**: `:section` singolo non copre le route storiche multi-segmento (`/forum/thread/:id`, `/chat/:slug`, `/events/:id`). Corretto in `/regno/:codice/*` (splat React Router v6): `RegnoSectionRouter` riceve il resto del path via `useParams()['*']` e monta al suo interno un secondo `<Routes>` nidificato con le route esplicite del regno, incluse quelle multi-segmento:
+
+```jsx
+function RegnoSectionRouter() {
+  const { codice } = useParams()
+  return (
+    <Routes>
+      <Route path="storia" element={<Storia />} />
+      <Route path="research" element={<Research />} />
+      <Route path="forum" element={<Forum />} />
+      <Route path="forum/:slug" element={<ForumCategory />} />
+      <Route path="forum/thread/:id" element={<ForumThread />} />
+      <Route path="chat" element={<Chat />} />
+      <Route path="chat/:slug" element={<ChatRoom />} />
+      <Route path="events" element={<Events />} />
+      <Route path="events/:id" element={<EventDetail />} />
+      {/* ... resto delle sezioni per regno, una route esplicita per path, non un dizionario generico */}
+    </Routes>
+  )
+}
+```
+Route esplicite (non un dizionario `SECTION_COMPONENTS` generico) per restare coerenti col controllo RBAC per-pagina già esistente (`SocioRoute` dove richiesto) — stessa posizione già presa da Codex nel suo draft per motivi di sicurezza/leggibilità.
 
 Componenti nuovi (nomi consolidati):
 
@@ -214,6 +275,12 @@ Confermato: entrambi i regni hanno una route/hub propria (`/regno/asgard`, `/reg
 ## 10. DECISO da Daniel — Migrazione Eventi Legacy: tutti in Asgard
 
 Procedura aggiornata secondo la decisione di Daniel: per ogni evento storico pubblicato senza scheda collegata, **prima** si tenta il match automatico (nome simile a `luogo`, sopra soglia); se non trovato, l'evento **non resta orfano né va in coda manuale caso per caso**: si collega a una **scheda segnaposto unica**, categoria `monumenti-cristiani`, regno Asgard, creata una tantum per la migrazione (es. nome "Eventi storici — luogo non ancora catalogato", `stato = pubblicato`, `note_migrazione = "scheda segnaposto per migrazione eventi legacy, sostituire con scheda reale se identificata"`). Questo soddisfa la regola 1..N senza richiedere revisione manuale per ogni evento non mappabile; gli eventi collegati alla segnaposto restano identificabili per una pulizia futura (query su `scheda_id = <id_segnaposto>`).
+
+**Correzione tecnica (rilievo Codex in peer review R9)**: `catalogo_schede` richiede `lat`/`lng` NOT NULL — una scheda segnaposto unica avrebbe comunque bisogno di coordinate valide, e usarle per renderizzare un marker reale in mappa produrrebbe un punto geografico falso (tutti gli eventi legacy non mappabili apparirebbero ammassati in un unico luogo inventato). Risoluzione:
+- Aggiungere un campo booleano `is_segnaposto` (default `false`) a `CatalogoScheda` — unico scopo: distinguere schede segnaposto da schede reali, non una nuova regola di business
+- La scheda segnaposto Asgard ha `is_segnaposto = true` e coordinate convenzionali (es. il municipio di riferimento della community, o le coordinate già usate come nodo zero in AF-CATALOGAZIONE-001 — Sant'Andrea), mai presentate come location reale dell'evento
+- `CatalogoMap.jsx`/`RegnoCatalogo`/Yggdrasil: qualunque marker generato da una scheda con `is_segnaposto = true` **non viene renderizzato in mappa** (filtro esplicito lato frontend o lato query `WHERE NOT is_segnaposto` quando si costruiscono i marker)
+- In lista/dettaglio evento, l'evento resta visibile con etichetta esplicita "luogo non ancora catalogato" invece delle coordinate, così l'utente non è indotto a credere che l'evento si sia svolto in quel punto
 
 Procedura:
 1. Script dry-run (`scripts/migrate_events_catalogo_links.py --dry-run`)
@@ -298,3 +365,4 @@ Tutte le decisioni di Daniel sono chiuse (§11) — nessun bloccante residuo pri
 | Data | Reviewer | Esito | Note |
 |---|---|---|---|
 | 2026-07-13 | Antigravity/Gemini | APPROVATO | La sintesi recepisce in modo eccellente tutte le decisioni di Daniel. L'opzione PostgreSQL per la mappa dei regni (invece della config statica che avevo suggerito) garantisce integrità e coerenza con il resto dei dati funzionali. La correzione sulla rotta `/mappa` è giusta e allineata all'AF originale. La strategia per gli eventi legacy (scheda segnaposto Asgard) è un'ottima soluzione per mantenere l'integrità del DB (vincolo 1..N) senza bloccare la migrazione. Procedere allo sviluppo. |
+| 2026-07-13 | Codex | 3 rilievi, non ancora verdetto formale | (1) Schema SQLAlchemy di `struttura_regni`/`struttura_regno_categorie` mancava nel documento finale (solo rimando al draft) — **risolto**, ora inline in §2. (2) `/regno/:codice/:section` non copriva route multi-segmento (forum/thread, chat/:slug, events/:id) — **risolto**, route corretta in `/regno/:codice/*` con `RegnoSectionRouter` a route esplicite nidificate, vedi §8. (3) Scheda segnaposto Asgard richiede comunque `lat`/`lng` validi e rischiava marker geografici falsi per eventi legacy — **risolto**, aggiunto flag `is_segnaposto` che esclude questi marker dal rendering mappa, vedi §10. Codex non ha scritto nel repo per rispetto di R1 (modifica non committata di Antigravity presente al momento della sua lettura, ora committata). In attesa del suo verdetto formale su questa revisione. |
