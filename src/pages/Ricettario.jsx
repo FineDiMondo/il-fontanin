@@ -18,7 +18,7 @@ function RicettaViewer({ ricetta, onBack }) {
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
         </button>
         <div className="flex-1">
-          <h2 className="text-lg font-bold text-nobile truncate leading-tight">{ricetta.nome}</h2>
+          <h2 className="text-lg font-bold text-sp-dark truncate leading-tight">{ricetta.nome}</h2>
           <p className="text-xs text-stone-500">{ricetta.categoria || 'Generale'}</p>
         </div>
       </div>
@@ -29,17 +29,17 @@ function RicettaViewer({ ricetta, onBack }) {
         <div className="flex items-center justify-around bg-white p-4 rounded-xl border border-pietra-border/50 shadow-sm print:shadow-none print:border-stone-300">
           <div className="text-center">
             <span className="block text-xs text-stone-400 uppercase tracking-wider mb-1">Prep</span>
-            <strong className="text-nobile">{ricetta.tempo_prep_min || '?'}m</strong>
+            <strong className="text-sp-dark">{ricetta.tempo_prep_min || '?'}m</strong>
           </div>
           <div className="w-px h-8 bg-stone-100"></div>
           <div className="text-center">
             <span className="block text-xs text-stone-400 uppercase tracking-wider mb-1">Cottura</span>
-            <strong className="text-nobile">{ricetta.tempo_cottura_min || '?'}m</strong>
+            <strong className="text-sp-dark">{ricetta.tempo_cottura_min || '?'}m</strong>
           </div>
           <div className="w-px h-8 bg-stone-100"></div>
           <div className="text-center">
             <span className="block text-xs text-stone-400 uppercase tracking-wider mb-1">Difficoltà</span>
-            <strong className="text-nobile text-sm">{ricetta.difficolta || '-'}</strong>
+            <strong className="text-sp-dark text-sm">{ricetta.difficolta || '-'}</strong>
           </div>
         </div>
 
@@ -163,7 +163,7 @@ export default function Ricettario() {
                 className="text-left bg-white p-4 rounded-xl shadow-sm border border-pietra-border/50 hover:border-oro-light transition-colors"
               >
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-bold text-nobile text-[15px]">{ricetta.nome}</h3>
+                  <h3 className="font-bold text-sp-dark text-[15px]">{ricetta.nome}</h3>
                   {ricetta.categoria && (
                     <span className="text-[10px] uppercase tracking-wider bg-stone-100 text-stone-500 px-2 py-1 rounded">
                       {ricetta.categoria}

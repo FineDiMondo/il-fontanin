@@ -25,7 +25,8 @@
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
-    background: #f3f7f9;
+    background: var(--sp-white);
+    color: var(--sp-dark);
     position: relative;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -36,9 +37,9 @@
       max-width: 1280px;
       height: 95dvh;
       margin: 2.5dvh auto;
-      border-radius: 20px;
-      border: 1px solid #cfdde6;
-      box-shadow: 0 25px 50px -12px rgba(8, 23, 36, 0.14);
+      border-radius: 0;
+      border: 1px solid var(--sp-dark);
+      box-shadow: none;
     }
   }
 
@@ -58,14 +59,14 @@
   }
 
   .stone-card {
-    background: white;
-    border-radius: 14px;
-    border: 0.5px solid #d6e1e8;
+    background: transparent;
+    border-radius: 0;
+    border: 1px solid var(--sp-dark);
     padding: 14px;
   }
 
   .skeleton {
-    background: linear-gradient(90deg, #dfe8ee 25%, #ecf3f7 50%, #dfe8ee 75%);
+    background: linear-gradient(90deg, #e5e5e5 25%, #f5f5f5 50%, #e5e5e5 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
     border-radius: 8px;

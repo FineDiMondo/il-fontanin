@@ -11,6 +11,10 @@ function stemmaFor(label = '') {
   if (l.startsWith('povegliano')) return 'povegliano'
   if (l.startsWith('mozzecane')) return 'mozzecane'
   if (l.startsWith('vigasio')) return 'vigasio'
+  if (l.startsWith('valeggio')) return 'valeggio'
+  if (l.startsWith('erbè') || l.startsWith('erbe')) return 'erbe'
+  if (l.startsWith('trevenzuolo')) return 'trevenzuolo'
+  if (l.startsWith('nogara')) return 'nogara'
   return null
 }
 

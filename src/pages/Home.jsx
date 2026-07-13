@@ -1,151 +1,86 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import AppHeader from '../components/AppHeader.jsx'
-import BottomNav from '../components/BottomNav.jsx'
-import SpartanoCard from '../components/SpartanoCard.jsx'
-import ToastContainer from '../components/Toast.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
-import api from '../api/client.js'
 import { useTranslation } from 'react-i18next'
 
-export default function Home() {
-  const { user } = useAuth()
-  const navigate = useNavigate()
-  const { t } = useTranslation()
-  const [threads, setThreads] = useState([])
-  const [event, setEvent] = useState(null)
-  const [loading, setLoading] = useState(true)
+const REGNI = [
+  { codice: 'asgard', nome: 'Asgard', subtitle: 'Il regno degli Dèi', bg: 'bg-[#1e3a8a]' },
+  { codice: 'vanaheim', nome: 'Vanaheim', subtitle: 'Il regno della Natura', bg: 'bg-[#064e3b]' },
+  { codice: 'alfheim', nome: 'Álfheim', subtitle: 'Luce e Cultura', bg: 'bg-[#0f766e]' },
+  { codice: 'midgard', nome: 'Midgard', subtitle: 'Il regno degli Uomini', bg: 'bg-[#334155]' },
+  { codice: 'jotunheim', nome: 'Jötunheim', subtitle: 'Il regno dei Giganti', bg: 'bg-[#1e40af]' },
+  { codice: 'svartalfheim', nome: 'Svartálfheim', subtitle: 'Nani e Lavoro', bg: 'bg-[#374151]' },
+  { codice: 'niflheim', nome: 'Niflheim', subtitle: 'Ghiaccio e Acqua', bg: 'bg-[#0369a1]' },
+  { codice: 'muspelheim', nome: 'Muspelheim', subtitle: 'Il regno del Fuoco', bg: 'bg-[#581c87]' },
+  { codice: 'helheim', nome: 'Helheim', subtitle: 'Morti e Memoria', bg: 'bg-[#0f172a]' }
+]
 
-  useEffect(() => {
-    async function load() {
-      try {
-        const [eventsRes, threadsRes] = await Promise.allSettled([
-          api.get('/events?upcoming=true&per_page=1'),
-          api.get('/forum/categories/generale/threads?per_page=3'),
-        ])
-        if (eventsRes.status === 'fulfilled' && eventsRes.value.data.length > 0) {
-          setEvent(eventsRes.value.data[0])
-        }
-        if (threadsRes.status === 'fulfilled') {
-          setThreads(threadsRes.value.data)
-        }
-      } finally {
-        setLoading(false)
-      }
-    }
-    load()
-  }, [])
+export default function Home() {
+  const { user: authUser, logout } = useAuth()
+  const user = authUser || { nome: 'daniel', ruolo: 'admin', id: 'mock-123' }
+  const navigate = useNavigate()
+  const { t, i18n } = useTranslation()
 
   return (
-    <div className="app-shell">
-      <ToastContainer />
-      <AppHeader />
-
-      <div className="scroll-content pb-20">
-        <div className="max-w-screen-xl mx-auto w-full px-4 py-4 sm:px-6 lg:px-8">
-
-          {/* 1. Hero Section */}
-          <div className="mb-12">
-            <h1 className="text-xl font-bold text-sp-dark mb-3">
-              {t('home.hero_title', `Ciao ${user?.nome || t('home.visitor', 'volontario')}!`)}
-            </h1>
-            <p className="text-sp-pietra text-lg mb-8">
-              {t('home.hero_subtitle', 'Cosa vuoi fare oggi?')}
-            </p>
-
-            {/* 2. CTA Primaria */}
-            <button
-              onClick={() => navigate('/profilo')}
-              className="w-full bg-sp-oro text-sp-white font-semibold py-4 rounded-md text-lg hover:opacity-90 transition-opacity active:opacity-80"
-            >
-              {t('home.cta_declare', 'Racconta cosa hai fatto')}
-            </button>
-          </div>
-
-          {/* 3. Quick Links */}
-          <div className="mb-12">
-            <h2 className="text-sm text-sp-pietra font-semibold uppercase tracking-wider mb-4">
-              {t('home.quick_links', 'Link Rapidi')}
-            </h2>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-              <SpartanoCard
-                variant="interactive"
-                onClick={() => navigate('/mappa')}
-                title="📍"
-                description={t('home.map_label', 'Mappa')}
-                className="text-center flex flex-col items-center justify-center min-h-24"
-              />
-              <SpartanoCard
-                variant="interactive"
-                onClick={() => navigate('/numeri-utili')}
-                title="📞"
-                description={t('home.numbers_label', 'Numeri Utili')}
-                className="text-center flex flex-col items-center justify-center min-h-24"
-              />
-              <SpartanoCard
-                variant="interactive"
-                onClick={() => navigate('/canzoniere')}
-                title="🎵"
-                description={t('home.canzoniere_label', 'Canzoniere')}
-                className="text-center flex flex-col items-center justify-center min-h-24"
-              />
-              <SpartanoCard
-                variant="interactive"
-                onClick={() => navigate('/ricettario')}
-                title="🍳"
-                description={t('home.ricettario_label', 'Ricettario')}
-                className="text-center flex flex-col items-center justify-center min-h-24"
-              />
-            </div>
-          </div>
-
-          {/* 4. Prossimo Evento */}
-          {event && (
-            <div className="mb-12">
-              <h2 className="text-sm text-sp-pietra font-semibold uppercase tracking-wider mb-4">
-                {t('home.next_event', 'Prossimo Evento')}
-              </h2>
-              <SpartanoCard
-                variant="elevated"
-                onClick={() => navigate(`/events/${event.id}`)}
-                title={event.titolo}
-                description={`${event.starts_at ? new Date(event.starts_at).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' }) : ''} ${event.luogo ? `· ${event.luogo}` : ''}`}
-              />
-            </div>
-          )}
-
-          {/* 5. Bacheca - Ultimi Thread */}
-          <div>
-            <h2 className="text-sm text-sp-pietra font-semibold uppercase tracking-wider mb-4">
-              {t('home.latest_posts', 'Ultimi Post')}
-            </h2>
-            {loading ? (
-              <div className="space-y-4">
-                {[1, 2, 3].map(i => (
-                  <div key={i} className="h-20 bg-sp-white border border-sp-pietra/20 rounded-md animate-pulse" />
-                ))}
-              </div>
-            ) : threads.length === 0 ? (
-              <SpartanoCard description={t('home.empty_posts', 'Nessun post ancora')} />
-            ) : (
-              <div className="space-y-4">
-                {threads.map(thread => (
-                  <SpartanoCard
-                    key={thread.id}
-                    variant="interactive"
-                    onClick={() => navigate(`/forum/categoria/generale/thread/${thread.id}`)}
-                    title={thread.titolo}
-                    description={`${thread.autore || 'Anonimo'} • ${thread.replies_count || 0} risposte`}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-
+    <div className="min-h-screen bg-[#0a0a0a] text-stone-300 font-sans selection:bg-stone-800">
+      
+      {/* Header Spartano */}
+      <header className="flex justify-between items-center px-6 py-4 border-b border-white relative">
+        <div className="text-white font-semibold text-lg tracking-tight">
+          Il Fontanin
         </div>
-      </div>
+        
+        {/* Lingua (Centro) */}
+        <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 text-sm text-white">
+          <button onClick={() => i18n.changeLanguage('it')} className={`uppercase ${i18n.language === 'it' ? 'font-bold text-white' : 'text-stone-400 hover:text-white'}`}>IT</button>
+          <span className="text-stone-600">/</span>
+          <button onClick={() => i18n.changeLanguage('en')} className={`uppercase ${i18n.language === 'en' ? 'font-bold text-white' : 'text-stone-400 hover:text-white'}`}>EN</button>
+        </div>
 
-      <BottomNav />
+        {/* Auth (Destra) */}
+        <div className="flex items-center gap-4 text-sm text-white">
+          {authUser ? (
+            <>
+              <span className="font-medium">{user.nome}</span>
+              <button onClick={logout} className="text-stone-400 hover:text-white">esci</button>
+            </>
+          ) : (
+            <button onClick={() => navigate('/login')} className="font-medium text-white hover:text-stone-300">accedi</button>
+          )}
+        </div>
+      </header>
+
+      <main className="max-w-[1600px] mx-auto p-0">
+        {/* 9 Regni Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          {REGNI.map((regno, idx) => (
+            <button
+              key={regno.codice}
+              onClick={() => navigate(`/regno/${regno.codice}`)}
+              className={`group text-left px-6 py-12 border-r border-b border-white ${regno.bg} hover:brightness-110 transition-all flex flex-col justify-center items-center min-h-[160px] md:min-h-[220px]`}
+            >
+              <div className="text-white font-semibold text-2xl mb-2 group-hover:scale-105 transition-transform text-center">
+                {regno.nome}
+              </div>
+              <div className="text-white/80 text-sm text-center font-medium">
+                {regno.subtitle}
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {/* Yggdrasil Accesso */}
+        <div className="mt-8 px-6 flex justify-center pb-12">
+          <button
+            onClick={() => navigate('/yggdrasil')}
+            className="w-full md:w-1/3 py-6 border border-white bg-transparent hover:bg-stone-900 transition-colors text-white text-lg font-medium tracking-wide flex flex-col items-center justify-center"
+          >
+            <span className="mb-1 uppercase tracking-widest text-sm text-stone-400">Esplora l'albero del mondo</span>
+            Yggdrasil
+          </button>
+        </div>
+
+      </main>
     </div>
   )
 }

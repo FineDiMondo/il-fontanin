@@ -201,29 +201,29 @@ export default function CatalogForm({
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         
         {/* INFO BASE */}
-        <div className="p-4 border border-stone-200 rounded-lg bg-white shadow-sm flex flex-col gap-4">
+        <div className="p-4 border border-stone-700 rounded-lg bg-[#1a1a1a] shadow-sm flex flex-col gap-4">
           <h2 className="font-serif text-lg text-oro">Dati Principali</h2>
           
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-stone-600">Nome Scheda *</label>
+            <label className="text-xs font-semibold text-stone-400">Nome Scheda *</label>
             <input required type="text" name="nome" value={formData.nome} onChange={handleChange} disabled={readOnly}
-              className="border border-stone-300 rounded p-2 text-sm focus:ring-oro" />
+              className="border border-stone-600 bg-transparent text-stone-200 placeholder-stone-500 rounded p-2 text-sm focus:ring-oro" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-semibold text-stone-600">Categoria *</label>
+              <label className="text-xs font-semibold text-stone-400">Categoria *</label>
               <select required name="categoria_id" value={formData.categoria_id} onChange={handleChange} disabled={readOnly}
-                className="border border-stone-300 rounded p-2 text-sm focus:ring-oro">
+                className="border border-stone-600 bg-transparent text-stone-200 placeholder-stone-500 rounded p-2 text-sm focus:ring-oro">
                 <option value="">Seleziona...</option>
                 {categories.map(c => <option key={c.id} value={c.id}>{c.nome}</option>)}
               </select>
             </div>
             
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-semibold text-stone-600">Sottocategoria</label>
+              <label className="text-xs font-semibold text-stone-400">Sottocategoria</label>
               <select name="sottocategoria_id" value={formData.sottocategoria_id} onChange={handleChange} disabled={readOnly || !selCategory}
-                className="border border-stone-300 rounded p-2 text-sm focus:ring-oro">
+                className="border border-stone-600 bg-transparent text-stone-200 placeholder-stone-500 rounded p-2 text-sm focus:ring-oro">
                 <option value="">Nessuna (Generica)</option>
                 {selCategory?.sottocategorie?.map(s => <option key={s.id} value={s.id}>{s.nome}</option>)}
               </select>
@@ -231,20 +231,20 @@ export default function CatalogForm({
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-stone-600">Descrizione</label>
+            <label className="text-xs font-semibold text-stone-400">Descrizione</label>
             <textarea name="descrizione" value={formData.descrizione || ''} onChange={handleChange} disabled={readOnly} rows={4}
-              className="border border-stone-300 rounded p-2 text-sm focus:ring-oro w-full" />
+              className="border border-stone-600 bg-transparent text-stone-200 placeholder-stone-500 rounded p-2 text-sm focus:ring-oro w-full" />
           </div>
           
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-stone-600">Cronologia / Cenni Storici</label>
+            <label className="text-xs font-semibold text-stone-400">Cronologia / Cenni Storici</label>
             <textarea name="cronologia_storica" value={formData.cronologia_storica || ''} onChange={handleChange} disabled={readOnly} rows={3}
-              className="border border-stone-300 rounded p-2 text-sm focus:ring-oro w-full" />
+              className="border border-stone-600 bg-transparent text-stone-200 placeholder-stone-500 rounded p-2 text-sm focus:ring-oro w-full" />
           </div>
         </div>
 
         {/* MAPPA / POSIZIONE */}
-        <div className="p-4 border border-stone-200 rounded-lg bg-white shadow-sm flex flex-col gap-4">
+        <div className="p-4 border border-stone-700 rounded-lg bg-[#1a1a1a] shadow-sm flex flex-col gap-4">
           <h2 className="font-serif text-lg text-oro">Posizione Geografica *</h2>
           <p className="text-xs text-stone-500">Trascina il marker per aggiustare la posizione esatta.</p>
           <div className="h-[300px] w-full rounded overflow-hidden relative z-0 touch-none">
@@ -275,13 +275,13 @@ export default function CatalogForm({
         )}
 
         {/* EVIDENZA E PUBBLICAZIONE */}
-        <div className="p-4 border border-stone-200 rounded-lg bg-white shadow-sm flex flex-col gap-4">
+        <div className="p-4 border border-stone-700 rounded-lg bg-[#1a1a1a] shadow-sm flex flex-col gap-4">
           <h2 className="font-serif text-lg text-oro">Livello Evidenza e Fonti</h2>
           
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-stone-600">{t('catalogo.evidenza.label', 'Livello di certezza (C/D/I/L)')}</label>
+            <label className="text-xs font-semibold text-stone-400">{t('catalogo.evidenza.label', 'Livello di certezza (C/D/I/L)')}</label>
             <select name="evidenza_livello" value={formData.evidenza_livello || ''} onChange={handleChange} disabled={readOnly}
-              className="border border-stone-300 rounded p-2 text-sm focus:ring-oro">
+              className="border border-stone-600 bg-transparent text-stone-200 placeholder-stone-500 rounded p-2 text-sm focus:ring-oro">
               <option value="">{t('catalogo.evidenza.non_specificato', 'Non specificato')}</option>
               {LIVELLI_EVIDENZA.map(sig => (
                 <option key={sig} value={sig}>{sig} - {t(`catalogo.evidenza.${sig}`, sig)}</option>
@@ -293,9 +293,9 @@ export default function CatalogForm({
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-stone-600">Archivio / Fonte di Riferimento</label>
+            <label className="text-xs font-semibold text-stone-400">Archivio / Fonte di Riferimento</label>
             <input type="text" name="evidenza_fonte" value={formData.evidenza_fonte || ''} onChange={handleChange} disabled={readOnly}
-              className="border border-stone-300 rounded p-2 text-sm focus:ring-oro" placeholder="es. Archivio Diocesano Verona" />
+              className="border border-stone-600 bg-transparent text-stone-200 placeholder-stone-500 rounded p-2 text-sm focus:ring-oro" placeholder="es. Archivio Diocesano Verona" />
           </div>
         </div>
 
@@ -314,51 +314,51 @@ export default function CatalogForm({
           <h2 className="font-serif text-lg text-oro">Aggiungi Allegato (Foto/Video/Doc)</h2>
           
           <div className="flex flex-col gap-3">
-            <div className="flex bg-stone-100 p-1 rounded-lg">
-              <button type="button" onClick={() => setMediaTab('upload')} className={`flex-1 text-xs py-2 rounded-md font-semibold transition-colors ${mediaTab === 'upload' ? 'bg-white shadow text-stone-800' : 'text-stone-500'}`}>Scatta / Carica</button>
-              <button type="button" onClick={() => setMediaTab('drive')} className={`flex-1 text-xs py-2 rounded-md font-semibold transition-colors ${mediaTab === 'drive' ? 'bg-white shadow text-stone-800' : 'text-stone-500'}`}>Da Drive</button>
-              <button type="button" onClick={() => setMediaTab('link')} className={`flex-1 text-xs py-2 rounded-md font-semibold transition-colors ${mediaTab === 'link' ? 'bg-white shadow text-stone-800' : 'text-stone-500'}`}>Link (YouTube)</button>
+            <div className="flex bg-[#2a2a2a] p-1 rounded-lg">
+              <button type="button" onClick={() => setMediaTab('upload')} className={`flex-1 text-xs py-2 rounded-md font-semibold transition-colors ${mediaTab === 'upload' ? 'bg-[#3a3a3a] shadow text-oro' : 'text-stone-400'}`}>Scatta / Carica</button>
+              <button type="button" onClick={() => setMediaTab('drive')} className={`flex-1 text-xs py-2 rounded-md font-semibold transition-colors ${mediaTab === 'drive' ? 'bg-[#3a3a3a] shadow text-oro' : 'text-stone-400'}`}>Da Drive</button>
+              <button type="button" onClick={() => setMediaTab('link')} className={`flex-1 text-xs py-2 rounded-md font-semibold transition-colors ${mediaTab === 'link' ? 'bg-[#3a3a3a] shadow text-oro' : 'text-stone-400'}`}>Link (YouTube)</button>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-semibold text-stone-600">Tipo Media</label>
-                <select value={mediaType} onChange={e => setMediaType(e.target.value)} className="border border-stone-300 rounded p-2 text-sm focus:ring-oro">
+                <label className="text-xs font-semibold text-stone-400">Tipo Media</label>
+                <select value={mediaType} onChange={e => setMediaType(e.target.value)} className="border border-stone-600 bg-transparent text-stone-200 placeholder-stone-500 rounded p-2 text-sm focus:ring-oro">
                   <option value="foto">Foto Immagine</option>
                   <option value="video">Video</option>
                   <option value="documento">Documento (PDF/Testo)</option>
                 </select>
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-semibold text-stone-600">Nome / Didascalia</label>
-                <input type="text" value={mediaName} onChange={e => setMediaName(e.target.value)} className="border border-stone-300 rounded p-2 text-sm focus:ring-oro" />
+                <label className="text-xs font-semibold text-stone-400">Nome / Didascalia</label>
+                <input type="text" value={mediaName} onChange={e => setMediaName(e.target.value)} className="border border-stone-600 bg-transparent text-stone-200 placeholder-stone-500 rounded p-2 text-sm focus:ring-oro" />
               </div>
             </div>
 
             {mediaTab === 'upload' && (
               <div className="flex flex-col gap-1 mt-2">
-                <label className="text-xs font-semibold text-stone-600">Seleziona o Scatta dal Telefono (Max 28MB)</label>
+                <label className="text-xs font-semibold text-stone-400">Seleziona o Scatta dal Telefono (Max 28MB)</label>
                 <input 
                   type="file" 
                   accept={mediaType === 'video' ? 'video/*' : mediaType === 'foto' ? 'image/*' : '*/*'} 
                   capture="environment"
                   onChange={handleFileChange}
-                  className="border border-stone-300 rounded p-2 text-sm w-full bg-stone-50 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-oro file:text-white"
+                  className="border border-stone-600 rounded p-2 text-sm w-full bg-transparent text-stone-200 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-oro file:text-white"
                 />
               </div>
             )}
 
             {mediaTab === 'drive' && (
               <div className="flex flex-col gap-1 mt-2">
-                <label className="text-xs font-semibold text-stone-600">ID File Google Drive</label>
-                <input type="text" value={mediaDriveId} onChange={e => setMediaDriveId(e.target.value)} placeholder="es. 1B2a3c4d5e6f7g8h9i0j..." className="border border-stone-300 rounded p-2 text-sm focus:ring-oro" />
+                <label className="text-xs font-semibold text-stone-400">ID File Google Drive</label>
+                <input type="text" value={mediaDriveId} onChange={e => setMediaDriveId(e.target.value)} placeholder="es. 1B2a3c4d5e6f7g8h9i0j..." className="border border-stone-600 bg-transparent text-stone-200 placeholder-stone-500 rounded p-2 text-sm focus:ring-oro" />
               </div>
             )}
 
             {mediaTab === 'link' && (
               <div className="flex flex-col gap-1 mt-2">
-                <label className="text-xs font-semibold text-stone-600">URL Pubblico (es. Link YouTube)</label>
-                <input type="url" value={mediaLink} onChange={e => setMediaLink(e.target.value)} placeholder="https://..." className="border border-stone-300 rounded p-2 text-sm focus:ring-oro" />
+                <label className="text-xs font-semibold text-stone-400">URL Pubblico (es. Link YouTube)</label>
+                <input type="url" value={mediaLink} onChange={e => setMediaLink(e.target.value)} placeholder="https://..." className="border border-stone-600 bg-transparent text-stone-200 placeholder-stone-500 rounded p-2 text-sm focus:ring-oro" />
               </div>
             )}
 

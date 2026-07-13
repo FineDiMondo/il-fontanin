@@ -21,11 +21,11 @@ export default function MetadataFields({ schema, categoriaNome, data, onChange, 
     onChange({ ...valori, [chiave]: valore });
   };
 
-  const inputCls = 'border border-stone-300 rounded p-2 text-sm focus:ring-oro focus:border-oro disabled:bg-stone-100';
+  const inputCls = 'border border-stone-600 bg-transparent text-stone-200 placeholder-stone-500 rounded p-2 text-sm focus:ring-oro focus:border-oro disabled:opacity-50';
 
   return (
-    <div className="flex flex-col gap-4 mt-4 p-4 border rounded-lg bg-stone-50 border-stone-200">
-      <h3 className="font-semibold text-stone-700 text-sm">
+    <div className="flex flex-col gap-4 mt-4 p-4 border rounded-lg bg-[#1a1a1a] border-stone-700">
+      <h3 className="font-semibold text-stone-300 text-sm">
         {t('catalogo.campi_specifici', 'Dati Specifici')}{categoriaNome ? `: ${categoriaNome}` : ''}
       </h3>
 
@@ -35,22 +35,22 @@ export default function MetadataFields({ schema, categoriaNome, data, onChange, 
 
         if (campo.tipo === 'booleano') {
           return (
-            <label key={campo.chiave} className="flex items-center gap-2 text-sm text-stone-700">
+            <label key={campo.chiave} className="flex items-center gap-2 text-sm text-stone-300">
               <input
                 type="checkbox"
                 checked={!!valori[campo.chiave]}
                 onChange={e => setCampo(campo.chiave, e.target.checked)}
                 disabled={readOnly}
-                className="rounded border-stone-300 text-oro focus:ring-oro"
+                className="rounded border-stone-600 bg-transparent text-oro focus:ring-oro"
               />
-              <span className="font-semibold text-xs text-stone-600">{label}{req ? ' *' : ''}</span>
+              <span className="font-semibold text-xs text-stone-400">{label}{req ? ' *' : ''}</span>
             </label>
           );
         }
 
         return (
           <div key={campo.chiave} className="flex flex-col gap-1">
-            <label className="text-xs font-semibold text-stone-600">{label}{req ? ' *' : ''}</label>
+            <label className="text-xs font-semibold text-stone-400">{label}{req ? ' *' : ''}</label>
 
             {campo.tipo === 'scelta' ? (
               <select

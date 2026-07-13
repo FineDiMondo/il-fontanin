@@ -16,6 +16,9 @@ export default function Forum() {
   useEffect(() => {
     api.get('/forum/categories')
       .then(r => setCategories(r.data))
+      .catch(err => {
+        console.error("Errore recupero categorie forum:", err)
+      })
       .finally(() => setLoading(false))
   }, [])
 
@@ -30,40 +33,42 @@ export default function Forum() {
     <div className="app-shell">
       <AppHeader title={t('forum.title')} showBack={false} />
 
-      <div className="scroll-content px-4 py-4 space-y-3">
-        <p className="text-[10px] text-oro-dark uppercase tracking-widest font-medium">{t('forum.categories')}</p>
+      <div className="scroll-content px-4 py-6 space-y-4">
+        <h1 className="font-serif text-3xl font-bold text-white uppercase tracking-wider mb-6">Forum</h1>
+        
+        <p className="text-[10px] text-stone-400 uppercase tracking-widest font-medium border-b border-stone-800 pb-2">{t('forum.categories')}</p>
 
         {loading ? (
-          <LoadingSpinner />
+          <div className="flex justify-center py-12"><div className="animate-spin h-6 w-6 border-b-2 border-white rounded-full"></div></div>
         ) : categories.length === 0 ? (
-          <EmptyState message={t('forum.empty_categories')} />
+          <div className="text-center py-12 text-stone-500 stone-card border-dashed">
+            {t('forum.empty_categories')}
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {categories.map(cat => (
               <button
                 key={cat.id}
                 onClick={() => navigate(`/forum/${cat.slug}`)}
-                className="stone-card w-full text-left flex items-center gap-3 active:scale-[0.98] transition-transform"
+                className="stone-card w-full text-left flex items-center gap-4 hover:border-stone-400 transition-colors"
               >
-                <div className="bg-oro/10 rounded-xl p-2.5 flex-shrink-0">
-                  <svg className="w-5 h-5 text-oro-dark" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+                <div className="border border-stone-600 rounded-none p-3 flex-shrink-0">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d={ICONS[cat.slug] || ICONS.default} />
                   </svg>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-stone-800">{cat.nome}</p>
+                  <p className="text-lg font-serif font-bold text-white">{cat.nome}</p>
                   {cat.descrizione && (
-                    <p className="text-xs text-stone-500 truncate">{cat.descrizione}</p>
+                    <p className="text-xs text-stone-400 truncate mt-1">{cat.descrizione}</p>
                   )}
                 </div>
                 {!cat.pubblica && (
-                  <span className="text-[10px] bg-oro/10 text-oro-dark px-2 py-0.5 rounded-full border border-pietra-border flex-shrink-0">
+                  <span className="text-[9px] border border-stone-600 text-stone-300 px-2 py-0.5 uppercase tracking-widest flex-shrink-0">
                     {t('common.members_only')}
                   </span>
                 )}
-                <svg className="w-4 h-4 text-stone-400 flex-shrink-0 ml-auto" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
+                <span className="text-white ml-2">&rarr;</span>
               </button>
             ))}
           </div>
