@@ -56,6 +56,28 @@
 - `python -m pytest tests/test_struttura_006_wo2.py -q` isolato: 2 failed, riprodotto identico da entrambi i reviewer
 - Ispezione diretta codice: tutti i 7+1 redirect, l'import mancante, la logica RBAC, i `.pyc` — confermati riga per riga
 
-## Prossimo passo
+## Prossimo passo (Round 1)
 
 Nessun handoff a WO successivi né promozione `develop`→`certification` finché i 5 P1 non sono corretti. Il fix è a carico di Gemini/Antigravity (stesso sviluppatore, correzione mirata sui punti 1-5); Codex e Claude/Cowork rifanno una seconda passata di verifica sulla correzione prima di riaprire il flusso.
+
+---
+
+## Round 2 — Esito: RESPINTO, ma molto più vicino (commit `355fa8b`)
+
+Gemini/Antigravity ha corretto tutti i 5 P1 del Round 1 (redirect regno corretti con preservazione path via `RedirectLegacy`, `EventCreate` importato, RBAC bozza/valida, `.pyc` rimossi dal tracking, test WO-2 riparati) — confermato: `python -m pytest tests -q` → 27 passed, 2 skipped. Restano però nuovi bloccanti, tutti verificati indipendentemente da Claude/Cowork sul codice reale:
+
+### P1 — Nuovi/residui
+
+1. **Bozze evento visibili via dettaglio pubblico** (`community_module/api/events.py` riga 98). Verificato: `get_event` controlla solo `if not ev.pubblico and (not current_user or current_user.ruolo == "guest")` — **non controlla mai `ev.stato`**. Un evento in `bozza` con `pubblico=True` è leggibile da chiunque conosca l'UUID, inclusi guest non autenticati. Contraddice l'AT (§5): "GET /events/{id} — pubblico se pubblicato, altrimenti creatore/admin". Manca completamente la clausola stato.
+2. **Routing Step 5 ancora incompleto** (`src/App.jsx`). Verificato riga per riga:
+   - `/bar`, `/dona`, `/guida`, `/numeri-utili`, `/profilo` restano route root (righe 113-130), MAI redirette a `/regno/midgard/...` (dona, numeri-utili) o `/regno/asgard/...` (guida, profilo) come da AT §9
+   - `/media/*` ora reindirizza a `/regno/svartalfheim/media` (riga 108) — **regressione nuova**: il Round 1 aveva sbagliato il regno target, ma la correzione doveva essere "nessun redirect" (AT §9: "`/media` | invariata"), non "redirect al regno giusto". Il fix ha risolto il sintomo sbagliato.
+
+### P2 — Non bloccanti
+
+3. **Default schema eventi incoerente** (`community_module/models/community_models.py` riga 260): `CommunityEvent.stato` default resta `"pubblicato"`, mentre l'AT richiede default `"bozza"`. La route `POST /events` forza comunque `bozza` lato applicativo, quindi il rischio pratico è basso, ma il modello non riflette la regola di business — rischio se in futuro un altro path di scrittura (script, admin panel, migrazione) crea righe senza passare da quella route.
+4. **Gate WO-3 non coperto da test**: confermato, nessun file test per eventi in `tests/` (`test_struttura_006_wo2.py` copre solo WO-2). Il flusso critico — socio crea bozza, guest non vede bozza, admin valida, evento pubblicato compare — non ha mai avuto un test dedicato. Se ci fosse stato, avrebbe intercettato il P1 #1 sopra prima della review manuale.
+
+**Verifiche eseguite da Claude/Cowork**: lettura diretta di `events.py` (bozza visibility), `App.jsx` (routing completo righe 93-131), `community_models.py` (default stato) — tutti i 4 punti di Codex confermati esatti, nessun finding aggiuntivo trovato questa volta.
+
+**Prossimo passo (Round 2)**: stesso schema del Round 1 — fix a carico di Gemini/Antigravity sui 2 P1 residui (bozza visibility, routing Step 5 completo incl. correzione `/media`), poi terza passata di verifica prima di sbloccare handoff/promozione.

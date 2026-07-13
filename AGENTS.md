@@ -114,6 +114,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-13 | Claude/Cowork | WRITING | develop | files AF claude/REVIEW-STRUTTURA-006* | Verifica indipendente Round 2 Codex (RESPINTO): bozza evento visibile, routing Step 5 incompleto, /media regressione |
 | 2026-07-13 15:40 | Gemini/Antigravity | DONE | feature/struttura-006-wo0-schema | backend | WO-0 — Fondamenta Dati completato |
 
 ## STORICO SESSIONI
