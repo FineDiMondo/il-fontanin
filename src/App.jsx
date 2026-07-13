@@ -83,6 +83,13 @@ export function RegnoSectionRouter() {
       <Route path="media" element={<Media />} />
       <Route path="canzoniere" element={<Canzoniere />} />
       <Route path="ricettario" element={<Ricettario />} />
+      <Route path="bar" element={<Bar />} />
+      <Route path="dona" element={<Dona />} />
+      <Route path="guida" element={<Guida />} />
+      <Route path="numeri-utili" element={<NumeriUtili />} />
+      {import.meta.env.VITE_ENABLE_COMPETENZE_FEATURE === 'true' && (
+        <Route path="profilo" element={<SocioRoute><Profilo /></SocioRoute>} />
+      )}
       
       {/* Fallback per sezioni inesistenti */}
       <Route path="*" element={<Navigate to={`/regno/${codice}`} replace />} />
@@ -128,10 +135,6 @@ function AppRoutes() {
 
       {/* Utilities trasversali invariate (AT §9) */}
       <Route path="/media" element={<Media />} />
-
-      {import.meta.env.VITE_ENABLE_COMPETENZE_FEATURE === 'true' && (
-        <Route path="/profilo" element={<Navigate to="/regno/asgard/profilo" replace />} />
-      )}
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

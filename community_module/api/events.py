@@ -97,7 +97,7 @@ def get_event(
             raise HTTPException(status_code=404, detail="Evento non trovato")
         if not ev.pubblico and (not current_user or current_user.ruolo == "guest"):
             raise HTTPException(status_code=403, detail="Evento riservato ai soci")
-        
+
         if ev.stato != "pubblicato":
             if not current_user or (current_user.ruolo != "admin" and current_user.id != ev.creato_da):
                 raise HTTPException(status_code=403, detail="Evento in bozza, visibile solo ad admin e autore")
@@ -185,7 +185,7 @@ def valida_event(
         ev = session.query(CommunityEvent).filter(CommunityEvent.id == event_id).first()
         if not ev:
             raise HTTPException(status_code=404, detail="Evento non trovato")
-        
+
         # Validazione >=1 scheda
         schede_count = session.query(CommunityEventCatalogoScheda).filter(CommunityEventCatalogoScheda.event_id == ev.id).count()
         if schede_count < 1:
@@ -194,7 +194,7 @@ def valida_event(
         ev.stato = "pubblicato"
         ev.validato_da = current_user.id
         ev.validato_at = datetime.now(timezone.utc)
-        
+
         session.commit()
         session.refresh(ev)
 

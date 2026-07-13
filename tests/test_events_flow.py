@@ -50,7 +50,7 @@ def test_get_event_bozza_guest():
 
     with patch('community_module.api.events.get_session', return_value=mock_session):
         response = client.get(f"/community/events/{event_id}")
-    
+
     assert response.status_code == 403
     assert "Evento in bozza" in response.json()["detail"]
 
@@ -67,7 +67,7 @@ def test_get_event_bozza_author():
 
     with patch('community_module.api.events.get_session', return_value=mock_session):
         response = client.get(f"/community/events/{event_id}")
-    
+
     assert response.status_code == 200
     assert response.json()["id"] == str(event_id)
 
@@ -85,7 +85,7 @@ def test_get_event_bozza_admin():
 
     with patch('community_module.api.events.get_session', return_value=mock_session):
         response = client.get(f"/community/events/{event_id}")
-    
+
     assert response.status_code == 200
 
 def test_get_event_pubblicato_guest():
@@ -101,5 +101,5 @@ def test_get_event_pubblicato_guest():
 
     with patch('community_module.api.events.get_session', return_value=mock_session):
         response = client.get(f"/community/events/{event_id}")
-    
+
     assert response.status_code == 200
