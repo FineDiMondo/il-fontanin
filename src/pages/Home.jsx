@@ -1,54 +1,25 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
-import api from '../api/client.js'
 import { useTranslation } from 'react-i18next'
+
+const REGNI = [
+  { codice: 'asgard', nome: 'Asgard', subtitle: 'Il regno degli Dèi', bg: 'bg-[#1e3a8a]' },
+  { codice: 'vanaheim', nome: 'Vanaheim', subtitle: 'Il regno della Natura', bg: 'bg-[#064e3b]' },
+  { codice: 'alfheim', nome: 'Álfheim', subtitle: 'Luce e Cultura', bg: 'bg-[#0f766e]' },
+  { codice: 'midgard', nome: 'Midgard', subtitle: 'Il regno degli Uomini', bg: 'bg-[#334155]' },
+  { codice: 'jotunheim', nome: 'Jötunheim', subtitle: 'Il regno dei Giganti', bg: 'bg-[#1e40af]' },
+  { codice: 'svartalfheim', nome: 'Svartálfheim', subtitle: 'Nani e Lavoro', bg: 'bg-[#374151]' },
+  { codice: 'niflheim', nome: 'Niflheim', subtitle: 'Ghiaccio e Acqua', bg: 'bg-[#0369a1]' },
+  { codice: 'muspelheim', nome: 'Muspelheim', subtitle: 'Il regno del Fuoco', bg: 'bg-[#581c87]' },
+  { codice: 'helheim', nome: 'Helheim', subtitle: 'Morti e Memoria', bg: 'bg-[#0f172a]' }
+]
 
 export default function Home() {
   const { user: authUser, logout } = useAuth()
   const user = authUser || { nome: 'daniel', ruolo: 'admin', id: 'mock-123' }
   const navigate = useNavigate()
   const { t, i18n } = useTranslation()
-
-  const [stats, setStats] = useState({
-    forum: 0,
-    events: 0,
-    catalogo: 0
-  })
-
-  useEffect(() => {
-    // Simuliamo un caricamento statistiche o le omettiamo
-    setStats({
-      forum: 3,
-      events: 1,
-      catalogo: 128
-    })
-  }, [])
-
-  const navItems = [
-    { title: 'Storia', subtitle: '7 comuni', path: '/storia' },
-    { title: 'Mappa', subtitle: 'territorio', path: '/mappa' },
-    { title: 'Catalogo', subtitle: `${stats.catalogo} schede`, path: '/catalogo' },
-    { title: 'Forum', subtitle: `${stats.forum} nuovi`, path: '/forum' },
-    { title: 'Eventi', subtitle: 'sab 11 lug', path: '/events' },
-    { title: 'Canzoniere', subtitle: '42 canti', path: '/canzoniere' },
-    { title: 'Ricettario', subtitle: '18 ricette', path: '/ricettario' },
-    { title: 'Guida', subtitle: '8 lingue', path: '/guida' },
-    { title: 'Profilo', subtitle: 'area personale', path: '/profilo' },
-    { title: 'Chat', subtitle: 'messaggi', path: '/chat' },
-  ]
-
-  const recentItems = [
-    { title: "Fontanile di Sant'Andrea", meta: "idrico · C certo" },
-    { title: "Corte rurale El Palazzo", meta: "storico · D documentato" },
-    { title: "La dama del fosso", meta: "culturale · L leggenda" },
-  ]
-
-  const newsItems = [
-    { title: "Aperta la nuova sezione geologia", meta: "12 lug · admin" },
-    { title: "Completato refactoring design B&W", meta: "11 lug · system" },
-    { title: "Manutenzione programmata server", meta: "09 lug · admin" },
-  ]
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-stone-300 font-sans selection:bg-stone-800">
@@ -79,66 +50,34 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="max-w-[1600px] mx-auto">
-        {/* Grid Navigazione */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 border-b border-white">
-          {navItems.map((item, idx) => (
+      <main className="max-w-[1600px] mx-auto p-0">
+        {/* 9 Regni Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          {REGNI.map((regno, idx) => (
             <button
-              key={item.title}
-              onClick={() => navigate(item.path)}
-              className="group text-left px-6 py-8 border-r border-b lg:border-b-0 border-white hover:bg-stone-900/50 transition-colors"
+              key={regno.codice}
+              onClick={() => navigate(`/regno/${regno.codice}`)}
+              className={`group text-left px-6 py-12 border-r border-b border-white ${regno.bg} hover:brightness-110 transition-all flex flex-col justify-center items-center min-h-[160px] md:min-h-[220px]`}
             >
-              <div className="text-white font-medium text-lg mb-1 group-hover:translate-x-1 transition-transform">
-                {item.title}
+              <div className="text-white font-semibold text-2xl mb-2 group-hover:scale-105 transition-transform text-center">
+                {regno.nome}
               </div>
-              <div className="text-stone-500 text-sm">
-                {item.subtitle}
+              <div className="text-white/80 text-sm text-center font-medium">
+                {regno.subtitle}
               </div>
             </button>
           ))}
         </div>
 
-        {/* Sezione Liste Recenti e News */}
-        <div className="px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-16 max-w-[1600px]">
-          
-          {/* Catalogo */}
-          <div>
-            <div className="text-stone-500 text-sm mb-6">
-              catalogo · pubblicate
-            </div>
-            
-            <div className="flex flex-col">
-              {recentItems.map((item, idx) => (
-                <div 
-                  key={idx} 
-                  className="flex justify-between items-center py-4 border-b border-white hover:bg-stone-900/30 cursor-pointer px-2 -mx-2"
-                >
-                  <div className="text-white font-medium">{item.title}</div>
-                  <div className="text-stone-500 text-sm">{item.meta}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* News */}
-          <div>
-            <div className="text-stone-500 text-sm mb-6">
-              news · bacheca comunicazioni
-            </div>
-            
-            <div className="flex flex-col">
-              {newsItems.map((item, idx) => (
-                <div 
-                  key={idx} 
-                  className="flex justify-between items-center py-4 border-b border-stone-800/60 hover:bg-stone-900/30 cursor-pointer px-2 -mx-2"
-                >
-                  <div className="text-white font-medium">{item.title}</div>
-                  <div className="text-stone-500 text-sm">{item.meta}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
+        {/* Yggdrasil Accesso */}
+        <div className="mt-8 px-6 flex justify-center pb-12">
+          <button
+            onClick={() => navigate('/yggdrasil')}
+            className="w-full md:w-1/3 py-6 border border-white bg-transparent hover:bg-stone-900 transition-colors text-white text-lg font-medium tracking-wide flex flex-col items-center justify-center"
+          >
+            <span className="mb-1 uppercase tracking-widest text-sm text-stone-400">Esplora l'albero del mondo</span>
+            Yggdrasil
+          </button>
         </div>
 
       </main>

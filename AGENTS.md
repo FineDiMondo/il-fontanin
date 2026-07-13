@@ -120,6 +120,7 @@ Al check-out:
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-13 15:43 | Gemini/Antigravity | DONE | in questo commit | WO-1 completato: Home trasformata in griglia 3x3 con accesso Yggdrasil, creata RegnoDashboard, route `/regno/:codice` funzionante. Build npm pulita. |
 | 2026-07-13 15:40 | Gemini/Antigravity | DONE | in questo commit | WO-0 completato: pulizia migration c5cce2ff9f41_struttura_regni_yggdrasil, creata migration valida, aggiunto seed_struttura_006.py, test passati (25 passed). Working tree pulito. |
 | 2026-07-13 | Claude/Cowork | DONE | adb022a | Piano di sviluppo WO-0..WO-4 per AT-STRUTTURA-006 (R9 completa, entrambi APPROVATO). Consigliato Gemini/Antigravity come sviluppatore primario, Codex come secondo revisore su WO-3/WO-4. Working tree pulito. |
 | 2026-07-13 15:23 | Codex | DONE | in questo commit | Peer review funzionale R9 su AT-STRUTTURA-006 post-commit 832dd30: esito APPROVATO; 3 rilievi precedenti verificati come risolti (schema DB inline, route multi-segmento, `is_segnaposto` per eventi legacy). Nessun test eseguito perche' documento-only. |

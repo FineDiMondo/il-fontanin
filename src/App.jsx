@@ -28,6 +28,7 @@ import CatalogoNuovo from './pages/CatalogoNuovo';
 import CatalogoDettaglio from './pages/CatalogoDettaglio';
 import CatalogoValidazione from './pages/CatalogoValidazione';
 import Profilo from './pages/Profilo.jsx';
+import RegnoDashboard from './pages/RegnoDashboard.jsx';
 import { MediaProvider } from './context/MediaContext.jsx'
 import LoadingSpinner from './components/LoadingSpinner.jsx'
 
@@ -79,6 +80,10 @@ function AppRoutes() {
       <Route path="/catalogo/nuovo" element={<SocioRoute><CatalogoNuovo /></SocioRoute>} />
       <Route path="/catalogo/validazione" element={<SocioRoute><CatalogoValidazione /></SocioRoute>} />
       <Route path="/catalogo/scheda/:id" element={<CatalogoDettaglio />} />
+
+      {/* Regni & Yggdrasil */}
+      <Route path="/regno/:codice" element={<RegnoDashboard />} />
+      <Route path="/yggdrasil" element={<div className="text-white p-6">Yggdrasil - In arrivo</div>} />
 
       {import.meta.env.VITE_ENABLE_COMPETENZE_FEATURE === 'true' && (
         <Route path="/profilo" element={<SocioRoute><Profilo /></SocioRoute>} />
