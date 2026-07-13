@@ -114,11 +114,11 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-13 | Claude/Cowork | WRITING | fix/struttura-006-peer-review | files AF claude/REVIEW-STRUTTURA-006* | Verifica indipendente Round 3 Codex (RESPINTO): redirect verso sezioni non dichiarate in RegnoSectionRouter |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-13 | Claude/Cowork | DONE | 41b9559 | Verifica indipendente Round 3 di Codex: confermato il P1 residuo (redirect verso sezioni bar/dona/numeri-utili/guida/profilo non dichiarate in RegnoSectionRouter, fallback su dashboard vuota) + osservazione aggiuntiva su doppia dichiarazione /profilo. Test riconfermati 31 passed/2 skipped. Working tree pulito. |
 | 2026-07-13 17:08 | Codex | DONE | in questo commit | Peer review Round 3 su fix Antigravity `5886c61`/`962d38d` per AT-STRUTTURA-006: esito RESPINTO con 1 P1 residuo. Verificati risolti: RBAC `GET /events/{id}` (bozze visibili solo ad admin/autore), default `CommunityEvent.stato="bozza"`, `/media` invariata, test eventi aggiunti. P1 residuo: redirect Step 5 per `/bar`, `/dona`, `/numeri-utili`, `/guida`, `/profilo` puntano a `/regno/...` ma `RegnoSectionRouter` non dichiara queste sezioni, quindi cadono nel fallback dashboard e non preservano davvero le pagine legacy. P3: trailing whitespace in `events.py` e `test_events_flow.py` (`git diff --check`). Verifiche: `python -m pytest tests/test_events_flow.py -q` 4 passed; `python -m pytest tests -q` 31 passed, 2 skipped; `npm run build` OK con soli warning preesistenti chunk/eval. Working tree pulito dopo commit. |
 | 2026-07-13 16:54 | Gemini/Antigravity | DONE | 5886c61 | Fix P1/P2 da Round 2 Code Review: default `stato`="bozza" in `CommunityEvent`, RBAC su `get_event` in `events.py` corretto (solo admin/autore vedono bozze), aggiunti test dedicati in `test_events_flow.py`, redirect in `App.jsx` corretti secondo AT. Test passati (4 passed). Working tree pulito. |
 | 2026-07-13 15:40 | Gemini/Antigravity | DONE | feature/struttura-006-wo0-schema | WO-0 — Fondamenta Dati completato |
