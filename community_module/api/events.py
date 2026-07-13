@@ -97,6 +97,10 @@ def get_event(
             raise HTTPException(status_code=404, detail="Evento non trovato")
         if not ev.pubblico and (not current_user or current_user.ruolo == "guest"):
             raise HTTPException(status_code=403, detail="Evento riservato ai soci")
+        
+        if ev.stato != "pubblicato":
+            if not current_user or (current_user.ruolo != "admin" and current_user.id != ev.creato_da):
+                raise HTTPException(status_code=403, detail="Evento in bozza, visibile solo ad admin e autore")
 
         iscritti = session.query(EventRegistration).filter(
             EventRegistration.event_id == ev.id,

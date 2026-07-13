@@ -257,7 +257,7 @@ class CommunityEvent(Base):
     ends_at            = Column(DateTime(timezone=True))
     max_partecipanti   = Column(Integer)
     pubblico           = Column(Boolean, nullable=False, default=True)
-    stato              = Column(String(20), nullable=False, default="pubblicato")
+    stato              = Column(String(20), nullable=False, default="bozza")
     creato_da          = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
     qr_secret          = Column(String(64), unique=True)
     validato_da        = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))

@@ -105,15 +105,15 @@ function AppRoutes() {
       <Route path="/geologia/*" element={<RedirectLegacy fromBase="/geologia" toBase="/regno/vanaheim/geologia" />} />
       <Route path="/analisi-acqua/*" element={<RedirectLegacy fromBase="/analisi-acqua" toBase="/regno/niflheim/analisi-acqua" />} />
       <Route path="/lavori/*" element={<RedirectLegacy fromBase="/lavori" toBase="/regno/jotunheim/lavori" />} />
-      <Route path="/media/*" element={<RedirectLegacy fromBase="/media" toBase="/regno/svartalfheim/media" />} />
       <Route path="/canzoniere/*" element={<RedirectLegacy fromBase="/canzoniere" toBase="/regno/alfheim/canzoniere" />} />
       <Route path="/ricettario/*" element={<RedirectLegacy fromBase="/ricettario" toBase="/regno/muspelheim/ricettario" />} />
+      <Route path="/bar/*" element={<RedirectLegacy fromBase="/bar" toBase="/regno/muspelheim/bar" />} />
+      <Route path="/dona/*" element={<RedirectLegacy fromBase="/dona" toBase="/regno/midgard/dona" />} />
+      <Route path="/numeri-utili/*" element={<RedirectLegacy fromBase="/numeri-utili" toBase="/regno/midgard/numeri-utili" />} />
+      <Route path="/guida/*" element={<RedirectLegacy fromBase="/guida" toBase="/regno/asgard/guida" />} />
+      <Route path="/profilo/*" element={<RedirectLegacy fromBase="/profilo" toBase="/regno/asgard/profilo" />} />
 
-      {/* Pagine root che restano (Home, Login, Bar, etc) */}
-      <Route path="/bar" element={<Bar />} />
-      <Route path="/dona" element={<Dona />} />
-      <Route path="/guida" element={<Guida />} />
-      <Route path="/numeri-utili" element={<NumeriUtili />} />
+      {/* Pagine root che restano (Home, Login, utility trasversali) */}
       
       {/* Rotte Catalogo Territoriale (P1.1: invariata) */}
       <Route path="/catalogo" element={<Catalogo />} />
@@ -126,8 +126,11 @@ function AppRoutes() {
       <Route path="/regno/:codice/*" element={<RegnoSectionRouter />} />
       <Route path="/yggdrasil" element={<Yggdrasil />} />
 
+      {/* Utilities trasversali invariate (AT §9) */}
+      <Route path="/media" element={<Media />} />
+
       {import.meta.env.VITE_ENABLE_COMPETENZE_FEATURE === 'true' && (
-        <Route path="/profilo" element={<SocioRoute><Profilo /></SocioRoute>} />
+        <Route path="/profilo" element={<Navigate to="/regno/asgard/profilo" replace />} />
       )}
 
       <Route path="*" element={<Navigate to="/" replace />} />
