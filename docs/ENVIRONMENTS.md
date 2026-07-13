@@ -46,12 +46,12 @@ workflow passa solo il nome del secret.
 
 | Variabile | Esempio develop | Esempio certification | Production attuale |
 |---|---|---|---|
-| `CLOUDSQL_INSTANCE` | `freedomrun-491323:europe-west1:jackass-verona-develop` | `freedomrun-491323:europe-west1:jackass-verona-certification` | `freedomrun-491323:europe-west1:jackass-verona` |
-| `JACKASS_DB_HOST` | `34.77.188.122` | `35.205.224.40` | `35.241.200.140` |
+| `CLOUDSQL_INSTANCE` | `freedomrun-491323:europe-west1:jackass-verona` | `freedomrun-491323:europe-west1:jackass-verona` | `freedomrun-491323:europe-west1:jackass-verona` |
+| `JACKASS_DB_HOST` | `35.241.200.140` | `35.241.200.140` | `35.241.200.140` |
 | `JACKASS_DB_PORT` | `5432` | `5432` | `5432` |
 | `JACKASS_DB_USER` | `jackass_admin` | `jackass_admin` | `jackass_admin` |
-| `JACKASS_DB_NAME` | `jackass_verona` | `jackass_verona` | `jackass_verona` |
-| `JACKASS_DB_PASSWORD_SECRET` | `JACKASS_DB_PASSWORD_DEVELOP` | `JACKASS_DB_PASSWORD_CERTIFICATION` | `JACKASS_DB_PASSWORD` |
+| `JACKASS_DB_NAME` | `jackass_verona_develop` | `jackass_verona_certification` | `jackass_verona` |
+| `JACKASS_DB_PASSWORD_SECRET` | `JACKASS_DB_PASSWORD` | `JACKASS_DB_PASSWORD` | `JACKASS_DB_PASSWORD` |
 | `GOOGLE_CLOUD_PROJECT` | `el-fontanin` | `el-fontanin` | `el-fontanin` |
 | `VITE_API_BASE_URL` | `https://finedimondo-backend-develop-558649366501.europe-west1.run.app` | `https://finedimondo-backend-certification-558649366501.europe-west1.run.app` | `https://finedimondo-backend-vqytacm7la-ew.a.run.app` |
 
@@ -80,13 +80,13 @@ Build/GCloud e Firebase preview channel.
 | Campo | Valore |
 |---|---|
 | Stato | attivo, schema applicativo creato e seed categorie allineato |
-| Cloud SQL instance | `jackass-verona-develop` |
-| Cloud SQL console | https://console.cloud.google.com/sql/instances/jackass-verona-develop/overview?project=freedomrun-491323 |
-| Host pubblico configurato | `34.77.188.122` |
-| Database applicativo configurato | `jackass_verona` |
+| Cloud SQL instance | `jackass-verona` |
+| Cloud SQL console | https://console.cloud.google.com/sql/instances/jackass-verona/overview?project=freedomrun-491323 |
+| Host pubblico configurato | `35.241.200.140` |
+| Database applicativo configurato | `jackass_verona_develop` |
 | User applicativo configurato | `jackass_admin` |
-| Secret password | https://console.cloud.google.com/security/secret-manager/secret/JACKASS_DB_PASSWORD_DEVELOP/versions?project=freedomrun-491323 |
-| DSN template | `postgresql://jackass_admin:<JACKASS_DB_PASSWORD_DEVELOP>@34.77.188.122:5432/jackass_verona` |
+| Secret password | https://console.cloud.google.com/security/secret-manager/secret/JACKASS_DB_PASSWORD/versions?project=freedomrun-491323 |
+| DSN template | `postgresql://jackass_admin:<JACKASS_DB_PASSWORD>@35.241.200.140:5432/jackass_verona_develop` |
 
 ## 5. Certification
 
@@ -113,13 +113,13 @@ Build/GCloud e Firebase preview channel.
 | Campo | Valore |
 |---|---|
 | Stato | attivo, schema applicativo creato e seed categorie allineato |
-| Cloud SQL instance | `jackass-verona-certification` |
-| Cloud SQL console | https://console.cloud.google.com/sql/instances/jackass-verona-certification/overview?project=freedomrun-491323 |
-| Host pubblico configurato | `35.205.224.40` |
-| Database applicativo configurato | `jackass_verona` |
+| Cloud SQL instance | `jackass-verona` |
+| Cloud SQL console | https://console.cloud.google.com/sql/instances/jackass-verona/overview?project=freedomrun-491323 |
+| Host pubblico configurato | `35.241.200.140` |
+| Database applicativo configurato | `jackass_verona_certification` |
 | User applicativo configurato | `jackass_admin` |
-| Secret password | https://console.cloud.google.com/security/secret-manager/secret/JACKASS_DB_PASSWORD_CERTIFICATION/versions?project=freedomrun-491323 |
-| DSN template | `postgresql://jackass_admin:<JACKASS_DB_PASSWORD_CERTIFICATION>@35.205.224.40:5432/jackass_verona` |
+| Secret password | https://console.cloud.google.com/security/secret-manager/secret/JACKASS_DB_PASSWORD/versions?project=freedomrun-491323 |
+| DSN template | `postgresql://jackass_admin:<JACKASS_DB_PASSWORD>@35.241.200.140:5432/jackass_verona_certification` |
 
 ## 6. Production
 
@@ -178,6 +178,6 @@ dedicato prima di creare ambienti separati.
 - Fatto: GitHub Environment `develop`, `certification`, `production`.
 - Fatto: required reviewers su `certification` e `production`.
 - Fatto: servizi Cloud Run dedicati per `develop` e `certification`.
-- Fatto: istanze Cloud SQL separate per `develop` e `certification`.
-- Fatto: secret DB separati per non-prod, ripubblicati senza newline finale.
+- Fatto: istanze Cloud SQL consolidate in una singola istanza `jackass-verona`.
+- Fatto: secret DB consolidato in `JACKASS_DB_PASSWORD`.
 - Fatto: variabile frontend `VITE_API_BASE_URL` per ogni stage.

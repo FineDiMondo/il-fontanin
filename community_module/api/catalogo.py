@@ -50,13 +50,21 @@ def get_categorie(session: Session = Depends(get_db_session)):
 @router.get("/schede", response_model=List[CatalogoSchedaOut])
 def get_schede(
     categoria_id: Optional[UUID] = None,
+    regno_codice: Optional[str] = Query(None, description="Filtra per codice regno"),
+    categoria_codice: Optional[str] = Query(None, description="Filtra per codice categoria"),
+    categorie: Optional[str] = Query(None, description="Lista codici categoria (comma-separated)"),
     stato: str = Query("pubblicato", description="Filtro per stato"),
     bbox: Optional[str] = Query(None, description="Bounding box 'min_lng,min_lat,max_lng,max_lat'"),
     session: Session = Depends(get_db_session),
     current_user: Optional[CommunityUser] = Depends(get_current_user_optional)
 ):
     from sqlalchemy import and_, or_
-    from community_module.models.community_models import CompetenzaDominio, CompetenzaUtente
+    from community_module.models.community_models import CompetenzaDominio, CompetenzaUtente, StrutturaRegnoCategoria
+
+    # Regola anti-ambiguità: al massimo un filtro di categorizzazione
+    filtri_forniti = sum(1 for x in [categoria_id, regno_codice, categoria_codice, categorie] if x is not None)
+    if filtri_forniti > 1:
+        raise HTTPException(status_code=400, detail="Fornire solo uno tra categoria_id, regno_codice, categoria_codice o categorie")
 
     # Se lo stato non è 'pubblicato', l'utente DEVE essere autenticato
     if stato != "pubblicato":
@@ -86,7 +94,18 @@ def get_schede(
 
     if categoria_id:
         query = query.filter(CatalogoScheda.categoria_id == categoria_id)
-
+    elif categoria_codice:
+        query = query.join(CatalogoCategoria).filter(CatalogoCategoria.codice == categoria_codice)
+    elif categorie:
+        codici = [c.strip() for c in categorie.split(",") if c.strip()]
+        if codici:
+            query = query.join(CatalogoCategoria).filter(CatalogoCategoria.codice.in_(codici))
+    elif regno_codice:
+        # Trova tutte le categorie associate a questo regno
+        query = query.join(
+            StrutturaRegnoCategoria, 
+            CatalogoScheda.categoria_id == StrutturaRegnoCategoria.categoria_id
+        ).filter(StrutturaRegnoCategoria.regno_codice == regno_codice)
     if bbox:
         try:
             min_lng, min_lat, max_lng, max_lat = map(float, bbox.split(","))

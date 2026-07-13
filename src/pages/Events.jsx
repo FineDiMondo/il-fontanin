@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import AppHeader from '../components/AppHeader.jsx'
 import BottomNav from '../components/BottomNav.jsx'
+import { useAuth } from '../context/AuthContext.jsx'
 import { SkeletonCard } from '../components/LoadingSpinner.jsx'
 import EmptyState from '../components/EmptyState.jsx'
 import api from '../api/client.js'
@@ -16,6 +17,7 @@ export default function Events() {
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
   const { t, i18n } = useTranslation()
+  const { user } = useAuth()
 
   useEffect(() => {
     api.get('/events?upcoming=true&per_page=20')
@@ -28,6 +30,15 @@ export default function Events() {
       <AppHeader title={t('events.title')} showBack={false} />
 
       <div className="scroll-content px-4 py-4 space-y-3">
+        {user && user.ruolo !== 'guest' && (
+          <Link 
+            to="/events/nuovo"
+            className="block w-full bg-muschio/10 text-muschio text-center font-medium py-3 rounded-xl mb-4 active:scale-[0.98] transition-transform"
+          >
+            + {t('events.nuovo_evento', 'Nuovo Evento')}
+          </Link>
+        )}
+
         {loading ? (
           [1,2,3].map(i => <SkeletonCard key={i} />)
         ) : events.length === 0 ? (
