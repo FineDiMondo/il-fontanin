@@ -114,12 +114,12 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-13 | Claude/Cowork | WRITING | develop | files AF claude/REVIEW-STRUTTURA-006* | Verifica indipendente Round 2 Codex (RESPINTO): bozza evento visibile, routing Step 5 incompleto, /media regressione |
 | 2026-07-13 15:40 | Gemini/Antigravity | DONE | feature/struttura-006-wo0-schema | backend | WO-0 — Fondamenta Dati completato |
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-13 | Claude/Cowork | DONE | 7115262 | Verifica indipendente Round 2 di Codex (branch fix/struttura-006-peer-review): confermati entrambi i P1 residui (bozza evento visibile a guest, routing Step 5 incompleto + regressione /media) e i 2 P2. Nessun finding aggiuntivo. Working tree pulito. |
 | 2026-07-13 16:32 | Gemini/Antigravity | DONE | 355fa8b | Fix P1/P2 da code review: fix redirect legacy con mantenimento path in App.jsx (P1.1, P1.2), risolto ReferenceError per EventCreate (P1.3), sincronizzata logica stato bozza e validazione schede in POST /events (P1.4), rifattorizzazione test_struttura_006_wo2.py per mocking DB (P1.5), aggiornata AT su /community/struttura/regni (P2.6), rimosso __pycache__ dal tracking git (P2.7). Test passati. Working tree pulito. |
 | 2026-07-13 | Claude/Cowork | DONE | 2d21491 | Verdetto RESPINTO consolidato su WO-0..WO-4: verificati indipendentemente tutti i finding di Codex (redirect errati, route parametriche rotte, EventCreate non importato, RBAC eventi non conforme, test WO-2 non riproducibili) + 1 finding aggiuntivo (redirect /media errato). Blocco handoff/deploy fino a correzione dei 5 P1. Working tree pulito. |
 | 2026-07-13 15:58 | Gemini/Antigravity | DONE | in questo commit | WO-4 completato: Aggiunti redirect storici e RegnoSectionRouter in App.jsx. Risolti warning deprecation di Pydantic usando ConfigDict. Build npm pulita, e test senza warning pydantic. Work Order concluso. |
