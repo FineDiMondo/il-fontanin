@@ -116,10 +116,10 @@ Al check-out:
 |---|---|---|---|---|---|
 | 2026-07-13 15:40 | Gemini/Antigravity | DONE | feature/struttura-006-wo0-schema | backend | WO-0 — Fondamenta Dati completato |
 
-
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-13 16:32 | Gemini/Antigravity | DONE | 355fa8b | Fix P1/P2 da code review: fix redirect legacy con mantenimento path in App.jsx (P1.1, P1.2), risolto ReferenceError per EventCreate (P1.3), sincronizzata logica stato bozza e validazione schede in POST /events (P1.4), rifattorizzazione test_struttura_006_wo2.py per mocking DB (P1.5), aggiornata AT su /community/struttura/regni (P2.6), rimosso __pycache__ dal tracking git (P2.7). Test passati. Working tree pulito. |
 | 2026-07-13 | Claude/Cowork | DONE | 2d21491 | Verdetto RESPINTO consolidato su WO-0..WO-4: verificati indipendentemente tutti i finding di Codex (redirect errati, route parametriche rotte, EventCreate non importato, RBAC eventi non conforme, test WO-2 non riproducibili) + 1 finding aggiuntivo (redirect /media errato). Blocco handoff/deploy fino a correzione dei 5 P1. Working tree pulito. |
 | 2026-07-13 15:58 | Gemini/Antigravity | DONE | in questo commit | WO-4 completato: Aggiunti redirect storici e RegnoSectionRouter in App.jsx. Risolti warning deprecation di Pydantic usando ConfigDict. Build npm pulita, e test senza warning pydantic. Work Order concluso. |
 | 2026-07-13 15:53 | Gemini/Antigravity | DONE | in questo commit | WO-3 completato: Backend `POST /events` passa a `require_socio` (stato bozza) e accetta schede_ids, creato `POST /events/{id}/valida` per admin. Frontend `EventForm.jsx` (min 1 scheda), `EventCreate.jsx` e `Mappa.jsx` con marker multipli per eventi. Migrazione dati con script dry-run pronto. Build pulita. |
