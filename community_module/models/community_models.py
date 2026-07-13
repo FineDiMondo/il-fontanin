@@ -260,11 +260,32 @@ class CommunityEvent(Base):
     stato              = Column(String(20), nullable=False, default="pubblicato")
     creato_da          = Column(UUID(as_uuid=True), ForeignKey("community_users.id"), nullable=False)
     qr_secret          = Column(String(64), unique=True)
+    validato_da        = Column(UUID(as_uuid=True), ForeignKey("community_users.id"))
+    validato_at        = Column(DateTime(timezone=True))
+    nota_validazione   = Column(Text)
     created_at         = Column(DateTime(timezone=True), nullable=False, default=func.now())
     updated_at         = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
 
     registrations = relationship("EventRegistration", back_populates="event")
     checkins      = relationship("EventCheckin", back_populates="event")
+    schede_catalogo = relationship("CommunityEventCatalogoScheda", back_populates="event", cascade="all, delete-orphan")
+
+class CommunityEventCatalogoScheda(Base):
+    __tablename__ = "community_event_catalogo_schede"
+    __table_args__ = (
+        UniqueConstraint("event_id", "scheda_id", name="uq_event_scheda"),
+        Index("ix_event_schede_event", "event_id"),
+        Index("ix_event_schede_scheda", "scheda_id"),
+    )
+
+    id         = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    event_id   = Column(UUID(as_uuid=True), ForeignKey("community_events.id", ondelete="CASCADE"), nullable=False)
+    scheda_id  = Column(UUID(as_uuid=True), ForeignKey("catalogo_schede.id", ondelete="RESTRICT"), nullable=False)
+    ordine     = Column(Integer, nullable=False, default=0)
+    created_at = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+    event      = relationship("CommunityEvent", back_populates="schede_catalogo")
+    scheda     = relationship("CatalogoScheda")
 
 
 class EventRegistration(Base):
@@ -465,6 +486,43 @@ class RicettarioRaccoltaRicetta(Base):
     ordine      = Column(Integer, nullable=False, default=0)
 
 # =============================================================================
+# STRUTTURA REGNI / YGGDRASIL
+# =============================================================================
+
+class StrutturaRegno(Base):
+    __tablename__ = "struttura_regni"
+
+    codice      = Column(String(40), primary_key=True)  # vanaheim, jotunheim, ...
+    nome        = Column(String(100), nullable=False)
+    descrizione = Column(Text)
+    ordine      = Column(Integer, nullable=False, unique=True)
+    navigabile  = Column(Boolean, nullable=False, default=True)
+    tema_json   = Column(JSONB)  # SOLO tema grafico: colore, icona
+    attivo      = Column(Boolean, nullable=False, default=True)
+    created_at  = Column(DateTime(timezone=True), nullable=False, default=func.now())
+    updated_at  = Column(DateTime(timezone=True), nullable=False, default=func.now(), onupdate=func.now())
+
+    categorie   = relationship("StrutturaRegnoCategoria", back_populates="regno")
+
+
+class StrutturaRegnoCategoria(Base):
+    __tablename__ = "struttura_regno_categorie"
+    __table_args__ = (
+        UniqueConstraint("categoria_id", name="uq_regno_categoria_categoria_unica"),
+        Index("ix_regno_categorie_regno", "regno_codice"),
+    )
+
+    id            = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    regno_codice  = Column(String(40), ForeignKey("struttura_regni.codice", ondelete="CASCADE"), nullable=False)
+    categoria_id  = Column(UUID(as_uuid=True), ForeignKey("catalogo_categorie.id", ondelete="CASCADE"), nullable=False)
+    ordine        = Column(Integer, nullable=False, default=0)
+    created_at    = Column(DateTime(timezone=True), nullable=False, default=func.now())
+
+    regno         = relationship("StrutturaRegno", back_populates="categorie")
+    categoria     = relationship("CatalogoCategoria")
+
+
+# =============================================================================
 # CATALOGAZIONE TERRITORIALE
 # =============================================================================
 
@@ -502,6 +560,7 @@ class CatalogoScheda(Base):
     lng                   = Column(Numeric(9, 6), nullable=False)
     descrizione           = Column(Text)
     cronologia_storica    = Column(Text)
+    is_segnaposto         = Column(Boolean, nullable=False, default=False)
     
     evidenza_livello      = Column(String(1)) # 'C'|'D'|'I'|'L'
     evidenza_fonte        = Column(Text)
