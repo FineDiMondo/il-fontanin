@@ -114,6 +114,7 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
+| 2026-07-13 | Claude/Cowork | WRITING | develop | files AF claude/AT-STRUTTURA-006* | Sintesi dei 3 draft AT (Haiku/Codex/Antigravity) in AT-STRUTTURA-006.md finale; commit dei draft (erano untracked/fuori repo) |
 
 
 ## STORICO SESSIONI
