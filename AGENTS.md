@@ -114,12 +114,12 @@ Al check-out:
 ## SESSIONI ATTIVE
 | Data/ora | Agente | Stato | Branch | Moduli | Incarico |
 |---|---|---|---|---|---|
-| 2026-07-13 | Claude/Cowork | WRITING | develop | files AF claude/AT-STRUTTURA-006* | Correzione dei 3 rilievi Codex (schema DB inline, route multi-segmento, is_segnaposto per marker eventi legacy) in attesa del suo verdetto formale |
 
 
 ## STORICO SESSIONI
 | Data | Agente | Esito | Commit | Note |
 |---|---|---|---|---|
+| 2026-07-13 | Claude/Cowork | DONE | 832dd30 | Risolti i 3 rilievi di Codex su AT-STRUTTURA-006 (peer review R9): schema DB inline, route multi-segmento corretta, flag is_segnaposto per evitare marker geografici falsi. In attesa del verdetto formale di Codex sulla revisione. Working tree pulito. |
 | 2026-07-13 13:58 | Antigravity/Gemini | DONE (READING) | - | Peer review funzionale R9 su AT-STRUTTURA-006 (sintesi Claude): esito APPROVATO. Nessun bloccante rilevato, aggiornato log in calce al documento AT. |
 | 2026-07-13 | Claude/Cowork | DONE | f85410b | Incorporate le 13 decisioni di Daniel nella sintesi AT-STRUTTURA-006: nessun punto aperto residuo. Pronta per peer review R9 (Codex + Antigravity) su questa versione aggiornata, poi handoff a sviluppo. Working tree pulito. |
 | 2026-07-13 | Claude/Cowork | DONE | 1d1f86d | Sintesi dei 3 draft AT-STRUTTURA-006 (Haiku/Codex/Antigravity) in documento finale: 8 punti tecnici risolti per convergenza, 13 punti aperti consolidati per Daniel, 1 correzione (redirect /mappa, draft Antigravity incoerente con AF SS5). Committati anche i draft Haiku e Antigravity (erano untracked). Working tree pulito. |
